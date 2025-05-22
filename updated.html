@@ -5029,35 +5029,39 @@
     };
 
 
-    $(".filter-dropdown_list.is-specialties .w-dyn-item, .filter_checkbox.is-specialty").click(function(e) {
+    $(".filter-dropdown_list.is-specialties .w-dyn-item, .filter_checkbox.is-specialty").click(function (e) {
       e.preventDefault(); // Prevent default click behavior
-      
+
       const isCheckbox = $(this).hasClass('filter_checkbox');
       const item = isCheckbox ? $(this).closest('.w-dyn-item') : $(this);
-      const checkbox = isCheckbox ? $(this) : item.find('.filter_checkbox.is-specialty');
-      const label = item.find('.filter_checkbox-label.is-api-ip');
-      const specialtyLabel = label.text().trim();
-      
-      // Toggle checkbox state
-      checkbox.toggleClass('w--redirected-checked');
-      
+      const checkboxDiv = isCheckbox ? $(this) : item.find('.filter_checkbox.is-specialty');
+      const checkboxInput = item.find('input[type="checkbox"]');
+
+      // Get value from the checkbox input's ID
+      const specialtyValue = checkboxInput.attr('id');
+
+      // Toggle real checkbox state
+      const isChecked = checkboxInput.prop('checked');
+      checkboxInput.prop('checked', !isChecked);
+      checkboxDiv.toggleClass('w--redirected-checked', !isChecked);
+
       // Update URL parameters
       const params = new URLSearchParams(window.location.search);
       const currentSpecialties = params.getAll('specialties');
-      
-      if (checkbox.hasClass('w--redirected-checked')) {
-        // Add specialty if checked
-        if (!currentSpecialties.includes(specialtyLabel)) {
-          params.append('specialties', specialtyLabel);
+
+      if (!isChecked) {
+        // Add specialty if newly checked
+        if (!currentSpecialties.includes(specialtyValue)) {
+          params.append('specialties', specialtyValue);
         }
       } else {
         // Remove specialty if unchecked
-        const updatedSpecialties = currentSpecialties.filter(s => s !== specialtyLabel);
+        const updatedSpecialties = currentSpecialties.filter(s => decodeURIComponent(s) !== specialtyValue);
         params.delete('specialties');
         updatedSpecialties.forEach(s => params.append('specialties', s));
       }
 
-      // Update UI
+      // Update selected count in UI
       const selectedCount = params.getAll('specialties').length;
       $(".filter_tag-template.is-specialties")
         .text(selectedCount > 0 ? `${selectedCount} Selected` : "Specialties")
@@ -5069,11 +5073,6 @@
       // Update URL
       const newUrl = `${window.location.pathname}?${params.toString()}`;
       window.history.replaceState({}, '', newUrl);
-
-      // Close dropdown after delay
-      setTimeout(() => {
-        $(".w-dropdown").trigger("w-close");
-      }, 300);
 
       // Trigger API search
       fetchProviderProfiles(false);
@@ -5102,41 +5101,44 @@
     }
 
     // Add click handler for modalities
-    $(".filter-dropdown_list.is-modalities .w-dyn-item, .filter_checkbox.is-modality").click(function(e) {
+    $(".filter-dropdown_list.is-modalities .w-dyn-item, .filter_checkbox.is-modality").click(function (e) {
       e.preventDefault(); // Prevent default click behavior
-      
+
       const isCheckbox = $(this).hasClass('filter_checkbox');
       const item = isCheckbox ? $(this).closest('.w-dyn-item') : $(this);
-      const checkbox = isCheckbox ? $(this) : item.find('.filter_checkbox.is-modality');
-      const label = item.find('.filter_checkbox-label.is-api-ip');
-      const modalityLabel = label.text().trim();
-      
-      // Toggle checkbox state
-      checkbox.toggleClass('w--redirected-checked');
-      
-      // Update URL parameters
+      const checkboxDiv = isCheckbox ? $(this) : item.find('.filter_checkbox.is-modality');
+      const checkboxInput = item.find('input[type="checkbox"]');
+
+      // Get value (use .attr('id'), .val(), or label text depending on your need)
+      const modalityValue = checkboxInput.attr('id');
+
+      // Toggle real checkbox state
+      const isChecked = checkboxInput.prop('checked');
+      checkboxInput.prop('checked', !isChecked);
+      checkboxDiv.toggleClass('w--redirected-checked', !isChecked);
+
+      // URL parameter handling
       const params = new URLSearchParams(window.location.search);
       const currentModalities = params.getAll('modalities');
-      
-      if (checkbox.hasClass('w--redirected-checked')) {
-        // Add modality if checked
-        if (!currentModalities.includes(modalityLabel)) {
-          params.append('modalities', encodeURIComponent(modalityLabel));
+
+      if (!isChecked) {
+        // Add modality if newly checked
+        if (!currentModalities.includes(modalityValue)) {
+          params.append('modalities', modalityValue);
         }
       } else {
         // Remove modality if unchecked
-        const updatedModalities = currentModalities.filter(m => decodeURIComponent(m) !== modalityLabel);
+        const updatedModalities = currentModalities.filter(m => decodeURIComponent(m) !== modalityValue);
         params.delete('modalities');
         updatedModalities.forEach(m => params.append('modalities', m));
       }
 
-      // Update UI
+      // Update selected count in UI
       const selectedCount = params.getAll('modalities').length;
       $(".filter_tag-template.is-modalities")
         .text(selectedCount > 0 ? `${selectedCount} Selected` : "Modalities")
         .toggleClass("is-active", selectedCount > 0);
 
-      // Update modalities count
       $('.modalities-number').text(`(${selectedCount})`);
 
       // Update URL
@@ -5146,6 +5148,7 @@
       // Trigger API search
       fetchProviderProfiles(false);
     });
+
 
     function clearModalities() {
       const params = new URLSearchParams(window.location.search);
@@ -5169,13 +5172,13 @@
     }
 
     // Add clear modalities handler
-    $("#clear-modalities").click(function(e) {
+    $("#clear-modalities").click(function (e) {
       e.preventDefault();
       clearModalities();
     });
 
-    
-   $("#clear-specialties").click(function(e) {
+
+    $("#clear-specialties").click(function (e) {
       e.preventDefault();
       clearSpecialties();
     });
@@ -5375,28 +5378,31 @@
 
       const filters = {};
 
+      // Get insurance parameter
       const insurance = urlParams.getAll('insurance');
       if (insurance.length > 0) {
         filters.insurance = insurance;
       }
 
+      // Get state parameter
       const locationUSState = urlParams.get('state');
       if (locationUSState) {
         filters.state = locationUSState;
       }
 
+      // Get location coordinates
       const locationCoordinates = urlParams.get('location_coordinates');
       if (locationCoordinates) {
         filters.location_coordinates = locationCoordinates;
       }
 
-      // Add specialties filter
+      // Get specialties
       const specialties = urlParams.getAll('specialties').map(s => s.toLowerCase());
       if (specialties.length > 0) {
         filters.specialties = specialties;
       }
 
-      // Add modalities filter
+      // Get modalities
       const modalities = urlParams.getAll('modalities').map(m => m.toLowerCase());
       if (modalities.length > 0) {
         filters.modalities = modalities;
@@ -5433,7 +5439,7 @@
         // Add modalities to API request
         if (filters.modalities && filters.modalities.length > 0) {
           filters.modalities.forEach(modality => {
-            params.append('modalities', encodeURIComponent(modality));
+            params.append('modalities', modality);
           });
         }
 
@@ -5551,7 +5557,6 @@
         const insuranceOptions = document.querySelectorAll('.filter_radio-label.is-api-ip');
         insuranceOptions.forEach(option => {
           if (option.textContent.trim() === insuranceParam) {
-            // Find the parent radio button and click it
             const radioButton = option.closest('.w-dyn-item').querySelector('.filter_radio-button.is-insurance');
             if (radioButton) {
               radioButton.click();
@@ -5561,7 +5566,6 @@
       }
 
       if (specialtyParams.length > 0) {
-        // Find and click matching specialty checkboxes
         const specialtyOptions = document.querySelectorAll('.filter_checkbox.is-specialty');
         specialtyOptions.forEach(checkbox => {
           const label = checkbox.closest('.w-dyn-item').querySelector('.filter_checkbox-label.is-api-ip');
@@ -5570,13 +5574,13 @@
           }
         });
       }
+
       if (modalityParams.length > 0) {
-        // Find and click matching modality checkboxes
         const modalityOptions = document.querySelectorAll('.filter_checkbox.is-modality');
-        // const decodedModalityParams = modalityParams.map(m => decodeURIComponent(m));
         modalityOptions.forEach(checkbox => {
-          const label = checkbox.closest('.w-dyn-item').querySelector('.filter_checkbox-label.is-api-ip');
-          if (label && modalityParams.includes(label.textContent.trim())) {
+          const item = checkbox.closest('.w-dyn-item');
+          const hiddenInput = item.querySelector('.jetboost-list-item');
+          if (hiddenInput && modalityParams.includes(hiddenInput.value)) {
             checkbox.click();
           }
         });
