@@ -6326,8 +6326,7 @@
                 // Show loading state
                 const loader = document.querySelector('[fs-cmsload-element="loader"]');
                 const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
-                if (loader) loader.style.display = 'block';
-                if (emptyState) emptyState.style.display = 'none';
+               
 
                 // Fetch data
                 const response = await fetch(`${API_URL}?${params.toString()}`);

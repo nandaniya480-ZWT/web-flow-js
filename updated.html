@@ -5526,8 +5526,7 @@
         const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
 
         // Show loader while fetching
-        if (loader) loader.style.display = 'block';
-        if (emptyState) emptyState.style.display = 'none';
+
 
         const url = `https://9ja7n2qnce.execute-api.us-east-1.amazonaws.com/prod/fay-api/provider-profiles?${params.toString()}`;
         const response = await fetch(url);
