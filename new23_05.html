@@ -6276,6 +6276,31 @@
         // Provider profile fetching and rendering
         async function fetchProviderProfiles(token = null) {
             try {
+
+                const container = document.getElementById('dietitian-items-container');
+                container.innerHTML = '';
+
+                const paginationWrapper = document.querySelector('.pagination_buttons');
+                if (paginationWrapper) {
+                    paginationWrapper.classList.add('hide');
+                }
+                const loader = document.querySelector('[fs-cmsload-element="loader"]');
+                const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
+
+                // if (emptyState && loader) {
+                //     // Hide the entire emptyState first
+                //     emptyState.style.display = 'block';
+
+                //     // Loop through all child elements inside emptyState
+                //     [...emptyState.children].forEach(child => {
+                //         if (child === loader) {
+                //             child.style.display = 'block'; // Show only loader
+                //         } else {
+                //             child.style.display = 'none'; // Hide everything else
+                //         }
+                //     });
+                // }
+
                 const filters = getFiltersFromURL();
                 const params = new URLSearchParams();
 
@@ -6322,11 +6347,9 @@
                 } else {
                     currentPage = 0;
                 }
-
-                // Show loading state
-                const loader = document.querySelector('[fs-cmsload-element="loader"]');
-                const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
-               
+                // const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
+                // if (loader) loader.style.display = 'block';
+                // if (emptyState) emptyState.style.display = 'none';
 
                 // Fetch data
                 const response = await fetch(`${API_URL}?${params.toString()}`);
@@ -6338,6 +6361,11 @@
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 const data = await response.json();
+                 if (data.items.length === 0) {
+                    if (emptyState) emptyState.style.display = 'block';
+                    if (loader) loader.style.display = 'none';
+                    return;
+                }
                 renderProviderProfiles(data);
                 updatePagination(data.continuation_token);
 
