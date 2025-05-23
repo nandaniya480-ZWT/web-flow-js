@@ -2331,22 +2331,19 @@
                         <div class="modal-filter_wrap is-api-ip">
                           <div class="u-text-bold u-mb-1 is-api-ip">Driving Distance</div><label class="w-radio">
                             <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input">
-                            </div><input id="filter-dis1" type="radio" name="distance" data-name="distance"
-                              asci-value="distance" style="opacity:0;position:absolute;z-index:-1"
-                              value="filter-dis1" /><span class="filter_radio-label is-api-ip w-form-label"
-                              for="filter-dis1">Within 5 minute drive</span>
+                            </div><input id="5" type="radio" name="distance" data-name="distance" asci-value="distance"
+                              style="opacity:0;position:absolute;z-index:-1" value="5" /><span
+                              class="filter_radio-label is-api-ip w-form-label" for="5">Within 5 minute drive</span>
                           </label><label class="w-radio">
                             <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input">
-                            </div><input id="filter-dis2" type="radio" name="distance" data-name="distance"
-                              asci-value="distance" style="opacity:0;position:absolute;z-index:-1"
-                              value="filter-dis2" /><span class="filter_radio-label is-api-ip w-form-label"
-                              for="filter-dis2">Within 15 minute drive</span>
+                            </div><input id="15" type="radio" name="distance" data-name="distance" asci-value="distance"
+                              style="opacity:0;position:absolute;z-index:-1" value="15" /><span
+                              class="filter_radio-label is-api-ip w-form-label" for="15">Within 15 minute drive</span>
                           </label><label class="w-radio">
                             <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input">
-                            </div><input id="filter-dis3" type="radio" name="distance" data-name="distance"
-                              asci-value="distance" style="opacity:0;position:absolute;z-index:-1"
-                              value="filter-dis3" /><span class="filter_radio-label is-api-ip w-form-label"
-                              for="filter-dis3">Within 25 minute drive</span>
+                            </div><input id="25" type="radio" name="distance" data-name="distance" asci-value="distance"
+                              style="opacity:0;position:absolute;z-index:-1" value="25" /><span
+                              class="filter_radio-label is-api-ip w-form-label" for="25">Within 25 minute drive</span>
                           </label>
                         </div>
                         <div class="modal-filter_btn-wrap is-api-ip"><a id="clear-more-filters-2"
@@ -2672,25 +2669,23 @@
                       <div><label class="filter_radio-button-field w-radio">
                           <div
                             class="w-form-formradioinput w-form-formradioinput--inputType-custom filter_radio mobile-filter w-radio-input">
-                          </div><input id="filter-dis-b" type="radio" name="distance" data-name="distance"
-                            asci-value="distance" style="opacity:0;position:absolute;z-index:-1"
-                            value="filter-dis-b" /><span class="filter_radio-label w-form-label"
-                            for="filter-dis-b">Within 5 minute drive</span>
+                          </div><input id="5" type="radio" name="distance" data-name="distance" asci-value="distance"
+                            style="opacity:0;position:absolute;z-index:-1" value="5" /><span
+                            class="filter_radio-label w-form-label" for="5">Within 5 minute drive</span>
                         </label></div>
                       <div><label class="filter_radio-button-field w-radio">
                           <div
                             class="w-form-formradioinput w-form-formradioinput--inputType-custom filter_radio mobile-filter w-radio-input">
-                          </div><input id="filter-dis-c" type="radio" name="distance" data-name="distance"
-                            asci-value="distance" style="opacity:0;position:absolute;z-index:-1"
-                            value="filter-dis-c" /><span class="filter_radio-label w-form-label"
-                            for="filter-dis-c">Within 15 minute drive</span>
+                          </div><input id="15" type="radio" name="distance" data-name="distance" asci-value="distance"
+                            style="opacity:0;position:absolute;z-index:-1" value="15" /><span
+                            class="filter_radio-label w-form-label" for="15">Within 15 minute drive</span>
                         </label></div>
                       <div><label class="filter_radio-button-field w-radio">
                           <div
                             class="w-form-formradioinput w-form-formradioinput--inputType-custom filter_radio mobile-filter w-radio-input">
-                          </div><input id="radio-15" type="radio" name="distance" data-name="distance"
-                            asci-value="distance" style="opacity:0;position:absolute;z-index:-1"
-                            value="Radio 15" /><span class="filter_radio-label w-form-label" for="radio-15">Within 25
+                          </div><input id="25" type="radio" name="distance" data-name="distance" asci-value="distance"
+                            style="opacity:0;position:absolute;z-index:-1" value="25" /><span
+                            class="filter_radio-label w-form-label" for="15">Within 25
                             minute drive</span>
                         </label></div>
                     </div>
@@ -3901,7 +3896,7 @@
         </div>
       </div>
     </div>
-    <div class="section_list_top is-api-ip">
+    <div class="section_list_top hide is-api-ip">
       <div id="active-tags" class="active-tags is-api-ip">
         <div fs-cmsfilter-element="tag-template" class="active-tag is-api-ip">
           <p fs-cmsfilter-element="tag-text"></p>
@@ -3919,8 +3914,8 @@
     <!-- Main card -->
     <section class="section_list_bottom is-api-ip">
       <div class="w-layout-blockcontainer container-find is-api-ip w-container">
-        <div id="dietitian-container"></div>
-        <div class="dietitian-item is-api-ip" id="dietitian-template" style="display: none;">
+        <div id="dietitian-items-container"></div>
+        <div class="dietitian-item is-api-ip" style="display: none;">
           <div class="hide is-api-ip w-embed">
             <style>
               .accepted-insurance_item:after {
@@ -4097,26 +4092,6 @@
           </div>
         </div>
 
-        <div role="navigation" aria-label="List" class="w-pagination-wrapper pagination_buttons"><a
-            href="?9ebcbb58_page=1" aria-label="Previous Page" class="w-pagination-previous btn cc-secondary">
-            <div class="w-inline-block">Previous</div>
-          </a>
-          <a id="next" href="?9ebcbb58_page=3" aria-label="Next Page" class="w-pagination-next btn cc-secondary">
-            <div class="w-inline-block">
-              Next
-            </div>
-          </a>
-
-          <a id="load-more-btn" href="#" aria-label="Next Page" class="w-pagination-next btn cc-secondary">
-            <div class="w-inline-block">
-              Load More
-            </div>
-          </a>
-
-          <link rel="prerender" href="?9ebcbb58_page=3" />
-          <div aria-label="Page 2 of 290" role="heading" class="w-page-count hidden">2 / 290</div>
-        </div>
-
         <div fs-cmsload-element="empty" class="empty-state_wrap is-api-ip">
           <div>
             <div class="h4 u-mb-1 is-api-ip">No more dietitians found</div>
@@ -4150,6 +4125,16 @@
               </style>
             </div>
           </div>
+        </div>
+
+        <div role="navigation" aria-label="List" class="w-pagination-wrapper pagination_buttons">
+          <button id="prev-btn" class="w-pagination-previous btn cc-secondary" disabled>
+            <div class="w-inline-block">Previous</div>
+          </button>
+          <button id="next-btn" class="w-pagination-next btn cc-secondary">
+            <div class="w-inline-block">Next</div>
+          </button>
+          <div aria-label="Page" role="heading" class="w-page-count hidden" id="page-count">1</div>
         </div>
       </div>
     </section>
@@ -4787,7 +4772,7 @@
       popup.setAttribute("inert", "");
       popup.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
-      nav.style.top = "0rem";
+      // nav.style.top = "0rem";
 
       // Return focus to the last trigger
       if (lastTrigger) {
@@ -4821,10 +4806,10 @@
         if (stateName === state) {
           radio.click();
           const statelabel = stateElement.querySelector(".checkbox-label")?.textContent?.trim();
-          updateStateParam(statelabel)
-          setTimeout(() => {
-            updateItemsSorting(state, userLatLong);
-          }, 500);
+          updateStateParam(stateName, userLatLong)
+          // setTimeout(() => {
+          //   updateItemsSorting(state, userLatLong);
+          // }, 500);
         } else {
           radio.checked = false;
         }
@@ -4832,16 +4817,21 @@
       addUtmParamsInLinks();
     };
 
-    function updateStateParam(newValue) {
+    function updateStateParam(newValue, userLocation = null) {
       const url = new URL(window.location.href);
-      if (newValue) {
+      if (newValue && userLocation != null) {
         url.searchParams.set('state', newValue);
+
+        const userLatLong = `${userLocation.lat},${userLocation.lng}`;
+        url.searchParams.set('location_coordinates', userLatLong);
+
       } else {
         url.searchParams.delete('state');
+        url.searchParams.delete('lat-lang');
       }
 
       window.history.replaceState({}, '', url);
-      fetchProviderProfiles(false);
+      fetchProviderProfiles();
     }
 
 
@@ -4880,8 +4870,8 @@
               applyStateFilter(state, userLatLong);
             }
 
-            const filtersContainer = document.querySelector(".new-filters");
-            filtersContainer.style.pointerEvents = 'none'
+            // const filtersContainer = document.querySelector(".new-filters");
+            // filtersContainer.style.pointerEvents = 'none'
           }
 
           var event = new Event("input", { bubbles: true });
@@ -4891,8 +4881,8 @@
         inputElement.addEventListener("input", function () {
           const input = this.value.trim();
           if (/^\d{5}$/.test(input)) {
-            const filtersContainer = document.querySelector(".new-filters");
-            filtersContainer.style.pointerEvents = 'none'
+            // const filtersContainer = document.querySelector(".new-filters");
+            // filtersContainer.style.pointerEvents = 'none'
             checkStateByZipCode(input);
           } else {
             applyStateFilter(input);
@@ -4930,26 +4920,26 @@
         clearStateSorting()
       });
 
-      function clearStateSorting() {
-        let selected = null;
-        document
-          .querySelectorAll(".find-dropdown.is-sort .filter-dropdown_radio")
-          .forEach(function (e) {
-            if (e.classList.contains("w--current")) {
-              selected = e;
-            }
-          });
+      // function clearStateSorting() {
+      //   let selected = null;
+      //   document
+      //     .querySelectorAll(".find-dropdown.is-sort .filter-dropdown_radio")
+      //     .forEach(function (e) {
+      //       if (e.classList.contains("w--current")) {
+      //         selected = e;
+      //       }
+      //     });
 
-        if (selected) {
-          selected.click();
-        } else {
-          const originalItemsOrder = listInstance.originalItemsOrder
-          listInstance.items = originalItemsOrder;
-          listInstance.renderItems(originalItemsOrder);
-        }
+      //   if (selected) {
+      //     selected.click();
+      //   } else {
+      //     const originalItemsOrder = listInstance.originalItemsOrder
+      //     listInstance.items = originalItemsOrder;
+      //     listInstance.renderItems(originalItemsOrder);
+      //   }
 
-        updateStateParam('')
-      }
+      //   updateStateParam('')
+      // }
 
       function checkStateByZipCode(zipCode) {
         if (/^\d{5}$/.test(zipCode)) {
@@ -4997,7 +4987,7 @@
           const newUrl = `${window.location.pathname}?${params.toString()}`;
           window.history.replaceState({}, '', newUrl);
 
-          fetchProviderProfiles(false);
+          fetchProviderProfiles();
         }
       }, 500);
     });
@@ -5025,7 +5015,7 @@
 
       $('[data-popup="insurance"]').hide();
 
-      fetchProviderProfiles(false);
+      fetchProviderProfiles();
     };
 
 
@@ -5075,7 +5065,7 @@
       window.history.replaceState({}, '', newUrl);
 
       // Trigger API search
-      fetchProviderProfiles(false);
+      fetchProviderProfiles();
     });
 
     function clearSpecialties() {
@@ -5097,7 +5087,7 @@
       $('[data-popup="specialties"]').hide();
       $('.specialties-number').text('(0)');
 
-      fetchProviderProfiles(false);
+      fetchProviderProfiles();
     }
 
     // Add click handler for modalities
@@ -5146,7 +5136,7 @@
       window.history.replaceState({}, '', newUrl);
 
       // Trigger API search
-      fetchProviderProfiles(false);
+      fetchProviderProfiles();
     });
 
 
@@ -5168,7 +5158,7 @@
       $('body').removeClass("no-scroll");
       $('.modalities-number').text('(0)');
 
-      fetchProviderProfiles(false);
+      fetchProviderProfiles();
     }
 
     // Add clear modalities handler
@@ -5183,23 +5173,42 @@
       clearSpecialties();
     });
 
-    document
-      .getElementById("clear-trigger")
-      .addEventListener("click", function () {
-        // Click the "clear-all" button
-        document.getElementById("clear-all").click();
 
-        // Clear the zipInput and zipInputMobile fields
-        zipInput.value = "";
-        zipInputMobile.value = "";
+    ['clear-trigger', 'clear-more-filters-1'].forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('click', function () {
 
-        const originalItemsOrder = listInstance.originalItemsOrder
-        listInstance.items = originalItemsOrder;
-        listInstance.renderItems(originalItemsOrder);
+          const baseUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, baseUrl);
+          fetchProviderProfiles()
+          clearSpecialties()
+          clearInsurance()
+          clearModalities()
+          clearState()
 
-        clearInsurance();
-        updateStateParam();
-      });
+        });
+      }
+    });
+
+
+    // document
+    //   .getElementById("clear-trigger")
+    //   .addEventListener("click", function () {
+    //     // Click the "clear-all" button
+    //     document.getElementById("clear-all").click();
+
+    //     // Clear the zipInput and zipInputMobile fields
+    //     zipInput.value = "";
+    //     zipInputMobile.value = "";
+
+    //     const originalItemsOrder = listInstance.originalItemsOrder
+    //     listInstance.items = originalItemsOrder;
+    //     listInstance.renderItems(originalItemsOrder);
+
+    //     clearInsurance();
+    //     updateStateParam();
+    //   });
 
     Webflow.push(function () {
       // Disable submitting form fields during development
@@ -5235,59 +5244,82 @@
       }
     }
 
+    function handleSortChange(value) {
+      const params = new URLSearchParams(window.location.search);
+      params.set('sort_order', value);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+      fetchProviderProfiles();
+    }
+
+    function setupSortListeners() {
+      const sortOptions = document.querySelectorAll('.filter-dropdown_radio');
+
+      sortOptions.forEach(option => {
+        option.addEventListener('click', function (e) {
+          e.preventDefault(); // Prevent anchor navigation
+          const value = this.textContent.trim();
+          handleSortChange(value);
+        });
+      });
+    }
+
+
     // Call the function initially
     moveDivOnMobile();
+    setupSortListeners();
+
 
     // Add event listener for resize event to handle viewport changes
     window.addEventListener("resize", moveDivOnMobile);
 
-    const getStateName = (state) => {
-      const stateElements = document.querySelectorAll(".count-state");
-      for (const stateElement of stateElements) {
-        const stateName = stateElement.getAttribute("state-name");
-        const stateLabel = stateElement
-          .querySelector(".checkbox-label")
-          .textContent?.trim();
-        if (stateName === state || stateLabel == state) {
-          // const radio = stateElement.querySelector('.state-checkbox');
-          // radio.click();
+    // const getStateName = (state) => {
+    //   const stateElements = document.querySelectorAll(".count-state");
+    //   for (const stateElement of stateElements) {
+    //     const stateName = stateElement.getAttribute("state-name");
+    //     const stateLabel = stateElement
+    //       .querySelector(".checkbox-label")
+    //       .textContent?.trim();
+    //     if (stateName === state || stateLabel == state) {
+    //       // const radio = stateElement.querySelector('.state-checkbox');
+    //       // radio.click();
 
-          return stateElement
-            .querySelector(".checkbox-label")
-            .textContent?.trim();
-          break;
-        }
-      }
-    };
+    //       return stateElement
+    //         .querySelector(".checkbox-label")
+    //         .textContent?.trim();
+    //       break;
+    //     }
+    //   }
+    // };
 
-    function updateStateFilterFromQuery() {
-      var inputText = sessionStorage.getItem("inputText");
-      if (inputText !== null && inputText !== undefined) {
-        // Populate the input with the stored value from homepage
-        zipInput.value = inputText;
-        zipInputMobile.value = inputText;
-      } else {
-        // Populate with state value if set
-        var urlParams = new URLSearchParams(window.location.search);
-        var urlValue = urlParams.get("state");
-        if (urlValue) {
-          urlValue = urlValue.replace(/-/g, " ");
-          urlValue = urlValue.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-          });
+    // function updateStateFilterFromQuery() {
+    //   var inputText = sessionStorage.getItem("inputText");
+    //   if (inputText !== null && inputText !== undefined) {
+    //     // Populate the input with the stored value from homepage
+    //     zipInput.value = inputText;
+    //     zipInputMobile.value = inputText;
+    //   } else {
+    //     // Populate with state value if set
+    //     var urlParams = new URLSearchParams(window.location.search);
+    //     var urlValue = urlParams.get("state");
+    //     if (urlValue) {
+    //       urlValue = urlValue.replace(/-/g, " ");
+    //       urlValue = urlValue.replace(/\b\w/g, function (match) {
+    //         return match.toUpperCase();
+    //       });
 
-          const stateLabel = getStateName(urlValue);
-          zipInput.value = stateLabel ?? urlValue;
-        }
-      }
-      if (zipInput.value !== "") {
-        checkStateByAddress(zipInput.value);
-      } else {
-        // var event = new Event("input", { bubbles: true });
-        // zipInput.dispatchEvent(event);
-      }
-      sessionStorage.removeItem("inputText");
-    }
+    //       const stateLabel = getStateName(urlValue);
+    //       zipInput.value = stateLabel ?? urlValue;
+    //     }
+    //   }
+    //   if (zipInput.value !== "") {
+    //     checkStateByAddress(zipInput.value);
+    //   } else {
+    //     // var event = new Event("input", { bubbles: true });
+    //     // zipInput.dispatchEvent(event);
+    //   }
+    //   sessionStorage.removeItem("inputText");
+    // }
 
     document
       .querySelectorAll('input[kckat="visit-type"]')
@@ -5295,17 +5327,24 @@
         radio.addEventListener("change", function () {
           if (this.checked) {
             const label = this.closest("label").textContent.trim();
+            const value = this.value.trim();
             document.getElementById("visit-label").textContent = label;
             document.getElementById("visit-label").style.color = "#34353e";
+
+            const params = new URLSearchParams(window.location.search);
+            params.set('availability_type', value);
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            window.history.replaceState({}, '', newUrl);
+            fetchProviderProfiles();
           }
         });
       });
 
-    document.getElementById("next").addEventListener("click", function () {
-      setTimeout(() => {
-        addUtmParamsInLinks();
-      }, 300);
-    });
+    // document.getElementById("next").addEventListener("click", function () {
+    //   setTimeout(() => {
+    //     addUtmParamsInLinks();
+    //   }, 300);
+    // });
   </script>
 
   <script>
@@ -5372,9 +5411,21 @@
   </script>
 
   <script>
-
+    const distanceRadios = document.querySelectorAll('input[type="radio"][name="distance"]');
+    distanceRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        const selectedValue = this.value;
+        const params = new URLSearchParams(window.location.search);
+        params.set('radius_miles', selectedValue);
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.replaceState({}, '', newUrl);
+        fetchProviderProfiles();
+      });
+    });
     function getFiltersFromURL() {
       const urlParams = new URLSearchParams(window.location.search);
+      let continuationToken = null;
+      let currentPage = 0;
 
       const filters = {};
 
@@ -5408,96 +5459,131 @@
         filters.modalities = modalities;
       }
 
+      const availabilityType = urlParams.getAll('availability_type').map(m => m.toLowerCase());
+      if (availabilityType.length > 0) {
+        filters.availabilityType = availabilityType;
+      }
+
+      const sortOrder = urlParams.getAll('sort_order').map(m => m.toLowerCase());
+      if (sortOrder.length > 0) {
+        filters.sortOrder = sortOrder;
+      }
+
+      const radiusMiles = urlParams.get('radius_miles');
+      if (radiusMiles) {
+        filters.radiusMiles = radiusMiles;
+      }
+
       return filters;
     }
 
-    async function fetchProviderProfiles(isLoadMore = false) {
+    async function fetchProviderProfiles(token = null) {
       try {
         const filters = getFiltersFromURL();
         const params = new URLSearchParams();
 
-        if (filters.insurance && filters.insurance != "") {
-          params.set('insurance', filters.insurance);
-        }
-
-        if (filters.state && filters.state != "") {
+        if (filters.insurance) params.set('insurance', filters.insurance);
+        if (filters.state) {
           params.append('location_us_state', filters.state);
           params.append('supported_us_states', filters.state);
+          if (filters.location_coordinates) params.append('location_coordinates', filters.location_coordinates);
         }
+        if (filters.radiusMiles) params.append('radius_miles', filters.radiusMiles);
+        if (filters.specialties) filters.specialties.forEach(s => params.append('specialties', s));
+        if (filters.modalities) filters.modalities.forEach(m => params.append('modalities', m));
 
-        if (filters.location_coordinates) {
-          params.append('location_coordinates', filters.location_coordinates);
-        }
-
-        // Add specialties to API request
-        if (filters.specialties && filters.specialties.length > 0) {
-          filters.specialties.forEach(specialty => {
-            params.append('specialties', specialty);
+        const availabilityMap = {
+          'in-person': ['in_person'],
+          'video-only': ['virtual'],
+          'video-in-person': ['in_person', 'virtual'],
+        };
+        if (filters.availabilityType) {
+          filters.availabilityType.forEach(type => {
+            const values = availabilityMap[type];
+            if (values) values.forEach(v => params.append('availability_type', v));
           });
         }
 
-        // Add modalities to API request
-        if (filters.modalities && filters.modalities.length > 0) {
-          filters.modalities.forEach(modality => {
-            params.append('modalities', modality);
+        const sortOrderMap = {
+          'recommended': 'ranking',
+          'availability': 'availability',
+          'best health outcomes': 'outcomes'
+        };
+        if (filters.sortOrder) {
+          filters.sortOrder.forEach(order => {
+            const value = sortOrderMap[order];
+            if (value) params.append('sort_order', value);
           });
         }
 
-        if (isLoadMore && continuationToken) {
-          params.append('continuation_token', continuationToken);
+        if (token) {
+          params.append('continuation_token', token);
+        } else {
+          currentPage = 0;
         }
+
+        const loader = document.querySelector('[fs-cmsload-element="loader"]');
+        const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
+
+        // Show loader while fetching
+        if (loader) loader.style.display = 'block';
+        if (emptyState) emptyState.style.display = 'none';
 
         const url = `https://9ja7n2qnce.execute-api.us-east-1.amazonaws.com/prod/fay-api/provider-profiles?${params.toString()}`;
         const response = await fetch(url);
+
+        if (response.status === 422) {
+          if (emptyState) emptyState.style.display = 'block';
+          if (loader) loader.style.display = 'none';
+          return; // Stop further execution
+        }
 
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
 
-        const container = document.getElementById('dietitian-container');
-        const template = document.getElementById('dietitian-template');
 
-        if (!isLoadMore) container.innerHTML = '';
+        const container = document.getElementById('dietitian-items-container');
+        const template = document.getElementsByClassName('dietitian-item');
+
+        container.innerHTML = '';
 
         data.items.forEach(provider => {
-          const card = template.cloneNode(true);
-          card.style.display = 'block';
+          const card = template[0].cloneNode(true);
+
+          card.querySelector('.jetboost-list-item').value = provider.slug;
 
           card.querySelector('.h3').textContent = provider.full_name_and_credentials;
           const image = card.querySelector('.dietitian_img');
           image.src = provider.photo_url;
           image.alt = provider.full_name_and_credentials;
 
-          if (provider.insurance_accepted) {
-            const ins = card.querySelector('.insurances-text');
-            if (ins) ins.textContent = provider.insurance_accepted.join(', ');
+          const ins = card.querySelector('.insurances-text');
+          if (ins && provider.insurance_accepted) {
+            ins.textContent = provider.insurance_accepted.join(', ');
           }
 
-          if (provider.specialties) {
-            const spec = card.querySelector('.specialties-text');
-            if (spec) spec.textContent = provider.specialties.join(', ');
+          const spec = card.querySelector('.specialties-text');
+          if (spec && provider.specialties) {
+            spec.textContent = provider.specialties.map(s => s.name).join(', ');
           }
 
-          if (provider.supported_us_states) {
-            const states = card.querySelector('.states-text');
-            if (states) states.textContent = provider.supported_us_states.join(', ');
+          const states = card.querySelector('.states-text');
+          if (states && provider.supported_us_states) {
+            states.textContent = provider.supported_us_states.join(', ');
           }
 
           const modalitiesList = card.querySelector('.modalities_list');
           modalitiesList.querySelectorAll('.modality_item').forEach(i => i.remove());
-
           if (provider.modalities) {
             provider.modalities.forEach(modality => {
               const item = document.createElement('div');
               item.className = 'modality_item is-api-ip';
-
               const emojiDiv = document.createElement('div');
               emojiDiv.className = 'modality_emoji is-api-ip';
               emojiDiv.textContent = '❓';
-
               const nameDiv = document.createElement('div');
-              nameDiv.textContent = modality;
-
+              nameDiv.textContent = modality.name;
               item.appendChild(emojiDiv);
               item.appendChild(nameDiv);
               modalitiesList.appendChild(item);
@@ -5505,15 +5591,16 @@
           }
 
           const visitsWrap = card.querySelector('.dietitian_visits-wrap');
-          const videoVisit = visitsWrap.querySelector('.dietitian_visit > .u-text-bold:is(:first-child)');
-          const inPersonVisit = visitsWrap.querySelector('.dietitian_visit .dietitian_visit');
+          if (visitsWrap) {
+            const outerVisitBlock = visitsWrap.querySelector('.dietitian_visit');
+            const innerVisitBlock = outerVisitBlock?.querySelector('.dietitian_visit');
+            const availability = provider.availability_types || [];
 
-          const availability = provider.availability_types || [];
-          if (!availability.includes('virtual')) {
-            videoVisit?.parentElement?.remove();
-          }
-          if (!availability.includes('in_person')) {
-            inPersonVisit?.remove();
+            if (!availability.includes('virtual')) {
+              outerVisitBlock?.remove();
+            } else if (!availability.includes('in_person') && innerVisitBlock) {
+              innerVisitBlock.remove();
+            }
           }
 
           const bookNow = card.querySelector('.btn.cc-mobile-50');
@@ -5521,36 +5608,76 @@
           if (bookNow && provider.booking_url) bookNow.href = provider.booking_url;
           if (viewProfile && provider.profile_url) viewProfile.href = provider.profile_url;
 
+          card.style.display = 'block';
           container.appendChild(card);
         });
 
-        const countElement = document.querySelector('.dieitian-count .bold-span');
-        if (countElement) countElement.textContent = data.total;
-
-        // Loader hide
-        const loader = document.querySelector('[fs-cmsload-element="loader"]');
         if (loader) loader.style.display = 'none';
-
-        const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
         if (emptyState) emptyState.style.display = 'none';
 
-        // Update continuationToken and show Load More button
+        const countElement = document.querySelector('.dieitian-count .bold-span');
+
+        const sectionListTopElements = document.getElementsByClassName('section_list_top');
+        Array.from(sectionListTopElements).forEach(el => el.classList.remove('hide'));
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (countElement) countElement.textContent = data.total;
+
         continuationToken = data.continuation_token || null;
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        loadMoreBtn.style.display = continuationToken ? 'block' : 'none';
+        const prevBtn = document.getElementById('prev-btn');
+
+        if (currentPage === 0) {
+          prevBtn.disabled = true;
+          prevBtn.style.display = 'none';
+        } else {
+          prevBtn.disabled = false;
+          prevBtn.style.display = 'inline-block'; // or 'block'
+        }
+        const nextBtn = document.getElementById('next-btn');
+        if (continuationToken) {
+          nextBtn.disabled = false;
+          nextBtn.style.display = 'inline-block';
+        } else {
+          nextBtn.disabled = true;
+          nextBtn.style.display = 'none';
+        } document.getElementById('page-count').textContent = `Page ${currentPage + 1}`;
 
       } catch (error) {
         console.error('Error fetching provider profiles:', error);
       }
     }
 
+    let tokenHistory = [null];
+
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (continuationToken) {
+        currentPage++;
+        tokenHistory[currentPage] = continuationToken;
+        fetchProviderProfiles(continuationToken);
+      }
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentPage > 0) {
+        currentPage--;
+        const prevToken = tokenHistory[currentPage];
+        fetchProviderProfiles(prevToken);
+      }
+    });
+
     // Initial load
     window.addEventListener('load', () => {
-      // Check for insurance, specialty and modalities parameters in URL
+
+      // Check for insurance, specialty, availability_type and modalities parameters in URL
       const urlParams = new URLSearchParams(window.location.search);
       const insuranceParam = urlParams.get('insurance');
       const specialtyParams = urlParams.getAll('specialties');
       const modalityParams = urlParams.getAll('modalities');
+      const availabilityType = urlParams.getAll('availability_type');
+      const sortOrder = urlParams.getAll('sort_order');
+      const radiusMiles = urlParams.getAll('radius_miles');
 
       if (insuranceParam) {
         // Find the insurance option that matches the parameter
@@ -5586,13 +5713,43 @@
         });
       }
 
+      if (availabilityType) {
+        const availabilityRadios = document.querySelectorAll('input[kckat="visit-type"]');
+        availabilityRadios.forEach(radio => {
+          if (radio.value.trim() === availabilityType[0]) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change'));
+          }
+        });
+      }
+
+      if (radiusMiles) {
+        const distanceRadios = document.querySelectorAll('input[type="radio"][name="distance"]');
+        distanceRadios.forEach(radio => {
+          radio.addEventListener('change', function () {
+            const selectedValue = this.value;
+          });
+
+          if (radiusMiles[0] && radio.value === radiusMiles[0]) {
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change'));
+          }
+        });
+      }
+
+      // if (sortOrder) {
+      //   const availabilityRadios = document.querySelectorAll('input[kckat="visit-type"]');
+      //   availabilityRadios.forEach(radio => {
+      //     if (radio.value.trim() === sortOrder[0]) {
+      //       radio.checked = true;
+      //       radio.dispatchEvent(new Event('change'));
+      //     }
+      //   });
+      // }
+
       fetchProviderProfiles();
     });
 
-    // Load more handler
-    document.getElementById('load-more-btn').addEventListener('click', () => {
-      fetchProviderProfiles(true);
-    });
   </script>
 </body>
 
