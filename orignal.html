@@ -3897,7 +3897,7 @@
         </div>
       </div>
     </div>
-    <div class="section_list_top is-api-ip">
+    <div class="section_list_top is-api-ip hide">
       <div id="active-tags" class="active-tags is-api-ip">
         <div fs-cmsfilter-element="tag-template" class="active-tag is-api-ip">
           <p fs-cmsfilter-element="tag-text"></p>
@@ -3912,7 +3912,7 @@
         </div>
       </div>
     </div>
-    <section class="section_list_bottom is-api-ip">
+    <section id="" class="section_list_bottom is-api-ip">
       <div class="w-layout-blockcontainer container-find is-api-ip w-container">
         <div id="dietitian-items-container" class="dietitian-items-container is-api-ip"></div>
         <div class="dietitian-item is-api-ip">
@@ -3928,9 +3928,6 @@
             </style>
           </div>
           <div class="hide is-api-ip w-embed"><input type="hidden" class="jetboost-list-item" value="" />
-
-            <div class="hidden-not-hidden"></div>
-            <div class="hidden-not-hidden"></div>
           </div>
           <div class="dietitian_card is-api-ip">
             <div class="dietitian_card-img-container test is-api-ip"><a href="#"
@@ -4632,6 +4629,7 @@
     ];
     let currenturlParams = new URLSearchParams(window.location.search);
 
+    // Store UTM parameters in localStorage
     utmParams.forEach((param) => {
       const value = currenturlParams.get(param);
       if (value) {
@@ -4639,23 +4637,24 @@
       }
     });
 
+    // Add UTM parameters to links
     function addUtmParamsInLinks() {
       const currentDomain = new URL(window.location.href);
       document.querySelectorAll('a[href]').forEach(link => {
         try {
           const href = link.getAttribute('href');
+          let updatedUrl;
+
           if (href.startsWith("/")) {
             updatedUrl = new URL(href, window.location.origin);
-          }
-          // Full URL
-          else if (href.startsWith("http")) {
+          } else if (href.startsWith("http")) {
             const tempUrl = new URL(href);
-            //if (tempUrl.hostname != currentDomain.hostname) return;
             if (!tempUrl.hostname.endsWith(".faynutrition.com") && tempUrl.hostname !== "faynutrition.com") return;
             updatedUrl = tempUrl;
           } else {
             return; // skip links like mailto:, tel:, etc.
           }
+
           const searchParams = new URLSearchParams(updatedUrl.search);
           utmParams.forEach(key => {
             const storedVal = localStorage.getItem(key);
@@ -4672,6 +4671,7 @@
       });
     }
 
+    // Initialize Finsweet CMS
     window.fsAttributes = window.fsAttributes || [];
     window.fsAttributes.push([
       "cmsload",
@@ -4682,10 +4682,12 @@
       },
     ]);
 
+    // Add UTM parameters on page load
     document.addEventListener("DOMContentLoaded", function () {
       addUtmParamsInLinks();
     });
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/artsci-studio/fay/nav.js"></script>
 
@@ -4696,25 +4698,23 @@
     addUtmParamsInLinks();
 
 
-    ///Popups
+    // Popup Management
     const nav = document.querySelector(".static-nav");
     const triggers = document.querySelectorAll(".popup-trigger");
     const popups = document.querySelectorAll(".mobile-filter-modal");
     let lastTrigger = null; // To save the last trigger element
 
-    // Event Listener for Opening Popups
+    // Event Listeners for Popups
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (event) => {
         const popupId = event.currentTarget.getAttribute("data-popup");
         const popup = document.getElementById(popupId);
-
         if (popup) {
           openPopup(popup, trigger);
         }
       });
     });
 
-    // Event Listener for Closing Popups
     popups.forEach((popup) => {
       const closeButton = popup.querySelectorAll(".close");
       if (closeButton && closeButton.length > 0) {
@@ -4723,7 +4723,6 @@
         });
       }
 
-      // Close popup when clicking outside the content
       popup.addEventListener("click", (event) => {
         if (event.target === popup) {
           closePopup(popup);
@@ -4746,7 +4745,7 @@
       popup.removeAttribute("inert");
       popup.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      nav.style.top = "-4.5rem";
+      // nav.style.top = "-4.5rem";
 
       // Focus on the first focusable element inside the popup
       const focusableElements = popup.querySelectorAll(
@@ -4786,6 +4785,7 @@
       }
     });
 
+    // Location and State Management
     const apiKey = "AIzaSyBvoUcGtPBjUewpNhFXpf_r6rue6cyVvnY";
     const zipInput = document.getElementById("zip-input");
     const zipInputMobile = document.getElementById("zip-input-mobile");
@@ -4811,18 +4811,22 @@
       addUtmParamsInLinks();
     };
 
-    function updateStateParam(newValue) {
+    function updateStateParam(newValue, userLocation = null) {
       const url = new URL(window.location.href);
-      if (newValue) {
+      if (newValue && userLocation != null) {
         url.searchParams.set('state', newValue);
+        const userLatLong = `${userLocation.lat},${userLocation.lng}`;
+        url.searchParams.set('location_coordinates', userLatLong);
       } else {
         url.searchParams.delete('state');
+        url.searchParams.delete('lat-lang');
       }
 
       window.history.replaceState({}, '', url);
+      fetchProviderProfiles();
     }
 
-
+    // Google Maps Integration
     function initMap() {
       const applyAutocomplete = (inputElement) => {
         const autocomplete = new google.maps.places.Autocomplete(inputElement, {
@@ -4841,6 +4845,7 @@
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng(),
             };
+
             for (const component of place.address_components) {
               if (component.types.includes("postal_code")) {
                 zipCode = component.short_name;
@@ -4857,9 +4862,6 @@
             } else if (state) {
               applyStateFilter(state, userLatLong);
             }
-
-            const filtersContainer = document.querySelector(".new-filters");
-            filtersContainer.style.pointerEvents = 'none'
           }
 
           var event = new Event("input", { bubbles: true });
@@ -4869,8 +4871,6 @@
         inputElement.addEventListener("input", function () {
           const input = this.value.trim();
           if (/^\d{5}$/.test(input)) {
-            const filtersContainer = document.querySelector(".new-filters");
-            filtersContainer.style.pointerEvents = 'none'
             checkStateByZipCode(input);
           } else {
             applyStateFilter(input);
@@ -4878,7 +4878,7 @@
 
           if (input === "") {
             const filtersContainer = document.querySelector(".new-filters");
-            filtersContainer.style.pointerEvents = 'none'
+            // filtersContainer.style.pointerEvents = 'none';
             clearState.click();
           }
         });
@@ -4905,7 +4905,7 @@
         zipInput.value = "";
         zipInputMobile.value = "";
         clearState.click();
-        clearStateSorting()
+        clearStateSorting();
       });
 
       function clearStateSorting() {
@@ -4921,9 +4921,9 @@
         if (selected) {
           selected.click();
         } else {
-          const originalItemsOrder = listInstance.originalItemsOrder
-          listInstance.items = originalItemsOrder;
-          listInstance.renderItems(originalItemsOrder);
+          // const originalItemsOrder = listInstance.originalItemsOrder
+          // listInstance.items = originalItemsOrder;
+          // listInstance.renderItems(originalItemsOrder);
         }
 
         updateStateParam('')
@@ -4957,151 +4957,259 @@
       }
     }
 
-
-
+    // Insurance Filter Management
     $(".filter-dropdown_list.is-insurance .w-dyn-item").click(function () {
       setTimeout(() => {
-        if ($(this).find('.filter_radio-button.is-insurance').hasClass("w--redirected-checked")) {
-          var labelText = $(this).find(".filter_radio-label").text();
+        const radio = $(this).find('.filter_radio-button.is-insurance');
+        if (radio.hasClass("w--redirected-checked")) {
+          const labelText = $(this).find(".filter_radio-label").text();
           $(".filter_tag-template.is-insurance")
             .text(labelText)
             .addClass("is-active");
+
+          const params = new URLSearchParams(window.location.search);
+          params.set("insurance", labelText);
+          const newUrl = `${window.location.pathname}?${params.toString()}`;
+          window.history.replaceState({}, '', newUrl);
+          fetchProviderProfiles();
         }
       }, 500);
-    })
+    });
 
-
+    $("#clear-insurance, #mobile-clear-insurance").click(function () {
+      clearInsurance();
+    });
 
     function clearInsurance() {
-      // Reset the text and class of the "insurance-label" element
-      const insuranceLabel = document.getElementById("insurance-label");
-      insuranceLabel.textContent = "Insurance";
-      insuranceLabel.classList.remove("is-active");
+      const params = new URLSearchParams(window.location.search);
+      params.delete("insurance");
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+
+      $(".filter_tag-template.is-insurance")
+        .text("Insurance")
+        .removeClass("is-active");
+
+      $(".filter_radio-button.is-insurance").removeClass("w--redirected-checked");
+      $(".w-dropdown").trigger("w-close");
+      $('body').removeClass("no-scroll");
+      $('[data-popup="insurance"]').hide();
+      fetchProviderProfiles();
     }
 
-    document
-      .getElementById("clear-trigger")
-      .addEventListener("click", function () {
-        // Click the "clear-all" button
-        document.getElementById("clear-all").click();
+    // Specialties Filter Management
+    $(".filter-dropdown_list.is-specialties .w-dyn-item, .filter_checkbox.is-specialty").click(function (e) {
+      e.preventDefault();
 
-        // Clear the zipInput and zipInputMobile fields
-        zipInput.value = "";
-        zipInputMobile.value = "";
+      const isCheckbox = $(this).hasClass('filter_checkbox');
+      const item = isCheckbox ? $(this).closest('.w-dyn-item') : $(this);
+      const checkboxDiv = isCheckbox ? $(this) : item.find('.filter_checkbox.is-specialty');
+      const checkboxInput = item.find('input[type="checkbox"]');
+      const specialtyValue = checkboxInput.attr('id');
 
-        const originalItemsOrder = listInstance.originalItemsOrder
-        listInstance.items = originalItemsOrder;
-        listInstance.renderItems(originalItemsOrder);
+      const isChecked = checkboxInput.prop('checked');
+      checkboxInput.prop('checked', !isChecked);
+      checkboxDiv.toggleClass('w--redirected-checked', !isChecked);
 
-        clearInsurance();
-        updateStateParam();
-      });
+      const params = new URLSearchParams(window.location.search);
+      const currentSpecialties = params.getAll('specialties');
 
+      if (!isChecked) {
+        if (!currentSpecialties.includes(specialtyValue)) {
+          params.append('specialties', specialtyValue);
+        }
+      } else {
+        const updatedSpecialties = currentSpecialties.filter(s => decodeURIComponent(s) !== specialtyValue);
+        params.delete('specialties');
+        updatedSpecialties.forEach(s => params.append('specialties', s));
+      }
+
+      const selectedCount = params.getAll('specialties').length;
+      $(".filter_tag-template.is-specialties")
+        .text(selectedCount > 0 ? `${selectedCount} Selected` : "Specialties")
+        .toggleClass("is-active", selectedCount > 0);
+
+      $('.specialties-number').text(`(${selectedCount})`);
+
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+      fetchProviderProfiles();
+    });
+
+    function clearSpecialties() {
+      const params = new URLSearchParams(window.location.search);
+      params.delete("specialties");
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+
+      $(".filter_tag-template.is-specialties")
+        .text("Specialties")
+        .removeClass("is-active");
+
+      $(".filter_checkbox.is-specialty").removeClass("w--redirected-checked");
+      $("input[type='checkbox'][name='checkbox-3']").prop("checked", false);
+
+      $(".w-dropdown").trigger("w-close");
+      $('body').removeClass("no-scroll");
+      $('[data-popup="specialties"]').hide();
+      $('.specialties-number').text('(0)');
+
+      fetchProviderProfiles();
+    }
+
+    // Modalities Filter Management
+    $(".filter-dropdown_list.is-modalities .w-dyn-item, .filter_checkbox.is-modality").click(function (e) {
+      e.preventDefault();
+
+      const isCheckbox = $(this).hasClass('filter_checkbox');
+      const item = isCheckbox ? $(this).closest('.w-dyn-item') : $(this);
+      const checkboxDiv = isCheckbox ? $(this) : item.find('.filter_checkbox.is-modality');
+      const checkboxInput = item.find('input[type="checkbox"]');
+      const modalityValue = checkboxInput.attr('id');
+
+      const isChecked = checkboxInput.prop('checked');
+      checkboxInput.prop('checked', !isChecked);
+      checkboxDiv.toggleClass('w--redirected-checked', !isChecked);
+
+      const params = new URLSearchParams(window.location.search);
+      const currentModalities = params.getAll('modalities');
+
+      if (!isChecked) {
+        if (!currentModalities.includes(modalityValue)) {
+          params.append('modalities', modalityValue);
+        }
+      } else {
+        const updatedModalities = currentModalities.filter(m => decodeURIComponent(m) !== modalityValue);
+        params.delete('modalities');
+        updatedModalities.forEach(m => params.append('modalities', m));
+      }
+
+      const selectedCount = params.getAll('modalities').length;
+      $(".filter_tag-template.is-modalities")
+        .text(selectedCount > 0 ? `${selectedCount} Selected` : "Modalities")
+        .toggleClass("is-active", selectedCount > 0);
+
+      $('.modalities-number').text(`(${selectedCount})`);
+
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+      fetchProviderProfiles();
+    });
+
+    function clearModalities() {
+      const params = new URLSearchParams(window.location.search);
+      params.delete("modalities");
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+
+      $(".filter_tag-template.is-modalities")
+        .text("Modalities")
+        .removeClass("is-active");
+
+      $(".filter_checkbox.is-modality").removeClass("w--redirected-checked");
+      $("input[type='checkbox'][name='checkbox-2']").prop("checked", false);
+
+      $(".w-dropdown").trigger("w-close");
+      $('body').removeClass("no-scroll");
+      $('.modalities-number').text('(0)');
+
+      fetchProviderProfiles();
+    }
+
+    // Clear Filters
+    $("#clear-modalities").click(function (e) {
+      e.preventDefault();
+      clearModalities();
+    });
+
+    $("#clear-specialties").click(function (e) {
+      e.preventDefault();
+      clearSpecialties();
+    });
+
+    ['clear-trigger', 'clear-more-filters-1'].forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('click', function () {
+          const baseUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, baseUrl);
+          fetchProviderProfiles();
+          clearSpecialties();
+          clearInsurance();
+          clearModalities();
+        });
+      }
+    });
+
+    // Form Handling
     Webflow.push(function () {
-      // Disable submitting form fields during development
       $("form").submit(function () {
         return false;
       });
     });
 
-
     $(".save").on("click", function (evt) {
       setTimeout(function () {
         $(".w-dropdown").trigger("w-close");
-      }, 300); //ms of time before action
+      }, 300);
     });
 
-
+    // Mobile Responsive Functions
     function moveDivOnMobile() {
-      // Get viewport width
-      const viewportWidth =
-        window.innerWidth || document.documentElement.clientWidth;
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const divToMove = document.getElementById("sort");
 
-      // If viewport width is less than or equal to the mobile breakpoint (e.g., 768px)
       if (viewportWidth <= 991) {
-        // Move the div to a different location in the DOM
         const newParent = document.getElementById("mobile-sort");
-        const divToMove = document.getElementById("sort");
         newParent.appendChild(divToMove);
       } else {
-        // If viewport width is greater than the mobile breakpoint, restore the original position
         const originalParent = document.getElementById("desktop-sort");
-        const divToMove = document.getElementById("sort");
         originalParent.appendChild(divToMove);
       }
     }
 
-    // Call the function initially
-    moveDivOnMobile();
-
-    // Add event listener for resize event to handle viewport changes
-    window.addEventListener("resize", moveDivOnMobile);
-
-    const getStateName = (state) => {
-      const stateElements = document.querySelectorAll(".count-state");
-      for (const stateElement of stateElements) {
-        const stateName = stateElement.getAttribute("state-name");
-        const stateLabel = stateElement
-          .querySelector(".checkbox-label")
-          .textContent?.trim();
-        if (stateName === state || stateLabel == state) {
-          // const radio = stateElement.querySelector('.state-checkbox');
-          // radio.click();
-
-          return stateElement
-            .querySelector(".checkbox-label")
-            .textContent?.trim();
-          break;
-        }
-      }
-    };
-
-    function updateStateFilterFromQuery() {
-      var inputText = sessionStorage.getItem("inputText");
-      if (inputText !== null && inputText !== undefined) {
-        // Populate the input with the stored value from homepage
-        zipInput.value = inputText;
-        zipInputMobile.value = inputText;
-      } else {
-        // Populate with state value if set
-        var urlParams = new URLSearchParams(window.location.search);
-        var urlValue = urlParams.get("state");
-        if (urlValue) {
-          urlValue = urlValue.replace(/-/g, " ");
-          urlValue = urlValue.replace(/\b\w/g, function (match) {
-            return match.toUpperCase();
-          });
-
-          const stateLabel = getStateName(urlValue);
-          zipInput.value = stateLabel ?? urlValue;
-        }
-      }
-      if (zipInput.value !== "") {
-        checkStateByAddress(zipInput.value);
-      } else {
-        // var event = new Event("input", { bubbles: true });
-        // zipInput.dispatchEvent(event);
-      }
-      sessionStorage.removeItem("inputText");
+    function handleSortChange(value) {
+      const params = new URLSearchParams(window.location.search);
+      params.set('sort_order', value);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl);
+      fetchProviderProfiles();
     }
 
-    document
-      .querySelectorAll('input[kckat="visit-type"]')
-      .forEach(function (radio) {
-        radio.addEventListener("change", function () {
-          if (this.checked) {
-            const label = this.closest("label").textContent.trim();
-            document.getElementById("visit-label").textContent = label;
-            document.getElementById("visit-label").style.color = "#34353e";
-          }
+    function setupSortListeners() {
+      const sortOptions = document.querySelectorAll('.filter-dropdown_radio');
+      sortOptions.forEach(option => {
+        option.addEventListener('click', function (e) {
+          e.preventDefault();
+          const value = this.textContent.trim();
+          handleSortChange(value);
         });
       });
+    }
 
-    document.getElementById("next").addEventListener("click", function () {
-      setTimeout(() => {
-        addUtmParamsInLinks();
-      }, 300);
+    moveDivOnMobile();
+    setupSortListeners();
+    window.addEventListener("resize", moveDivOnMobile);
+
+    // Visit Type Management
+    document.querySelectorAll('input[kckat="visit-type"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        if (this.checked) {
+          const label = this.closest("label").textContent.trim();
+          const value = this.value.trim();
+          document.getElementById("visit-label").textContent = label;
+          document.getElementById("visit-label").style.color = "#34353e";
+
+          const params = new URLSearchParams(window.location.search);
+          params.set('availability_type', value);
+          const newUrl = `${window.location.pathname}?${params.toString()}`;
+          window.history.replaceState({}, '', newUrl);
+          fetchProviderProfiles();
+        }
+      });
     });
+
+
   </script>
 
   <script>
@@ -5164,6 +5272,340 @@
       canonicalLink.rel = "canonical";
       canonicalLink.href = canonicalUrl;
       document.head.appendChild(canonicalLink);
+    });
+  </script>
+
+  <script>
+    const distanceRadios = document.querySelectorAll('input[type="radio"][name="distance"]');
+    distanceRadios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        const selectedValue = this.value;
+        const params = new URLSearchParams(window.location.search);
+        params.set('radius_miles', selectedValue);
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.replaceState({}, '', newUrl);
+        fetchProviderProfiles();
+      });
+    });
+
+    // Core functionality for provider profile management
+    const API_URL = 'https://9ja7n2qnce.execute-api.us-east-1.amazonaws.com/prod/fay-api/provider-profiles';
+
+    // State management
+    let continuationToken = null;
+    let currentPage = 0;
+    let tokenHistory = [null];
+
+    // Filter management
+    function getFiltersFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const filters = {};
+
+      // Insurance filter
+      const insurance = urlParams.getAll('insurance');
+      if (insurance.length > 0) filters.insurance = insurance;
+
+      // Location filters
+      const locationUSState = urlParams.get('state');
+      if (locationUSState) {
+        filters.state = locationUSState;
+        const locationCoordinates = urlParams.get('location_coordinates');
+        if (locationCoordinates) filters.location_coordinates = locationCoordinates;
+      }
+
+      // Specialty and modality filters
+      const specialties = urlParams.getAll('specialties').map(s => s.toLowerCase());
+      if (specialties.length > 0) filters.specialties = specialties;
+
+      const modalities = urlParams.getAll('modalities').map(m => m.toLowerCase());
+      if (modalities.length > 0) filters.modalities = modalities;
+
+      // Availability and sort filters
+      const availabilityType = urlParams.getAll('availability_type').map(m => m.toLowerCase());
+      if (availabilityType.length > 0) filters.availabilityType = availabilityType;
+
+      const sortOrder = urlParams.getAll('sort_order').map(m => m.toLowerCase());
+      if (sortOrder.length > 0) filters.sortOrder = sortOrder;
+
+      // Distance filter
+      const radiusMiles = urlParams.get('radius_miles');
+      if (radiusMiles) filters.radiusMiles = radiusMiles;
+
+      return filters;
+    }
+
+    // Provider profile fetching and rendering
+    async function fetchProviderProfiles(token = null) {
+      try {
+
+        const container = document.getElementById('dietitian-items-container');
+        container.innerHTML = '';
+
+        const paginationWrapper = document.querySelector('.pagination_buttons');
+        if (paginationWrapper) {
+          paginationWrapper.classList.add('hide');
+        }
+        const loader = document.querySelector('[fs-cmsload-element="loader"]');
+        const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
+
+        // if (emptyState && loader) {
+        //     // Hide the entire emptyState first
+        //     emptyState.style.display = 'block';
+
+        //     // Loop through all child elements inside emptyState
+        //     [...emptyState.children].forEach(child => {
+        //         if (child === loader) {
+        //             child.style.display = 'block'; // Show only loader
+        //         } else {
+        //             child.style.display = 'none'; // Hide everything else
+        //         }
+        //     });
+        // }
+
+        const filters = getFiltersFromURL();
+        const params = new URLSearchParams();
+
+        // Add filters to params
+        if (filters.insurance) params.set('insurance', filters.insurance);
+        if (filters.state) {
+          params.append('location_us_state', filters.state);
+          params.append('supported_us_states', filters.state);
+          if (filters.location_coordinates) params.append('location_coordinates', filters.location_coordinates);
+        }
+        if (filters.radiusMiles) params.append('radius_miles', filters.radiusMiles);
+        if (filters.specialties) filters.specialties.forEach(s => params.append('specialties', s));
+        if (filters.modalities) filters.modalities.forEach(m => params.append('modalities', m));
+
+        // Handle availability types
+        const availabilityMap = {
+          'in-person': ['in_person'],
+          'video-only': ['virtual'],
+          'video-in-person': ['in_person', 'virtual'],
+        };
+        if (filters.availabilityType) {
+          filters.availabilityType.forEach(type => {
+            const values = availabilityMap[type];
+            if (values) values.forEach(v => params.append('availability_type', v));
+          });
+        }
+
+        // Handle sort order
+        const sortOrderMap = {
+          'recommended': 'ranking',
+          'availability': 'availability',
+          'best health outcomes': 'outcomes'
+        };
+        if (filters.sortOrder) {
+          filters.sortOrder.forEach(order => {
+            const value = sortOrderMap[order];
+            if (value) params.append('sort_order', value);
+          });
+        }
+
+        // Handle pagination
+        if (token) {
+          params.append('continuation_token', token);
+        } else {
+          currentPage = 0;
+        }
+        // const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
+        // if (loader) loader.style.display = 'block';
+        // if (emptyState) emptyState.style.display = 'none';
+
+        // Fetch data
+        const response = await fetch(`${API_URL}?${params.toString()}`);
+        if (response.status === 422) {
+          if (emptyState) emptyState.style.display = 'block';
+          if (loader) loader.style.display = 'none';
+          return;
+        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        if (data.items.length === 0) {
+          if (emptyState) emptyState.style.display = 'block';
+          if (loader) loader.style.display = 'none';
+          return;
+        }
+        renderProviderProfiles(data);
+        updatePagination(data.continuation_token);
+
+      } catch (error) {
+        console.error('Error fetching provider profiles:', error);
+        // Show error state if needed
+      }
+    }
+
+    // Render provider profiles
+    function renderProviderProfiles(data) {
+      const container = document.getElementById('dietitian-items-container');
+      const template = document.getElementsByClassName('dietitian-item');
+      if (!container || !template.length) return;
+
+      container.innerHTML = '';
+
+      data.items.forEach(provider => {
+        const card = template[0].cloneNode(true);
+
+        // Set basic info
+        card.querySelector('.jetboost-list-item').value = provider.slug;
+        card.querySelector('.h3').textContent = provider.full_name_and_credentials;
+
+        // Set image
+        const image = card.querySelector('.dietitian_img');
+        if (image) {
+          image.src = provider.photo_url;
+          image.alt = provider.full_name_and_credentials;
+        }
+
+        // Set insurance info
+        const ins = card.querySelector('.insurances-text');
+        if (ins && provider.insurance_accepted) {
+          ins.textContent = provider.insurance_accepted.join(', ');
+        }
+
+        // Set specialties
+        const spec = card.querySelector('.specialties-text');
+        if (spec && provider.specialties) {
+          spec.textContent = provider.specialties.map(s => s.name).join(', ');
+        }
+
+        // Set states
+        const states = card.querySelector('.states-text');
+        if (states && provider.supported_us_states) {
+          states.textContent = provider.supported_us_states.join(', ');
+        }
+
+        // Set modalities
+        const modalitiesList = card.querySelector('.modalities_list');
+        if (modalitiesList) {
+          modalitiesList.querySelectorAll('.modality_item').forEach(i => i.remove());
+          if (provider.modalities) {
+            provider.modalities.forEach(modality => {
+              const item = document.createElement('div');
+              item.className = 'modality_item is-api-ip';
+              const emojiDiv = document.createElement('div');
+              emojiDiv.className = 'modality_emoji is-api-ip';
+              emojiDiv.textContent = '❓';
+              const nameDiv = document.createElement('div');
+              nameDiv.textContent = modality.name;
+              item.appendChild(emojiDiv);
+              item.appendChild(nameDiv);
+              modalitiesList.appendChild(item);
+            });
+          }
+        }
+
+        // Set availability
+        const visitsWrap = card.querySelector('.dietitian_visits-wrap');
+        if (visitsWrap) {
+          const outerVisitBlock = visitsWrap.querySelector('.dietitian_visit');
+          const innerVisitBlock = outerVisitBlock?.querySelector('.dietitian_visit');
+          const availability = provider.availability_types || [];
+
+          if (!availability.includes('virtual')) {
+            outerVisitBlock?.remove();
+          } else if (!availability.includes('in_person') && innerVisitBlock) {
+            innerVisitBlock.remove();
+          }
+        }
+
+        // Set links
+        const bookNow = card.querySelector('.btn.cc-mobile-50');
+        const viewProfile = card.querySelector('.btn.cc-secondary');
+        if (bookNow && provider.booking_url) bookNow.href = provider.booking_url;
+        if (viewProfile && provider.profile_url) viewProfile.href = provider.profile_url;
+
+        card.style.display = 'block';
+        container.appendChild(card);
+      });
+
+      // Update UI elements
+      const countElement = document.querySelector('.dieitian-count .bold-span');
+      if (countElement) countElement.textContent = data.total;
+
+      const sectionListTopElements = document.getElementsByClassName('section_list_top');
+      Array.from(sectionListTopElements).forEach(el => el.classList.remove('hide'));
+
+      // Hide loading states
+      const loader = document.querySelector('[fs-cmsload-element="loader"]');
+      const emptyState = document.querySelector('[fs-cmsload-element="empty"]');
+      if (loader) loader.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Update pagination UI
+    function updatePagination(newToken) {
+      continuationToken = newToken || null;
+      const prevBtn = document.getElementById('pagination-prev');
+      const nextBtn = document.getElementById('pagination-next');
+      const paginationWrapper = document.querySelector('.pagination_buttons');
+
+      if (prevBtn) {
+        if (currentPage === 0) {
+          prevBtn.classList.add('hide');
+        } else {
+          prevBtn.classList.remove('hide');
+        }
+      }
+
+      if (nextBtn) {
+        if (continuationToken) {
+          nextBtn.classList.remove('hide');
+        } else {
+          nextBtn.classList.add('hide');
+        }
+      }
+
+      if (paginationWrapper) {
+        paginationWrapper.classList.remove('hide');
+      }
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pagination listeners
+      const nextBtn = document.getElementById('pagination-next');
+      const prevBtn = document.getElementById('pagination-prev');
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (continuationToken) {
+            currentPage++;
+            tokenHistory[currentPage] = continuationToken;
+            fetchProviderProfiles(continuationToken);
+          }
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (currentPage > 0) {
+            currentPage--;
+            const prevToken = tokenHistory[currentPage];
+            fetchProviderProfiles(prevToken);
+          }
+        });
+      }
+
+      // Distance filter listeners
+      const distanceRadios = document.querySelectorAll('input[type="radio"][name="distance"]');
+      distanceRadios.forEach(radio => {
+        radio.addEventListener('change', function () {
+          const params = new URLSearchParams(window.location.search);
+          params.set('radius_miles', this.value);
+          window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+          fetchProviderProfiles();
+        });
+      });
+
+      // Initial load
+      fetchProviderProfiles();
     });
   </script>
 </body>
