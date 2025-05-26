@@ -2798,7 +2798,7 @@
                                 <div data-hover="false" data-delay="0"
                                     class="find-dropdown hide-md is-api-ip w-dropdown">
                                     <div class="filter-dropdown is-sm is-api-ip w-dropdown-toggle">
-                                        <div id="visit-label" class="filter_tag-template is-modalities trunc is-api-ip">
+                                        <div id="visit-label" class="filter_tag-template is-visittype trunc is-api-ip">
                                             Visit type</div>
                                         <div class="dropdown-chevron is-new-find is-api-ip w-embed"><svg width=" 100%"
                                                 height=" 100%" viewBox="0 0 16 16" fill="none"
@@ -2809,7 +2809,7 @@
                                                     stroke-linejoin="round" />
                                             </svg></div>
                                     </div>
-                                    <nav class="filter-dropdown_list is-modalities is-api-ip w-dropdown-list">
+                                    <nav class="filter-dropdown_list is-visittype is-api-ip w-dropdown-list">
                                         <div>
                                             <div class="filter_radio-list is-api-ip"><label
                                                     class="filter_radio-button-field is-api-ip w-radio">
@@ -5730,13 +5730,14 @@
             popup.setAttribute("aria-hidden", "true");
             document.body.style.overflow = "";
 
+            // Return focus to the last trigger
             if (lastTrigger) {
                 lastTrigger.focus();
-                lastTrigger = null;
+                lastTrigger = null; // Clear after returning focus
             }
         }
 
-        // Close Popup on Escape Key
+        // Close Popup on Esc Key
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
                 popups.forEach((popup) => {
@@ -5837,7 +5838,7 @@
 
                     if (input === "") {
                         const filtersContainer = document.querySelector(".new-filters");
-                        filtersContainer.style.pointerEvents = 'none';
+                        // filtersContainer.style.pointerEvents = 'none';
                         clearState.click();
                     }
                 });
@@ -5866,6 +5867,28 @@
                 clearState.click();
                 clearStateSorting();
             });
+
+            function clearStateSorting() {
+                let selected = null;
+                document
+                    .querySelectorAll(".find-dropdown.is-sort .filter-dropdown_radio")
+                    .forEach(function (e) {
+                        if (e.classList.contains("w--current")) {
+                            selected = e;
+                        }
+                    });
+
+                if (selected) {
+                    selected.click();
+                } else {
+                    // const originalItemsOrder = listInstance.originalItemsOrder
+                    // listInstance.items = originalItemsOrder;
+                    // listInstance.renderItems(originalItemsOrder);
+                }
+
+                updateStateParam('')
+            }
+
         }
 
         function checkStateByZipCode(zipCode) {
@@ -5918,7 +5941,7 @@
             clearInsurance();
         });
 
-        function clearInsurance() {
+        function clearInsurance(refresh = true) {
             const params = new URLSearchParams(window.location.search);
             params.delete("insurance");
             const newUrl = `${window.location.pathname}?${params.toString()}`;
@@ -5932,7 +5955,10 @@
             $(".w-dropdown").trigger("w-close");
             $('body').removeClass("no-scroll");
             $('[data-popup="insurance"]').hide();
-            fetchProviderProfiles();
+
+            if (refresh) {
+                fetchProviderProfiles();
+            }
         }
 
         // Specialties Filter Management
@@ -5974,7 +6000,7 @@
             fetchProviderProfiles();
         });
 
-        function clearSpecialties() {
+        function clearSpecialties(refresh = true) {
             const params = new URLSearchParams(window.location.search);
             params.delete("specialties");
             const newUrl = `${window.location.pathname}?${params.toString()}`;
@@ -5992,7 +6018,9 @@
             $('[data-popup="specialties"]').hide();
             $('.specialties-number').text('(0)');
 
-            fetchProviderProfiles();
+            if (refresh) {
+                fetchProviderProfiles();
+            }
         }
 
         // Modalities Filter Management
@@ -6034,7 +6062,7 @@
             fetchProviderProfiles();
         });
 
-        function clearModalities() {
+        function clearModalities(refresh = true) {
             const params = new URLSearchParams(window.location.search);
             params.delete("modalities");
             const newUrl = `${window.location.pathname}?${params.toString()}`;
@@ -6051,7 +6079,9 @@
             $('body').removeClass("no-scroll");
             $('.modalities-number').text('(0)');
 
-            fetchProviderProfiles();
+            if (refresh) {
+                fetchProviderProfiles();
+            }
         }
 
         // Clear Filters
@@ -6072,13 +6102,45 @@
                     const baseUrl = window.location.origin + window.location.pathname;
                     window.history.replaceState({}, document.title, baseUrl);
                     fetchProviderProfiles();
-                    clearSpecialties();
-                    clearInsurance();
-                    clearModalities();
-                    clearState();
+                    clearSpecialties(false);
+                    clearInsurance(false);
+                    clearModalities(false);
+                    clearAvailabilityType();
+                    clearSort();
                 });
             }
         });
+
+
+        function clearAvailabilityType() {
+            // Uncheck all visit type radio buttons and remove classes
+            const radioButtons = document.querySelectorAll('input[type="radio"][name="type"]');
+            radioButtons.forEach(radio => {
+                radio.checked = false;
+                const wrapper = radio.closest('label');
+                if (wrapper) {
+                    wrapper.classList.remove('is-checked', 'is-active');
+                    const visualDiv = wrapper.querySelector('.filter_radio-button');
+                    if (visualDiv) {
+                        visualDiv.classList.remove('w--redirected-checked');
+                    }
+                }
+            });
+
+            const visitLabel = document.getElementById('visit-label');
+            if (visitLabel) {
+                visitLabel.textContent = 'Visit type';
+            }
+        }
+
+        function clearSort() {
+            const sortLabel = document.querySelector('.filter_tag-template.is-sort');
+            if (sortLabel) {
+                sortLabel.textContent = 'Sort';
+            }
+        }
+
+
 
         // Form Handling
         Webflow.push(function () {
@@ -6093,7 +6155,6 @@
             }, 300);
         });
 
-        // Mobile Responsive Functions
         function moveDivOnMobile() {
             const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
             const divToMove = document.getElementById("sort");
@@ -6110,6 +6171,10 @@
         function handleSortChange(value) {
             const params = new URLSearchParams(window.location.search);
             params.set('sort_order', value);
+            const sortLabel = document.querySelector('.filter_tag-template.is-sort');
+            if (sortLabel) {
+                sortLabel.textContent = value;
+            }
             const newUrl = `${window.location.pathname}?${params.toString()}`;
             window.history.replaceState({}, '', newUrl);
             fetchProviderProfiles();
@@ -6272,11 +6337,9 @@
 
             return filters;
         }
-
-        // Provider profile fetching and rendering
+        let isFetchingProfiles = false
         async function fetchProviderProfiles(token = null) {
             try {
-
                 const container = document.getElementById('dietitian-items-container');
                 container.innerHTML = '';
 
@@ -6361,7 +6424,7 @@
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
                 const data = await response.json();
-                 if (data.items.length === 0) {
+                if (data.items.length === 0) {
                     if (emptyState) emptyState.style.display = 'block';
                     if (loader) loader.style.display = 'none';
                     return;
@@ -6452,8 +6515,13 @@
                 // Set links
                 const bookNow = card.querySelector('.btn.cc-mobile-50');
                 const viewProfile = card.querySelector('.btn.cc-secondary');
+                const viewProfile1 = card.querySelector('.dietitian_card-link-overlay');
+                const viewProfile2 = card.querySelector('.u-no-underline');
+
                 if (bookNow && provider.booking_url) bookNow.href = provider.booking_url;
                 if (viewProfile && provider.profile_url) viewProfile.href = provider.profile_url;
+                if (viewProfile1 && provider.profile_url) viewProfile1.href = provider.profile_url;
+                if (viewProfile2 && provider.profile_url) viewProfile2.href = provider.profile_url;
 
                 card.style.display = 'block';
                 container.appendChild(card);
@@ -6543,9 +6611,141 @@
                 });
             });
 
+            setTimeout(() => {
+                applyPreselectedValues();
+            }, 1000); // Delay to ensure all elements are loaded
+
+
             // Initial load
             fetchProviderProfiles();
         });
+
+        function applyPreselectedValues() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Apply insurance filter
+            const insurance = urlParams.get('insurance');
+
+            if (insurance) {
+                // Get all labels
+                const labels = document.querySelectorAll('.filter_radio-label.is-api-ip');
+
+                labels.forEach(label => {
+                    const labelText = label.textContent.trim().toLowerCase();
+                    if (labelText === insurance.toLowerCase()) {
+                        const input = label.closest('label').querySelector('input[type="radio"]');
+                        const customRadio = label.closest('label').querySelector('.filter_radio-button');
+
+                        if (input) {
+                            input.checked = true;
+                            input.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+
+                        if (customRadio) {
+                            customRadio.click();
+                        }
+                    }
+                });
+            }
+
+            // Apply specialties filter based on URL params
+            const specialties = urlParams.getAll('specialties');
+
+            // if (specialties.length > 0) {
+            //     const labels = document.querySelectorAll('.filter_checkbox-label.is-api-ip');
+
+            //     labels.forEach(label => {
+            //         const labelText = label.textContent.trim().toLowerCase();
+
+            //         specialties.forEach(specialty => {
+            //             if (labelText === specialty.trim().toLowerCase()) {
+            //                 const checkboxDiv = label.closest('label').querySelector('.filter_checkbox.is-specialty');
+
+            //                 if (checkboxDiv) {
+            //                     // $(checkboxDiv).trigger('click');
+            //                 }
+            //             }
+            //         });
+            //     });
+            // }
+
+
+
+            // Apply modalities filter
+            // Apply modalities filter from URL params
+            const modalities = urlParams.getAll('modalities');
+
+            // if (modalities.length > 0) {
+            //     const labels = document.querySelectorAll('.filter_checkbox-label.is-api-ip');
+
+            //     labels.forEach(label => {
+            //         const labelText = label.textContent.trim().toLowerCase();
+
+            //         modalities.forEach(modality => {
+            //             if (labelText === modality.trim().toLowerCase()) {
+            //                 const checkboxDiv = label.closest('label').querySelector('.filter_checkbox.is-modality');
+
+            //                 if (checkboxDiv) {
+            //                     $(checkboxDiv).trigger('click');  
+            //                 }
+            //             }
+            //         });
+            //     });
+            // }
+
+
+            // Apply availability type filter
+            const availabilityType = urlParams.getAll('availability_type');
+            if (availabilityType.length > 0) {
+                availabilityType.forEach(type => {
+                    const radioInput = document.querySelector(`input[type="radio"][value="${type}"]`);
+                    if (radioInput && !radioInput.checked) {
+                        // Mark radio as checked
+                        radioInput.checked = true;
+
+                        const wrapper = radioInput.closest('label');
+                        if (wrapper) {
+                            // Add classes to label
+                            wrapper.classList.add('is-checked', 'is-active');
+
+                            // Add visual selected class
+                            const visualDiv = wrapper.querySelector('.filter_radio-button');
+                            if (visualDiv) {
+                                visualDiv.classList.add('w--redirected-checked');
+                            }
+
+                            // Update visit label text
+                            const labelText = wrapper.querySelector('.filter_radio-label')?.textContent.trim();
+                            if (labelText) {
+                                const visitLabel = document.getElementById('visit-label');
+                                if (visitLabel) {
+                                    visitLabel.textContent = labelText;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const sortValue = urlParams.get('sort_order');
+            if (sortValue) {
+                const dropdownToggle = document.querySelector('.filter_tag-template.is-sort');
+                if (dropdownToggle) {
+                    dropdownToggle.textContent = sortValue;
+
+                }
+            }
+
+
+            // Apply distance filter
+            const radiusMiles = urlParams.get('radius_miles');
+            if (radiusMiles) {
+                const distanceOption = document.querySelector(`input[type="radio"][name="distance"][value="${radiusMiles}"]`);
+                if (distanceOption) {
+                    distanceOption.checked = true;
+                }
+            }
+        }
     </script>
 </body>
 
