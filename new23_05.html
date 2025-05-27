@@ -5730,7 +5730,7 @@
             popup.removeAttribute("inert");
             popup.setAttribute("aria-hidden", "false");
             document.body.style.overflow = "hidden";
-            nav.style.top = "-4.5rem";
+            // nav.style.top = "-4.5rem";
 
             const focusableElements = popup.querySelectorAll(
                 "a, button, input, select, textarea"
@@ -5955,12 +5955,41 @@
                         .addClass("is-active");
 
                     const params = new URLSearchParams(window.location.search);
+                    params.set('insurance', labelText);
                     const newUrl = `${window.location.pathname}?${params.toString()}`;
                     window.history.replaceState({}, '', newUrl);
                     fetchProviderProfiles();
                 }
             }, 500);
         });
+
+        // Insurance Filter Radio Button Change Event for mobile
+        // $('.filter-dropdown_list.is-insurance input[type="radio"]').change(function () {
+        //     // Remove active class from all
+        //     $('.filter_radio-button-field.is-api-ip').removeClass('is-active');
+
+        //     const selectedRadio = $(this);
+        //     const labelText = selectedRadio.closest('label').find('.filter_radio-label').text();
+
+        //     // Add active to the selected radio's parent
+        //     selectedRadio.closest('.filter_radio-button-field').addClass('is-active');
+
+        //     // Update tag template
+        //     $(".filter_tag-template.is-insurance")
+        //         .text(labelText)
+        //         .addClass("is-active");
+
+        //     // Update query params
+        //     const params = new URLSearchParams(window.location.search);
+        //     params.set('insurance', labelText); // set or replace
+
+        //     const newUrl = `${window.location.pathname}?${params.toString()}`;
+        //     window.history.replaceState({}, '', newUrl);
+
+        //     // Fetch data
+        //     // fetchProviderProfiles();
+        // });
+
 
         $("#clear-insurance, #mobile-clear-insurance").click(function () {
             clearInsurance();
@@ -6739,6 +6768,7 @@
             fetchProviderProfiles();
         });
 
+        // pre selected vlaues
         function applyPreselectedValues() {
             const urlParams = new URLSearchParams(window.location.search);
 
