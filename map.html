@@ -42,9 +42,7 @@
                     n = {
                         __cs: t
                     }
-
                     ;
-
                 ["show",
                     "hide",
                     "isVisible",
@@ -760,11 +758,7 @@
                                     <div>Oops ! Something went wrong while submitting the form.</div>
                                 </div>
                             </div>
-                            <div class="map-canvas"><img
-                                    src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9f_map.avif"
-                                    loading="lazy" sizes="(max-width: 2688px) 100vw, 2688px"
-                                    srcset="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9f_map.avif 500w, https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9f_map.avif 800w, https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9f_map.avif 1080w, https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9f_map.avif 2688w"
-                                    alt="" class="map-img" />
+                            <div class="map-canvas" id="map-canvas">
                                 <div class="map-canvas_popup">
                                     <div class="map-popup_split">
                                         <div class="ts-p--big">Solved Story #0001</div><img
@@ -786,8 +780,7 @@
                                             <div class="map-popup_location">Location</div><a href="#"
                                                 class="icon-link w-inline-block">
                                                 <div class="icon-link_icon w-embed"><svg width="16" height="17"
-                                                        viewBox="0 0 16 17" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <g clip-path="url(#clip0_3023_73395)">
                                                             <path
                                                                 d="M14 7.1665C14 11.8332 8 15.8332 8 15.8332C8 15.8332 2 11.8332 2 7.1665C2 5.57521 2.63214 4.04908 3.75736 2.92386C4.88258 1.79864 6.4087 1.1665 8 1.1665C9.5913 1.1665 11.1174 1.79864 12.2426 2.92386C13.3679 4.04908 14 5.57521 14 7.1665Z"
@@ -826,22 +819,7 @@
                                                 src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eba2_icon-link.svg"
                                                 loading="lazy" alt="" class="map-popup_share-icon" /></a></div>
                                 </div>
-                                <div class="map-controls_wr">
-                                    <div class="map-controls_block">
-                                        <div class="map-controls_btn"><img
-                                                src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9c_NavigationArrow.svg"
-                                                loading="lazy" alt="" class="map-controls_icon" /></div>
-                                    </div>
-                                    <div class="map-controls_block">
-                                        <div class="map-controls_btn"><img
-                                                src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9e_icon-plus.svg"
-                                                loading="lazy" alt="" class="map-controls_icon" /></div>
-                                        <div class="map-controls_divider"></div>
-                                        <div class="map-controls_btn"><img
-                                                src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eb9d_icon-minus.svg"
-                                                loading="lazy" alt="" class="map-controls_icon" /></div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -999,6 +977,102 @@
             $('#State, #Region').on('change', toggleMapFilter);
         });
     </script>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
+
+        const usaBounds = [
+            [-125.0011, 24.9493], // SW corner
+            [-66.9326, 49.5904]   // NE corner
+        ];
+
+        const map = new mapboxgl.Map({
+            container: 'map-canvas',
+            style: 'mapbox://styles/mapbox/light-v11',
+            projection: 'mercator',
+            center: [-98.5795, 39.8283],
+            zoom: 4,
+            maxBounds: usaBounds
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+        map.setMinZoom(2);
+        map.setMaxZoom(10);
+        map.dragRotate.disable();
+        map.touchZoomRotate.disableRotation();
+
+        map.on('load', () => {
+            fetch('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
+                .then(res => res.json())
+                .then(data => {
+
+                    map.addSource('earthquakes', {
+                        type: 'geojson',
+                        data: {
+                            type: 'FeatureCollection',
+                            features: data.features
+                        },
+                        cluster: true,
+                        clusterMaxZoom: 10,
+                        clusterRadius: 50
+                    });
+
+                    // Cluster circles
+                    map.addLayer({
+                        id: 'clusters',
+                        type: 'circle',
+                        source: 'earthquakes',
+                        filter: ['has', 'point_count'],
+                        paint: {
+                            'circle-color': [
+                                'step',
+                                ['get', 'point_count'],
+                                '#51bbd6', 20,
+                                '#f1f075', 50,
+                                '#f28cb1'
+                            ],
+                            'circle-radius': [
+                                'step',
+                                ['get', 'point_count'],
+                                15, 20,
+                                20, 50,
+                                25
+                            ]
+                        }
+                    });
+
+                    // Cluster count text
+                    map.addLayer({
+                        id: 'cluster-count',
+                        type: 'symbol',
+                        source: 'earthquakes',
+                        filter: ['has', 'point_count'],
+                        layout: {
+                            'text-field': '{point_count_abbreviated}',
+                            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                            'text-size': 12
+                        }
+                    });
+
+                    // Unclustered points
+                    map.addLayer({
+                        id: 'unclustered-point',
+                        type: 'circle',
+                        source: 'earthquakes',
+                        filter: ['!', ['has', 'point_count']],
+                        paint: {
+                            'circle-color': '#ff5500',
+                            'circle-radius': 6,
+                            'circle-stroke-width': 1,
+                            'circle-stroke-color': '#fff'
+                        }
+                    });
+                });
+        });
+    </script>
+
 </body>
 
 </html>
