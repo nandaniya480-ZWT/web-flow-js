@@ -2086,6 +2086,173 @@ a,
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const region = urlParams.get('region');
+            const state = urlParams.get('state');
+
+            // map controller buttons
+            document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
+            document.getElementById('zoom-out').addEventListener('click', () => map.zoomOut());
+            document.getElementById('locate-me-btn').addEventListener('click', () => {
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser.');
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lng = position.coords.longitude;
+                        const lat = position.coords.latitude;
+                        map.flyTo({
+                            center: [lng, lat],
+                            zoom: 12,
+                            speed: 1.2,
+                            curve: 1.5,
+                            essential: true
+                        });
+                        new mapboxgl.Marker({ color: '#007aff' })
+                            .setLngLat([lng, lat])
+                            .addTo(map);
+                    },
+                    error => {
+                        alert('Unable to retrieve your location.');
+                        console.error(error);
+                    }
+                );
+            });
+
+            $('[fs-combobox-element="clear"]').on('click', () => {
+                $('#States-Search').val('');
+                $('#States').val('All States').trigger('change');
+
+                const url = new URL(window.location.href);
+                url.searchParams.delete('state');
+                history.replaceState({}, '', url);
+
+                const query = getFilterParams();
+                updateUrlWithFilters(query);
+                initializeMapWithClusters();
+            });
+
+            $('.map-filter_right .button.is-secondary.is-nav.is-white').on('click', function (e) {
+                e.preventDefault();
+                const currentUrl = window.location.href;
+
+                const textarea = document.createElement('textarea');
+                textarea.value = currentUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+
+                const buttonText = $(this).find('div');
+                const originalText = buttonText.text();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        buttonText.text('Copied!');
+                        setTimeout(() => {
+                            buttonText.text(originalText);
+                        }, 2000);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+                document.body.removeChild(textarea);
+            });
+
+
+            $('.map-popup_close').on('click', () => {
+                closePopup();
+                if (map?.getSource('highlight-point')) {
+                    map.getSource('highlight-point').setData({
+                        type: 'FeatureCollection',
+                        features: []
+                    });
+                }
+            });
+
+            if (region) {
+                $('#RegionRadio').prop('checked', true).trigger('change');
+                showRegion(region);
+            } else if (state) {
+                $('#StateRadio').prop('checked', true).trigger('change');
+                showState(state);
+            } else {
+                $('#RegionRadio').prop('checked', true).trigger('change');
+                showRegion();
+            }
+
+            initializeMapWithClusters();
+
+
+            $('#State, #Region').on('change', function () {
+                const selected = this.value;
+                if (selected === 'Region') {
+                    showRegion();
+                    updateURLParam('state', '');
+                } else if (selected === 'State') {
+                    showState();
+                    updateURLParam('region', '');
+                }
+                initializeMapWithClusters();
+            });
+
+            $('#Regions').on('change', function () {
+                if (this.value === 'All Regions') {
+                    updateURLParam('region', '');
+                } else {
+                    updateURLParam('region', '');
+                }
+                initializeMapWithClusters();
+            });
+
+            $('#States').on('change', function () {
+
+                if (this.value === 'All States') {
+                    updateURLParam('state', '');
+                } else {
+                    updateURLParam('state', this.value);
+                }
+                initializeMapWithClusters();
+            });
+
+            $('#Segments').on('change', function () {
+                updateURLParam('segment', this.value);
+                initializeMapWithClusters();
+            });
+
+            function showRegion(selectedValue = null) {
+                $('[map-filter="Regions"]').show();
+                $('[map-filter="States"]').hide();
+
+                if (selectedValue) {
+                    $('#Regions').val(selectedValue).trigger('change');
+                }
+            }
+
+            function showState(selectedValue = null) {
+                $('[map-filter="States"]').show();
+                $('[map-filter="Regions"]').hide();
+
+                if (selectedValue) {
+                    $('#States').val(selectedValue).trigger('change');
+                }
+            }
+
+            function updateURLParam(key, value) {
+                const params = new URLSearchParams(window.location.search);
+                if (value) {
+                    params.set(key, value);
+                } else {
+                    params.delete(key);
+                }
+                history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+            }
+        });
+
         const mapboxAccessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
         const dataBaseUrl = 'http://192.168.1.33:3002/api/v1/locations';
         const usaBounds = [
@@ -2101,91 +2268,15 @@ a,
 
         let map;
 
-        const getFilterParams = () => {
-
-            const params = new URLSearchParams();
-            const oldParams = new URLSearchParams(window.location.search);
-
-            if ($('[map-filter="Regions"]').is(':visible')) {
-
-                console.log('Regions filter is visible');
-
-                const region = $(mapFilterSelectors.region).val() || oldParams.get('region');
-                if (region && region !== 'All Regions') params.set('region', region);
-            }
-
-            if ($('[map-filter="States"]').is(':visible')) {
-
-                console.log('States filter is visible');
-
-                if($(mapFilterSelectors.state).val() === 'All States') {
-                    if(oldParams.get('state') !== ''){
-                        params.set('state', oldParams.get('state'));
-                    } else {
-                        params.delete('state');
-                        console.log('State selector value is "All States", removing state filter'); 
-                    }
-                    console.log('State selector value is "All States", not applying state filter');
-                } else {
-                    console.log('State selector value:', $(mapFilterSelectors.state).val());
-                }
-
-                console.log('State selector value:', $(mapFilterSelectors.state).val());
-                const state = $(mapFilterSelectors.state).val() || oldParams.get('state');
-                if (state && state !== 'All States') params.set('state', state);
-            }
+        function initializeMapWithClusters() {
+            const query = new URLSearchParams(window.location.search);
+            console.log('Reloading map with params:', query.toString());
 
 
-            
-            const segments = $(mapFilterSelectors.segments).val() || oldParams.get('segments');
-            if (segments && segments !== 'All Segments') params.set('segments', segments);
 
-            return params.toString();
-        };
-
-        const closePopup = () => {
-            document.getElementById('custom-map-popup').style.display = 'none';
-        };
-
-        const updateUrlWithFilters = (queryString) => {
-            const url = new URL(window.location);
-            url.search = queryString;
-            history.replaceState({}, '', url);
-        };
-
-        const populatePopup = (props) => {
-            document.querySelector('.ts-p--big').textContent = `Solved Story #${props.id || '0001'}`;
-            document.querySelector('.ts-h6').textContent = props.title || 'Location Event Title';
-            document.querySelector('.tc-grey200').textContent = props.description || 'Description not available.';
-            document.getElementById('popup-address').textContent = props.address || 'No address available';
-
-            const articleLink = document.querySelector('.icon-link.w-inline-block');
-            articleLink.href = props.article_url || '#';
-
-            const tagContainer = document.querySelector('.map-popup_tags-wrapper');
-            tagContainer.innerHTML = '';
-            try {
-                const tags = JSON.parse(props.segments || '[]');
-                tags.forEach(tag => {
-                    const div = document.createElement('div');
-                    div.className = 'map-popup_tag';
-                    div.textContent = tag.trim();
-                    tagContainer.appendChild(div);
-                });
-            } catch (err) {
-                console.warn('Error parsing segments:', err);
-            }
-
-            document.querySelectorAll('.map-popup_bottom a').forEach(link => {
-                link.href = props.article_url || '#';
-            });
-
-            document.getElementById('custom-map-popup').style.display = '';
-        };
-
-        const initializeMapWithClusters = () => {
+            /* const initializeMapWithClusters = () => { */
             closePopup();
-            const query = getFilterParams();
+            /* const query = getFilterParams(); */
             mapboxgl.accessToken = mapboxAccessToken;
 
             map = new mapboxgl.Map({
@@ -2199,10 +2290,10 @@ a,
 
             map.on('load', () => {
                 if (!map.hasImage('highlight-pointer')) {
-                map.loadImage('pointer.png', (error, image) => {
-                    if (error) throw error;
-                    map.addImage('highlight-pointer', image);
-                });
+                    map.loadImage('pointer.png', (error, image) => {
+                        if (error) throw error;
+                        map.addImage('highlight-pointer', image);
+                    });
                 }
 
                 fetch(`${dataBaseUrl}${query ? '?' + query : ''}`)
@@ -2361,179 +2452,44 @@ a,
                     });
             });
         };
+        const populatePopup = (props) => {
+            document.querySelector('.ts-p--big').textContent = `Solved Story #${props.id || '0001'}`;
+            document.querySelector('.ts-h6').textContent = props.title || 'Location Event Title';
+            document.querySelector('.tc-grey200').textContent = props.description || 'Description not available.';
+            document.getElementById('popup-address').textContent = props.address || 'No address available';
 
-        const toggleMapFilter = () => {
+            const articleLink = document.querySelector('.icon-link.w-inline-block');
+            articleLink.href = props.article_url || '#';
 
-            console.log('Regions:', $('#Regions').val());
-            console.log('States:', $('#States').val());
-
-            $('#Regions').val('All Regions').trigger('change');
-            $('#States').val('All States').trigger('change');
-
-            // Update visible dropdown label manually
-            /* $('.map-filter_dd[map-filter="Regions"] .map-filter_dd-trigger div').text('Regions');
-            $('.map-filter_dd[map-filter="States"] .map-filter_dd-trigger div').text('States'); */
-
-
-
-
-            console.log('Regions:', $('#Regions').val());
-            console.log('States:', $('#States').val());
-
-            if ($('#State').is(':checked')) {
-            /* if (defa) { */
-
-                $('[map-filter="States"]').show();
-                $('[map-filter="Regions"]').hide();
-            } else if ($('#Region').is(':checked')) {
-                $('[map-filter="Regions"]').show();
-                $('[map-filter="States"]').hide();
+            const tagContainer = document.querySelector('.map-popup_tags-wrapper');
+            tagContainer.innerHTML = '';
+            try {
+                const tags = JSON.parse(props.segments || '[]');
+                tags.forEach(tag => {
+                    const div = document.createElement('div');
+                    div.className = 'map-popup_tag';
+                    div.textContent = tag.trim();
+                    tagContainer.appendChild(div);
+                });
+            } catch (err) {
+                console.warn('Error parsing segments:', err);
             }
+
+            document.querySelectorAll('.map-popup_bottom a').forEach(link => {
+                link.href = props.article_url || '#';
+            });
+
+            document.getElementById('custom-map-popup').style.display = '';
+        };
+
+        const closePopup = () => {
+            document.getElementById('custom-map-popup').style.display = 'none';
         };
 
 
-        function getUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return {
-                region: urlParams.get('region'),
-                state: urlParams.get('state'),
-                segments: urlParams.get('segments')
-            };
-        }
 
-
-        $(document).ready(() => {
-            toggleMapFilter();
-
-            // map controller buttons
-            document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
-            document.getElementById('zoom-out').addEventListener('click', () => map.zoomOut());
-            document.getElementById('locate-me-btn').addEventListener('click', () => {
-                if (!navigator.geolocation) {
-                    alert('Geolocation is not supported by your browser.');
-                    return;
-                }
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        const lng = position.coords.longitude;
-                        const lat = position.coords.latitude;
-                        map.flyTo({
-                            center: [lng, lat],
-                            zoom: 12,
-                            speed: 1.2,
-                            curve: 1.5,
-                            essential: true
-                        });
-                        new mapboxgl.Marker({ color: '#007aff' })
-                            .setLngLat([lng, lat])
-                            .addTo(map);
-                    },
-                    error => {
-                        alert('Unable to retrieve your location.');
-                        console.error(error);
-                    }
-                );
-            });
-
-            const getInitialUrlParams = getUrlParams();
-
-            console.log('Initial URL Params:', getInitialUrlParams);
-
-            if (getInitialUrlParams.region) {
-
-                console.log('Region from URL:', getInitialUrlParams.region);
-
-                $('#Region').prop('checked', true).trigger('change');
-
-                console.log($('#Regions').val());
-
-                $('#Regions').val(getInitialUrlParams.region).trigger('change');
-
-                console.log($('#Regions').val());
-
-
-            } else if (getInitialUrlParams.state) {
-
-                console.log('State from URL:', getInitialUrlParams.state);
-
-                $('#State').prop('checked', true).trigger('change');
-                $('#States').val(getInitialUrlParams.state).trigger('change');
-                document.getElementById('States-Search').value = getInitialUrlParams.state;
-            }
-
-            if (getInitialUrlParams.segments) {
-                $('#Segments').val(getInitialUrlParams.segments).trigger('change');
-            }
-            /* toggleMapFilter(); */
-            initializeMapWithClusters();
-
-            $('#Regions, #States, #Segments').on('change', () => {
-                const query = getFilterParams();
-
-                console.log('Filter Params:', query);
-
-                updateUrlWithFilters(query);
-                initializeMapWithClusters();
-            });
-
-            $('.map-popup_close').on('click', () => {
-                closePopup();
-                if (map?.getSource('highlight-point')) {
-                    map.getSource('highlight-point').setData({
-                        type: 'FeatureCollection',
-                        features: []
-                    });
-                }
-            });
-            $('#State, #Region').on('change', toggleMapFilter);
-
-            $('#States-Search').on('keydown', e => {
-                if (e.key === 'Enter') e.preventDefault();
-            });
-
-            $('[fs-combobox-element="clear"]').on('click', () => {
-                $('#States-Search').val('');
-                $('#States').val('All States').trigger('change');
-
-                const url = new URL(window.location.href);
-                url.searchParams.delete('state');
-                history.replaceState({}, '', url);
-
-                const query = getFilterParams();
-                updateUrlWithFilters(query);
-                initializeMapWithClusters();
-            });
-
-            $('.map-filter_right .button.is-secondary.is-nav.is-white').on('click', function (e) {
-                e.preventDefault();
-                const currentUrl = window.location.href;
-
-                const textarea = document.createElement('textarea');
-                textarea.value = currentUrl;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
-
-                const buttonText = $(this).find('div');
-                const originalText = buttonText.text();
-
-                try {
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        buttonText.text('Copied!');
-                        setTimeout(() => {
-                            buttonText.text(originalText);
-                        }, 2000);
-                    }
-                } catch (err) {
-                    console.error('Failed to copy: ', err);
-                }
-                document.body.removeChild(textarea);
-            });
-        });
     </script>
+
 </body>
 
 </html>
