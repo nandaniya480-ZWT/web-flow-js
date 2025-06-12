@@ -2099,49 +2099,50 @@ a,
             segments: '#Segments'
         };
 
+        let defaultRadio = 'StateRadio';
+
+
         let map;
 
-        const getFilterParams = () => {
-
+        /* const getFilterParams = () => {
             const params = new URLSearchParams();
             const oldParams = new URLSearchParams(window.location.search);
-
             if ($('[map-filter="Regions"]').is(':visible')) {
-
                 console.log('Regions filter is visible');
-
                 const region = $(mapFilterSelectors.region).val() || oldParams.get('region');
                 if (region && region !== 'All Regions') params.set('region', region);
             }
-
             if ($('[map-filter="States"]').is(':visible')) {
-
                 console.log('States filter is visible');
-
-                if($(mapFilterSelectors.state).val() === 'All States') {
-                    if(oldParams.get('state') !== ''){
-                        params.set('state', oldParams.get('state'));
-                    } else {
-                        params.delete('state');
-                        console.log('State selector value is "All States", removing state filter'); 
-                    }
-                    console.log('State selector value is "All States", not applying state filter');
-                } else {
-                    console.log('State selector value:', $(mapFilterSelectors.state).val());
-                }
-
-                console.log('State selector value:', $(mapFilterSelectors.state).val());
                 const state = $(mapFilterSelectors.state).val() || oldParams.get('state');
                 if (state && state !== 'All States') params.set('state', state);
             }
-
-
-            
             const segments = $(mapFilterSelectors.segments).val() || oldParams.get('segments');
             if (segments && segments !== 'All Segments') params.set('segments', segments);
 
             return params.toString();
+        }; */
+
+        const getFilterParams = () => {
+            const params = new URLSearchParams();
+            const oldParams = new URLSearchParams(window.location.search);
+            /* if ($('[map-filter="Regions"]').is(':visible')) { */
+            if (defaultRadio === 'RegionRadio') {
+                console.log('Regions filter is visible');
+                const region = $(mapFilterSelectors.region).val() || oldParams.get('region');
+                if (region && region !== 'All Regions') params.set('region', region);
+            }
+            /* if ($('[map-filter="States"]').is(':visible')) { */
+            if (defaultRadio === 'StateRadio') {
+                console.log('States filter is visible');
+                const state = $(mapFilterSelectors.state).val() || oldParams.get('state');
+                if (state && state !== 'All States') params.set('state', state);
+            }
+            const segments = $(mapFilterSelectors.segments).val() || oldParams.get('segments');
+            if (segments && segments !== 'All Segments') params.set('segments', segments);
+            return params.toString();
         };
+
 
         const closePopup = () => {
             document.getElementById('custom-map-popup').style.display = 'none';
@@ -2185,6 +2186,7 @@ a,
 
         const initializeMapWithClusters = () => {
             closePopup();
+
             const query = getFilterParams();
             mapboxgl.accessToken = mapboxAccessToken;
 
@@ -2194,7 +2196,7 @@ a,
                 projection: 'mercator',
                 center: [-98.5795, 39.8283],
                 zoom: 4,
-                maxBounds: usaBounds
+                /* maxBounds: usaBounds */
             });
 
             map.on('load', () => {
@@ -2364,28 +2366,22 @@ a,
 
         const toggleMapFilter = () => {
 
-            console.log('Regions:', $('#Regions').val());
-            console.log('States:', $('#States').val());
+            /* $('#fs-option-all-states')[0].click()
+            $('.map-filter_dd-link')[0].click() */
 
-            $('#Regions').val('All Regions').trigger('change');
-            $('#States').val('All States').trigger('change');
-
-            // Update visible dropdown label manually
+            /* $('#Regions').val('All Regions').trigger('change');
+            $('#States').val('All States').trigger('change'); */
+            console.log('defaultRadio in toggle:', defaultRadio);
             /* $('.map-filter_dd[map-filter="Regions"] .map-filter_dd-trigger div').text('Regions');
             $('.map-filter_dd[map-filter="States"] .map-filter_dd-trigger div').text('States'); */
 
-
-
-
-            console.log('Regions:', $('#Regions').val());
-            console.log('States:', $('#States').val());
-
-            if ($('#State').is(':checked')) {
-            /* if (defa) { */
-
+            /* if ($('#State').is(':checked')) { */
+            if (defaultRadio === 'StateRadio') {
                 $('[map-filter="States"]').show();
                 $('[map-filter="Regions"]').hide();
-            } else if ($('#Region').is(':checked')) {
+            }
+            /* } else if ($('#Region').is(':checked')) { */
+            if (defaultRadio === 'RegionRadio') {
                 $('[map-filter="Regions"]').show();
                 $('[map-filter="States"]').hide();
             }
@@ -2403,6 +2399,8 @@ a,
 
 
         $(document).ready(() => {
+
+
             toggleMapFilter();
 
             document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
@@ -2438,30 +2436,33 @@ a,
 
             const getInitialUrlParams = getUrlParams();
 
-            console.log('Initial URL Params:', getInitialUrlParams);
 
             if (getInitialUrlParams.region) {
 
-                console.log('Region from URL:', getInitialUrlParams.region);
+                defaultRadio = 'RegionRadio';
 
                 $('#Region').prop('checked', true).trigger('change');
-
-                console.log($('#Regions').val());
-
                 $('#Regions').val(getInitialUrlParams.region).trigger('change');
-
-                console.log($('#Regions').val());
-
-
             } else if (getInitialUrlParams.state) {
-
-                console.log('State from URL:', getInitialUrlParams.state);
-
+                defaultRadio = 'StateRadio';
                 $('#State').prop('checked', true).trigger('change');
                 $('#States').val(getInitialUrlParams.state).trigger('change');
+
+
+                /* let states = $('.map-filter_dd-list')[1].children
+                $.each(states, (key, item) => {
+                    if ($(item).is('a')) {
+                        if (getInitialUrlParams.state === $(item).text()) {
+                            let stateId = $(item).attr('id');
+                            stateId[0].click()
+                        }
+                        console.log(key, $(item).text(), $(item).attr('id'))
+                    }
+                }) */
+
                 document.getElementById('States-Search').value = getInitialUrlParams.state;
             }
-
+            toggleMapFilter();
             if (getInitialUrlParams.segments) {
                 $('#Segments').val(getInitialUrlParams.segments).trigger('change');
             }
@@ -2469,13 +2470,18 @@ a,
             initializeMapWithClusters();
 
             $('#Regions, #States, #Segments').on('change', () => {
+
+                if (this.id === 'States') {
+                    defaultRadio == 'StateRadio';
+                } else if (this.id === 'Regions') {
+                    defaultRadio = 'RegionRadio';
+                }
+
                 const query = getFilterParams();
-
-                console.log('Filter Params:', query);
-
                 updateUrlWithFilters(query);
                 initializeMapWithClusters();
             });
+
 
             $('.map-popup_close').on('click', () => {
                 closePopup();
@@ -2486,7 +2492,24 @@ a,
                     });
                 }
             });
-            $('#State, #Region').on('change', toggleMapFilter);
+            $('#State, #Region').on('change', function () {
+
+
+                
+                if (this.id === 'State') {
+                    $('.map-filter_dd-link')[0].click()
+                    defaultRadio = 'StateRadio';
+                } else if (this.id === 'Region') {
+                    /* $('#fs-option-all-states')[0].click(); */
+                    $('.map-filter_input-clear')[0].click()
+                    defaultRadio = 'RegionRadio';
+                }
+
+                console.log('Radio id:', this.id);
+                console.log('Radio changed to:', defaultRadio);
+                toggleMapFilter(); // ← you also forgot to call the function
+            });
+
 
             $('#States-Search').on('keydown', e => {
                 if (e.key === 'Enter') e.preventDefault();
@@ -2494,7 +2517,7 @@ a,
 
             $('[fs-combobox-element="clear"]').on('click', () => {
                 $('#States-Search').val('');
-                $('#States').val('All States').trigger('change');
+                /* $('#States').val('All States').trigger('change'); */
 
                 const url = new URL(window.location.href);
                 url.searchParams.delete('state');

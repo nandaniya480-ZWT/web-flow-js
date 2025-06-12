@@ -995,6 +995,8 @@
             segments: '#Segments'
         };
 
+        let map; // 👈 Global map variable
+
         const initSelects = () => {
             for (const selector of Object.values(mapFilterSelectors)) {
                 $(selector).select2({ placeholder: `Select ${selector.replace('#', '')}` });
@@ -1030,9 +1032,6 @@
             history.replaceState({}, '', url);
         }
 
-
-
-
         const populatePopup = (props) => {
             document.querySelector('.ts-p--big').textContent = `Solved Story #${props.id || '0001'}`;
             document.querySelector('.ts-h6').textContent = props.title || 'Location Event Title';
@@ -1063,12 +1062,12 @@
             document.getElementById('custom-map-popup').style.display = '';
         };
 
-        const initializeMapWithClusters = (query = '') => {
+        const initializeMapWithClusters = () => {
             closePopup();
-
+            const query = getFilterParams();
             mapboxgl.accessToken = mapboxAccessToken;
 
-            const map = new mapboxgl.Map({
+            map = new mapboxgl.Map({
                 container: 'map-canvas',
                 style: 'mapbox://styles/mapbox/light-v11',
                 projection: 'mercator',
@@ -1101,6 +1100,33 @@
                             cluster: true,
                             clusterMaxZoom: 10,
                             clusterRadius: 50
+                        });
+
+                        map.loadImage('/pointer.png', (error, image) => {
+                            if (error) throw error;
+                            if (!map.hasImage('highlight-pointer')) {
+                                map.addImage('highlight-pointer', image);
+                            }
+                        });
+
+                        map.addSource('highlight-point', {
+                            type: 'geojson',
+                            data: {
+                                type: 'FeatureCollection',
+                                features: []
+                            }
+                        });
+
+                        map.addLayer({
+                            id: 'highlight-symbol',
+                            type: 'symbol',
+                            source: 'highlight-point',
+                            layout: {
+                                'icon-image': 'highlight-pointer',
+                                'icon-size': 0.1,
+                                'icon-allow-overlap': true,
+                                'icon-ignore-placement': true
+                            }
                         });
 
                         map.addLayer({
@@ -1141,6 +1167,30 @@
 
                         map.on('click', 'unclustered-point', (e) => {
                             const props = e.features[0].properties;
+                            const coords = e.features[0].geometry.coordinates;
+                            // const point = map.project(coords);
+                            // point.x -= 100;
+                            // const offsetCoords = map.unproject(point)
+                            map.flyTo({
+                                center: coords,
+                                zoom: Math.max(map.getZoom(), 6),
+                                speed: 0.5,
+                                curve: 1.4,
+                                essential: true
+                            });
+
+                            map.getSource('highlight-point').setData({
+                                type: 'FeatureCollection',
+                                features: [{
+                                    type: 'Feature',
+                                    geometry: {
+                                        type: 'Point',
+                                        coordinates: coords
+                                    },
+                                    properties: {}
+                                }]
+                            });
+
                             populatePopup(props);
                         });
 
@@ -1148,7 +1198,16 @@
                             const features = map.queryRenderedFeatures(e.point, {
                                 layers: ['unclustered-point']
                             });
-                            if (!features.length) closePopup();
+
+                            if (!features.length) {
+                                closePopup();
+                                if (map.getSource('highlight-point')) {
+                                    map.getSource('highlight-point').setData({
+                                        type: 'FeatureCollection',
+                                        features: []
+                                    });
+                                }
+                            }
                         });
 
                         map.on('mouseenter', 'unclustered-point', () => {
@@ -1173,37 +1232,83 @@
             };
 
             if (initialFilters.region) {
-                $('#Region').prop('checked', true);
+                $('#Region').prop('checked', true).trigger('change');
                 $('#Regions').val(initialFilters.region).trigger('change');
             }
 
             if (initialFilters.state) {
-                $('#State').prop('checked', true);
+                $('#State').prop('checked', true).trigger('change');
                 $('#States').val(initialFilters.state).trigger('change');
             }
 
-            toggleMapFilter();
-            if (initialFilters.segments) $('#Segments').val(initialFilters.segments).trigger('change');
+            if (initialFilters.segments) {
+                $('#Segments').val(initialFilters.segments).trigger('change');
+            }
 
-            initializeMapWithClusters(getFilterParams());
+            toggleMapFilter();
+            initializeMapWithClusters();
 
             $('#Regions, #States, #Segments').on('change', () => {
                 const query = getFilterParams();
                 updateUrlWithFilters(query);
-                initializeMapWithClusters(query);
+                initializeMapWithClusters();
             });
 
-            $('.map-popup_close').on('click', closePopup);
+            // 👇 Close popup and remove highlight icon
+            $('.map-popup_close').on('click', function () {
+                closePopup();
+                if (map && map.getSource('highlight-point')) {
+                    map.getSource('highlight-point').setData({
+                        type: 'FeatureCollection',
+                        features: []
+                    });
+                }
+            });
+
             $('#State, #Region').on('change', toggleMapFilter);
 
+            // Share map URL
+            $('.map-filter_right .button.is-secondary.is-nav.light-3').on('click', function (e) {
+                e.preventDefault();
+                const currentUrl = window.location.href;
+
+                const textarea = document.createElement('textarea');
+                textarea.value = currentUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+
+                const buttonText = $(this).find('div');
+                const originalText = buttonText.text();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        buttonText.text('Copied!');
+                        setTimeout(() => {
+                            buttonText.text(originalText);
+                        }, 2000);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+                document.body.removeChild(textarea);
+            });
+
+
         });
+
         function toggleMapFilter() {
             if ($('#State').is(':checked')) {
                 $('[map-filter="States"]').show();
                 $('[map-filter="Regions"]').hide();
+                $('#Regions').val('All Regions');
             } else if ($('#Region').is(':checked')) {
                 $('[map-filter="Regions"]').show();
                 $('[map-filter="States"]').hide();
+                $('#States').val('All States');
             }
         }
     </script>
