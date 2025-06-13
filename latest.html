@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- This site was created in Webflow. https://webflow.com --><!-- Last Published: Wed Jun 11 2025 18:56:14 GMT+0000 (Coordinated Universal Time) -->
+<!-- This site was created in Webflow. https://webflow.com --><!-- Last Published: Thu Jun 12 2025 14:48:07 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="flocksafety-staging-fdc65fa18dfdf8751e5.webflow.io" data-wf-page="683ea9ecd5e30a9e0614ea87"
     data-wf-site="683ea9ecd5e30a9e0614e96e" lang="en">
 
@@ -10,7 +10,9 @@
     <meta content="Map" property="twitter:title" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <link href="map.css" rel="stylesheet" type="text/css" />
+    <link
+        href="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/css/flocksafety-staging-fdc65fa18dfdf8751e5.webflow.shared.0a5e127c7.css"
+        rel="stylesheet" type="text/css" />
     <style>
         @media (max-width:991px) and (min-width:768px) {
             html.w-mod-js:not(.w-mod-ix) [data-w-id="fd6a4dd0-adab-64da-ec12-bade521b79ca"] {
@@ -346,6 +348,35 @@ a,
                     .map-filter_radio:before,
                     .map-filter_radio:after {
                         display: none;
+                    }
+
+                    .form_wr.is-dark .form_note {
+                        color: #A0A89E;
+                    }
+
+                    .form_wr.is-dark .form_label {
+                        color: #BBC0B9;
+                    }
+
+                    .form_wr.is-dark .form_input {
+                        border-color: #525751;
+                        background-color: #3C403B;
+                        color: #fff;
+                    }
+
+                    .form_wr.is-dark .form_input:hover {
+                        border-color: #525751;
+                        background-color: #777C75;
+                    }
+
+                    .form_wr.is-dark .form_input:focus {
+                        background-color: #777C75;
+                        border: 1px solid #3C403B;
+                        box-shadow: unset;
+                    }
+
+                    .form_wr.is-dark .form_link {
+                        color: #A0A89E;
                     }
                 </style>
             </div>
@@ -1505,8 +1536,7 @@ a,
                                             <div class="ts-h6 tc-white">Flock Safety Cameras Aid Police In Minnesota
                                                 Shopping Center Arrest Just 30 Minutes After Going Live</div>
                                             <p class="ts-p--medium tc-grey200">Nisl massa ut maecenas gravida rutrum
-                                                justo proin. Consectetur condimentum nulla euismod purus gravida
-                                                fusce
+                                                justo proin. Consectetur condimentum nulla euismod purus gravida fusce
                                                 etiam in. Vestibulum mi.</p>
                                         </div>
                                         <div class="map-popup_divider"></div>
@@ -1848,11 +1878,11 @@ a,
         crossorigin="anonymous"></script>
     <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.36b8fb49256177c8.js"
         type="text/javascript"></script>
-    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.5597b0ea38e9f177.js"
+    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.95c8c10aef846eea.js"
         type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.366d7c21cd7fb47e.js"
         type="text/javascript"></script>
-    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.639f41f6.ae9b75cb20248684.js"
+    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.027b5487.1ef3a468f8ff4ac0.js"
         type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/gsap/3.13.0/gsap.min.js" type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/gsap/3.13.0/ScrollTrigger.min.js" type="text/javascript"></script>
@@ -2085,7 +2115,187 @@ a,
     </script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
+
     <script>
+        $(document).ready(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const region = urlParams.get('region');
+            const state = urlParams.get('state');
+            const segment = urlParams.get('segment');
+
+            // Map controller buttons
+            document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
+            document.getElementById('zoom-out').addEventListener('click', () => map.zoomOut());
+            document.getElementById('locate-me-btn').addEventListener('click', () => {
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser.');
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lng = position.coords.longitude;
+                        const lat = position.coords.latitude;
+
+                        map.flyTo({
+                            center: [lng, lat],
+                            zoom: 12,
+                            speed: 1.2,
+                            curve: 1.5,
+                            essential: true
+                        });
+
+                        new mapboxgl.Marker({ color: '#007aff' })
+                            .setLngLat([lng, lat])
+                            .addTo(map);
+                    },
+                    error => {
+                        alert('Unable to retrieve your location.');
+                        console.error(error);
+                    }
+                );
+            });
+
+            // Clear state param
+            $('[fs-combobox-element="clear"]').on('click', () => {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('state');
+                history.replaceState({}, '', url);
+                initializeMapWithClusters();
+            });
+
+            // Copy current URL
+            $('.map-filter_right .button.is-secondary.is-nav.is-white').on('click', function (e) {
+                e.preventDefault();
+                const currentUrl = window.location.href;
+                const textarea = document.createElement('textarea');
+                textarea.value = currentUrl;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+
+                const buttonText = $(this).find('div');
+                const originalText = buttonText.text();
+
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        buttonText.text('Copied!');
+                        setTimeout(() => buttonText.text(originalText), 2000);
+                    }
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+
+                document.body.removeChild(textarea);
+            });
+
+            // Popup close
+            $('.map-popup_close').on('click', () => {
+                closePopup();
+                if (map?.getSource('highlight-point')) {
+                    map.getSource('highlight-point').setData({
+                        type: 'FeatureCollection',
+                        features: []
+                    });
+                }
+            });
+
+            // Prevent form submit on enter
+            $('#States-Search').on('keydown', e => {
+                if (e.key === 'Enter') e.preventDefault();
+            });
+
+            // Load filters from URL
+            if (region) {
+                $('#Region').prop('checked', true).trigger('change');
+                showRegion(region);
+            } else if (state) {
+                $('#State').prop('checked', true).trigger('change');
+                showState(state);
+            } else {
+                showRegion();
+            }
+
+            if (segment) {
+                $('#Segments').val(segment).trigger('change');
+            }
+
+            initializeMapWithClusters();
+
+            // Filter controls
+            $('#State, #Region').on('change', function () {
+                const selected = this.value;
+                if (selected === 'Region') {
+                    showRegion();
+                    updateURLParam('state', '');
+                    $('#States').val('All States');
+                    $('#fs-option-all-states')[0].click();
+                } else if (selected === 'State') {
+                    showState('');
+                    updateURLParam('region', '');
+                    $('#Regions').val("All Regions");
+                    $('.map-filter_dd-link')[0].click();
+                }
+                initializeMapWithClusters();
+            });
+
+            $('#Regions').on('change', function () {
+                updateURLParam('region', this.value === "All Regions" ? '' : this.value);
+                initializeMapWithClusters();
+            });
+
+            $('#States').on('change', function () {
+                updateURLParam('state', this.value === 'All States' ? '' : this.value);
+                initializeMapWithClusters();
+            });
+
+            $('#Segments').on('change', function () {
+                updateURLParam('segment', this.value);
+                initializeMapWithClusters();
+            });
+
+            function showRegion(selectedValue = null) {
+                $('[map-filter="Regions"]').show();
+                $('[map-filter="States"]').hide();
+                if (selectedValue) {
+                    $('#Regions').val(selectedValue).trigger('change');
+                }
+            }
+
+            function showState(selectedValue = null) {
+                $('[map-filter="States"]').show();
+                $('[map-filter="Regions"]').hide();
+
+                if (selectedValue) {
+                    setTimeout(() => {
+                        let states = $('.map-filter_dd-list')[1].children;
+                        $.each(states, (key, item) => {
+                            if ($(item).is('a') && selectedValue === $(item).text()) {
+                                $(item)[0].click();
+                                $(item)[0].attr('aria-selected') = true;
+                                $(item)[0].class('w--current');
+                                $(item)[0].tabindex = 0;
+                                return;
+                            }
+                        });
+                    }, 1000);
+                }
+            }
+
+            function updateURLParam(key, value) {
+                const params = new URLSearchParams(window.location.search);
+                if (value) {
+                    params.set(key, value);
+                } else {
+                    params.delete(key);
+                }
+                history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+            }
+        });
+
         const mapboxAccessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
         const dataBaseUrl = 'http://192.168.1.33:3002/api/v1/locations';
         const usaBounds = [
@@ -2093,101 +2303,13 @@ a,
             [-66.9326, 49.5904]
         ];
 
-        const mapFilterSelectors = {
-            region: '#Regions',
-            state: '#States',
-            segments: '#Segments'
-        };
-
-        let defaultRadio = 'StateRadio';
-
-
         let map;
 
-        /* const getFilterParams = () => {
-            const params = new URLSearchParams();
-            const oldParams = new URLSearchParams(window.location.search);
-            if ($('[map-filter="Regions"]').is(':visible')) {
-                console.log('Regions filter is visible');
-                const region = $(mapFilterSelectors.region).val() || oldParams.get('region');
-                if (region && region !== 'All Regions') params.set('region', region);
-            }
-            if ($('[map-filter="States"]').is(':visible')) {
-                console.log('States filter is visible');
-                const state = $(mapFilterSelectors.state).val() || oldParams.get('state');
-                if (state && state !== 'All States') params.set('state', state);
-            }
-            const segments = $(mapFilterSelectors.segments).val() || oldParams.get('segments');
-            if (segments && segments !== 'All Segments') params.set('segments', segments);
+        function initializeMapWithClusters() {
+            const query = new URLSearchParams(window.location.search);
+            console.log('Reloading map with params:', query.toString());
 
-            return params.toString();
-        }; */
-
-        const getFilterParams = () => {
-            const params = new URLSearchParams();
-            const oldParams = new URLSearchParams(window.location.search);
-            /* if ($('[map-filter="Regions"]').is(':visible')) { */
-            if (defaultRadio === 'RegionRadio') {
-                console.log('Regions filter is visible');
-                const region = $(mapFilterSelectors.region).val() || oldParams.get('region');
-                if (region && region !== 'All Regions') params.set('region', region);
-            }
-            /* if ($('[map-filter="States"]').is(':visible')) { */
-            if (defaultRadio === 'StateRadio') {
-                console.log('States filter is visible');
-                const state = $(mapFilterSelectors.state).val() || oldParams.get('state');
-                if (state && state !== 'All States') params.set('state', state);
-            }
-            const segments = $(mapFilterSelectors.segments).val() || oldParams.get('segments');
-            if (segments && segments !== 'All Segments') params.set('segments', segments);
-            return params.toString();
-        };
-
-
-        const closePopup = () => {
-            document.getElementById('custom-map-popup').style.display = 'none';
-        };
-
-        const updateUrlWithFilters = (queryString) => {
-            const url = new URL(window.location);
-            url.search = queryString;
-            history.replaceState({}, '', url);
-        };
-
-        const populatePopup = (props) => {
-            document.querySelector('.ts-p--big').textContent = `Solved Story #${props.id || '0001'}`;
-            document.querySelector('.ts-h6').textContent = props.title || 'Location Event Title';
-            document.querySelector('.tc-grey200').textContent = props.description || 'Description not available.';
-            document.getElementById('popup-address').textContent = props.address || 'No address available';
-
-            const articleLink = document.querySelector('.icon-link.w-inline-block');
-            articleLink.href = props.article_url || '#';
-
-            const tagContainer = document.querySelector('.map-popup_tags-wrapper');
-            tagContainer.innerHTML = '';
-            try {
-                const tags = JSON.parse(props.segments || '[]');
-                tags.forEach(tag => {
-                    const div = document.createElement('div');
-                    div.className = 'map-popup_tag';
-                    div.textContent = tag.trim();
-                    tagContainer.appendChild(div);
-                });
-            } catch (err) {
-                console.warn('Error parsing segments:', err);
-            }
-
-            document.querySelectorAll('.map-popup_bottom a').forEach(link => {
-                link.href = props.article_url || '#';
-            });
-
-            document.getElementById('custom-map-popup').style.display = '';
-        };
-
-        const initializeMapWithClusters = () => {
             closePopup();
-
-            const query = getFilterParams();
             mapboxgl.accessToken = mapboxAccessToken;
 
             map = new mapboxgl.Map({
@@ -2196,16 +2318,16 @@ a,
                 projection: 'mercator',
                 center: [-98.5795, 39.8283],
                 zoom: 4,
-                /* maxBounds: usaBounds */
+                maxBounds: usaBounds
             });
 
             map.on('load', () => {
-                /* if (!map.hasImage('highlight-pointer')) { */
-                map.loadImage('pointer.png', (error, image) => {
-                    /* if (error) throw error;
-                    map.addImage('highlight-pointer', image); */
-                });
-                /* } */
+                if (!map.hasImage('highlight-pointer')) {
+                    map.loadImage('pointer.png', (error, image) => {
+                        if (error) throw error;
+                        map.addImage('highlight-pointer', image);
+                    });
+                }
 
                 fetch(`${dataBaseUrl}${query ? '?' + query : ''}`)
                     .then(res => res.json())
@@ -2362,202 +2484,44 @@ a,
                         });
                     });
             });
-        };
-
-        const toggleMapFilter = () => {
-
-            /* $('#fs-option-all-states')[0].click()
-            $('.map-filter_dd-link')[0].click() */
-
-            /* $('#Regions').val('All Regions').trigger('change');
-            $('#States').val('All States').trigger('change'); */
-            console.log('defaultRadio in toggle:', defaultRadio);
-            /* $('.map-filter_dd[map-filter="Regions"] .map-filter_dd-trigger div').text('Regions');
-            $('.map-filter_dd[map-filter="States"] .map-filter_dd-trigger div').text('States'); */
-
-            /* if ($('#State').is(':checked')) { */
-            if (defaultRadio === 'StateRadio') {
-                $('[map-filter="States"]').show();
-                $('[map-filter="Regions"]').hide();
-            }
-            /* } else if ($('#Region').is(':checked')) { */
-            if (defaultRadio === 'RegionRadio') {
-                $('[map-filter="Regions"]').show();
-                $('[map-filter="States"]').hide();
-            }
-        };
-
-
-        function getUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return {
-                region: urlParams.get('region'),
-                state: urlParams.get('state'),
-                segments: urlParams.get('segments')
-            };
         }
 
+        const populatePopup = (props) => {
+            document.querySelector('.ts-p--big').textContent = `Solved Story #${props.sr_no}`;
+            document.querySelector('.ts-h6').textContent = props.title || 'Location Event Title';
+            document.querySelector('.tc-grey200').textContent = props.description || 'Description not available.';
+            document.getElementById('popup-address').textContent = props.address || 'No address available';
 
-        $(document).ready(() => {
+            const articleLink = document.querySelector('.icon-link.w-inline-block');
+            articleLink.href = props.article_url || '#';
 
-
-            toggleMapFilter();
-
-            document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
-            document.getElementById('zoom-out').addEventListener('click', () => map.zoomOut());
-
-            // Locate me button functionality
-            document.getElementById('locate-me-btn').addEventListener('click', () => {
-                if (!navigator.geolocation) {
-                    alert('Geolocation is not supported by your browser.');
-                    return;
-                }
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        const lng = position.coords.longitude;
-                        const lat = position.coords.latitude;
-                        map.flyTo({
-                            center: [lng, lat],
-                            zoom: 12,
-                            speed: 1.2,
-                            curve: 1.5,
-                            essential: true
-                        });
-                        new mapboxgl.Marker({ color: '#007aff' })
-                            .setLngLat([lng, lat])
-                            .addTo(map);
-                    },
-                    error => {
-                        alert('Unable to retrieve your location.');
-                        console.error(error);
-                    }
-                );
-            });
-
-            const getInitialUrlParams = getUrlParams();
-
-
-            if (getInitialUrlParams.region) {
-
-                defaultRadio = 'RegionRadio';
-
-                $('#Region').prop('checked', true).trigger('change');
-                $('#Regions').val(getInitialUrlParams.region).trigger('change');
-            } else if (getInitialUrlParams.state) {
-                defaultRadio = 'StateRadio';
-                $('#State').prop('checked', true).trigger('change');
-                $('#States').val(getInitialUrlParams.state).trigger('change');
-
-
-                /* let states = $('.map-filter_dd-list')[1].children
-                $.each(states, (key, item) => {
-                    if ($(item).is('a')) {
-                        if (getInitialUrlParams.state === $(item).text()) {
-                            let stateId = $(item).attr('id');
-                            stateId[0].click()
-                        }
-                        console.log(key, $(item).text(), $(item).attr('id'))
-                    }
-                }) */
-
-                document.getElementById('States-Search').value = getInitialUrlParams.state;
+            const tagContainer = document.querySelector('.map-popup_tags-wrapper');
+            tagContainer.innerHTML = '';
+            try {
+                const tags = JSON.parse(props.segments || '[]');
+                tags.forEach(tag => {
+                    const div = document.createElement('div');
+                    div.className = 'map-popup_tag';
+                    div.textContent = tag.trim();
+                    tagContainer.appendChild(div);
+                });
+            } catch (err) {
+                console.warn('Error parsing segments:', err);
             }
-            toggleMapFilter();
-            if (getInitialUrlParams.segments) {
-                $('#Segments').val(getInitialUrlParams.segments).trigger('change');
-            }
-            /* toggleMapFilter(); */
-            initializeMapWithClusters();
 
-            $('#Regions, #States, #Segments').on('change', () => {
-
-                if (this.id === 'States') {
-                    defaultRadio == 'StateRadio';
-                } else if (this.id === 'Regions') {
-                    defaultRadio = 'RegionRadio';
-                }
-
-                const query = getFilterParams();
-                updateUrlWithFilters(query);
-                initializeMapWithClusters();
+            document.querySelectorAll('.map-popup_bottom a').forEach(link => {
+                link.href = props.article_url || '#';
             });
 
+            document.getElementById('custom-map-popup').style.display = '';
+        };
 
-            $('.map-popup_close').on('click', () => {
-                closePopup();
-                if (map?.getSource('highlight-point')) {
-                    map.getSource('highlight-point').setData({
-                        type: 'FeatureCollection',
-                        features: []
-                    });
-                }
-            });
-            $('#State, #Region').on('change', function () {
-
-
-                
-                if (this.id === 'State') {
-                    $('.map-filter_dd-link')[0].click()
-                    defaultRadio = 'StateRadio';
-                } else if (this.id === 'Region') {
-                    /* $('#fs-option-all-states')[0].click(); */
-                    $('.map-filter_input-clear')[0].click()
-                    defaultRadio = 'RegionRadio';
-                }
-
-                console.log('Radio id:', this.id);
-                console.log('Radio changed to:', defaultRadio);
-                toggleMapFilter(); // ← you also forgot to call the function
-            });
-
-
-            $('#States-Search').on('keydown', e => {
-                if (e.key === 'Enter') e.preventDefault();
-            });
-
-            $('[fs-combobox-element="clear"]').on('click', () => {
-                $('#States-Search').val('');
-                /* $('#States').val('All States').trigger('change'); */
-
-                const url = new URL(window.location.href);
-                url.searchParams.delete('state');
-                history.replaceState({}, '', url);
-
-                const query = getFilterParams();
-                updateUrlWithFilters(query);
-                initializeMapWithClusters();
-            });
-
-            $('.map-filter_right .button.is-secondary.is-nav.is-white').on('click', function (e) {
-                e.preventDefault();
-                const currentUrl = window.location.href;
-
-                const textarea = document.createElement('textarea');
-                textarea.value = currentUrl;
-                textarea.style.position = 'fixed';
-                textarea.style.opacity = '0';
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
-
-                const buttonText = $(this).find('div');
-                const originalText = buttonText.text();
-
-                try {
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        buttonText.text('Copied!');
-                        setTimeout(() => {
-                            buttonText.text(originalText);
-                        }, 2000);
-                    }
-                } catch (err) {
-                    console.error('Failed to copy: ', err);
-                }
-                document.body.removeChild(textarea);
-            });
-        });
+        const closePopup = () => {
+            document.getElementById('custom-map-popup').style.display = 'none';
+        };
     </script>
+
+
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- This site was created in Webflow. https://webflow.com --><!-- Last Published: Wed Jun 11 2025 18:56:14 GMT+0000 (Coordinated Universal Time) -->
+<!-- This site was created in Webflow. https://webflow.com --><!-- Last Published: Thu Jun 12 2025 14:48:07 GMT+0000 (Coordinated Universal Time) -->
 <html data-wf-domain="flocksafety-staging-fdc65fa18dfdf8751e5.webflow.io" data-wf-page="683ea9ecd5e30a9e0614ea87"
     data-wf-site="683ea9ecd5e30a9e0614e96e" lang="en">
 
@@ -10,7 +10,10 @@
     <meta content="Map" property="twitter:title" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <link href="map.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="map.css" rel="stylesheet" type="text/css" /> -->
+    <link
+        href="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/css/flocksafety-staging-fdc65fa18dfdf8751e5.webflow.shared.0a5e127c7.css"
+        rel="stylesheet" type="text/css" />
     <style>
         @media (max-width:991px) and (min-width:768px) {
             html.w-mod-js:not(.w-mod-ix) [data-w-id="fd6a4dd0-adab-64da-ec12-bade521b79ca"] {
@@ -346,6 +349,35 @@ a,
                     .map-filter_radio:before,
                     .map-filter_radio:after {
                         display: none;
+                    }
+
+                    .form_wr.is-dark .form_note {
+                        color: #A0A89E;
+                    }
+
+                    .form_wr.is-dark .form_label {
+                        color: #BBC0B9;
+                    }
+
+                    .form_wr.is-dark .form_input {
+                        border-color: #525751;
+                        background-color: #3C403B;
+                        color: #fff;
+                    }
+
+                    .form_wr.is-dark .form_input:hover {
+                        border-color: #525751;
+                        background-color: #777C75;
+                    }
+
+                    .form_wr.is-dark .form_input:focus {
+                        background-color: #777C75;
+                        border: 1px solid #3C403B;
+                        box-shadow: unset;
+                    }
+
+                    .form_wr.is-dark .form_link {
+                        color: #A0A89E;
                     }
                 </style>
             </div>
@@ -1221,8 +1253,7 @@ a,
                                     </div>
                                     <div data-w-id="6771948a-54e7-a0be-c93b-cbee1a0377aa" class="map-filter_main">
                                         <div class="map-filter_divider"></div>
-                                        <div class="map-filter_radio-wr">
-                                            <label class="map-filter_radio w-radio">
+                                        <div class="map-filter_radio-wr"><label class="map-filter_radio w-radio">
                                                 <div
                                                     class="w-form-formradioinput w-form-formradioinput--inputType-custom map-filter_radio-btn w-radio-input w--redirected-checked">
                                                 </div><input type="radio" name="Filter" id="Region" data-name="Filter"
@@ -1235,8 +1266,7 @@ a,
                                                 </div><input type="radio" name="Filter" id="State" data-name="Filter"
                                                     style="opacity:0;position:absolute;z-index:-1" value="State" /><span
                                                     class="map-filter_radio-label w-form-label" for="State">State</span>
-                                            </label>
-                                        </div>
+                                            </label></div>
                                         <div class="map-filter_dd-wr">
                                             <div data-hover="false" data-delay="0" map-filter="Regions"
                                                 fs-selectcustom-element="dropdown" class="map-filter_dd w-dropdown">
@@ -1495,7 +1525,7 @@ a,
                                                 loading="lazy" alt="" class="map-controls_icon" /></div>
                                     </div>
                                 </div>
-                                <div class="map-canvas_popup" id="custom-map-popup" style=" display: none;">
+                                <div class="map-canvas_popup" style=" display: none;">
                                     <div class="map-popup_split">
                                         <div class="ts-p--big">Solved Story #0001</div><img
                                             src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eba1_close.svg"
@@ -1504,12 +1534,8 @@ a,
                                     <div class="map-popup_divider"></div>
                                     <div class="map-popup_main">
                                         <div class="map-popup_content">
-                                            <div class="ts-h6 tc-white">Flock Safety Cameras Aid Police In Minnesota
-                                                Shopping Center Arrest Just 30 Minutes After Going Live</div>
-                                            <p class="ts-p--medium tc-grey200">Nisl massa ut maecenas gravida rutrum
-                                                justo proin. Consectetur condimentum nulla euismod purus gravida
-                                                fusce
-                                                etiam in. Vestibulum mi.</p>
+                                            <div class="ts-h6 tc-white"></div>
+                                            <p class="ts-p--medium tc-grey200"></p>
                                         </div>
                                         <div class="map-popup_divider"></div>
                                         <div class="map-popup_content">
@@ -1541,10 +1567,10 @@ a,
                                             </div>
                                             <div class="ts-p--medium" id="popup-address"></div>
                                             <div class="map-popup_tags-wrapper">
-                                                <div class="map-popup_tag">Community Safety</div>
-                                                <div class="map-popup_tag">Law Enforcement</div>
-                                                <div class="map-popup_tag">Agency 1</div>
-                                                <div class="map-popup_tag">Agency 2</div>
+                                                <div class="map-popup_tag"></div>
+                                                <div class="map-popup_tag"></div>
+                                                <div class="map-popup_tag"></div>
+                                                <div class="map-popup_tag"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1566,7 +1592,8 @@ a,
                 <div class="container-huge">
                     <div class="footer-5_top-group">
                         <div id="w-node-c22ac329-c887-61ca-2266-aa10a10eaf9a-a10eaf96"
-                            class="footer-5_link-group is-logo"><a href="#" class="footer-5_brand w-nav-brand">
+                            class="footer-5_link-group is-logo">
+                            <a href="#" class="footer-5_brand w-nav-brand">
                                 <div class="embed w-embed"><svg width="321" height="50" viewBox="0 0 321 50" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -1850,11 +1877,11 @@ a,
         crossorigin="anonymous"></script>
     <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.36b8fb49256177c8.js"
         type="text/javascript"></script>
-    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.5597b0ea38e9f177.js"
+    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.95c8c10aef846eea.js"
         type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.schunk.366d7c21cd7fb47e.js"
         type="text/javascript"></script>
-    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.639f41f6.ae9b75cb20248684.js"
+    <script src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/js/webflow.027b5487.1ef3a468f8ff4ac0.js"
         type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/gsap/3.13.0/gsap.min.js" type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/gsap/3.13.0/ScrollTrigger.min.js" type="text/javascript"></script>
@@ -2208,7 +2235,7 @@ a,
                 } else if (selected === 'State') {
                     showState('');
                     updateURLParam('region', '');
-                    $('#Regions').val("All Regions");
+                    $('#Regions').val("All Regions").trigger('change');
                     $('.map-filter_dd-link')[0].click();
                 }
                 initializeMapWithClusters();
@@ -2225,7 +2252,7 @@ a,
             });
 
             $('#Segments').on('change', function () {
-                updateURLParam('segment', this.value);
+                updateURLParam('segment', this.value === 'All Segments' ? '' : this.value);
                 initializeMapWithClusters();
             });
 
@@ -2246,14 +2273,13 @@ a,
                         let states = $('.map-filter_dd-list')[1].children;
                         $.each(states, (key, item) => {
                             if ($(item).is('a') && selectedValue === $(item).text()) {
-                                $(item)[0].click();
-                                $(item)[0].attr('aria-selected') = true;
-                                $(item)[0].class('w--current');
-                                $(item)[0].tabindex = 0;
-                                return;
+                                /* $(item)[0].click(); */
+                                $(item)[0].attr('aria-selected', true);
+                                $(item)[0].addClass('w--current');
+                                $(item)[0].attr('tabindex', 0);
                             }
                         });
-                    }, 1000);
+                    }, 500)
                 }
             }
 
@@ -2270,16 +2296,20 @@ a,
 
         const mapboxAccessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
         const dataBaseUrl = 'http://192.168.1.33:3002/api/v1/locations';
-        const usaBounds = [
-            [-125.0011, 24.9493],
-            [-66.9326, 49.5904]
-        ];
+        /* const usaBounds = [
+          [-125.0011, 24.9493],
+          [-66.9326, 49.5904]
+      ]; */
 
+        const usaBounds = [
+            [-179.231086, 18.776300],
+            [-66.934570, 71.538800]
+        ];
         let map;
+        let openPopupId = null;
 
         function initializeMapWithClusters() {
             const query = new URLSearchParams(window.location.search);
-            console.log('Reloading map with params:', query.toString());
 
             closePopup();
             mapboxgl.accessToken = mapboxAccessToken;
@@ -2288,7 +2318,7 @@ a,
                 container: 'map-canvas',
                 style: 'mapbox://styles/mapbox/light-v11',
                 projection: 'mercator',
-                center: [-98.5795, 39.8283],
+                /* center: [-98.5795, 39.8283], */
                 zoom: 4,
                 maxBounds: usaBounds
             });
@@ -2348,6 +2378,19 @@ a,
                         });
 
                         map.addLayer({
+                            id: 'cluster-background',
+                            type: 'circle',
+                            source: 'locations',
+                            filter: ['has', 'point_count'],
+                            paint: {
+                                'circle-color': '#fff',
+                                'circle-radius': 22,
+                                'circle-stroke-width': 2,
+                                'circle-stroke-color': '#000'
+                            }
+                        });
+
+                        map.addLayer({
                             id: 'clusters',
                             type: 'circle',
                             source: 'locations',
@@ -2375,7 +2418,8 @@ a,
                                 'text-size': 20,
                                 'text-allow-overlap': true,
                                 'text-ignore-placement': true,
-                                'text-anchor': 'center'
+                                'text-anchor': 'center',
+                                /* 'text-font': ['Denim Medium'] // Make sure this font is added in your Mapbox style */
                             },
                             paint: {
                                 'text-color': '#000'
@@ -2413,6 +2457,7 @@ a,
                             const props = e.features[0].properties;
                             const coords = e.features[0].geometry.coordinates;
 
+                            openPopupId = props.id;
                             map.flyTo({
                                 center: coords,
                                 zoom: Math.max(map.getZoom(), 6),
@@ -2446,23 +2491,88 @@ a,
                                 });
                             }
                         });
-
-                        map.on('mouseenter', 'unclustered-point', () => {
-                            map.getCanvas().style.cursor = 'pointer';
+                        const popup = new mapboxgl.Popup({
+                            closeButton: false,
+                            closeOnClick: false
                         });
 
-                        map.on('mouseleave', 'unclustered-point', () => {
-                            map.getCanvas().style.cursor = '';
-                        });
+                        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+                        // for desktop
+                        if (!isTouchDevice) {
+                            map.on('mouseenter', 'unclustered-point', (e) => {
+                                if (openPopupId == e.features[0].properties.id) return;
+                                map.getCanvas().style.cursor = 'pointer';
+                                const coordinates = e.features[0].geometry.coordinates.slice();
+                                const title = e.features[0].properties.title;
+                                const description = e.features[0].properties.description;
+                                if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
+                                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                                    }
+                                }
+                                const popupHTML = `
+                                    <div style="max-width: 400px;">
+                                    <h6 style="margin: 0 0 5px;">${title}</h6>
+                                    <p style="margin: 0 ; font-size: 14px">${description}</p>
+                                    </div>
+                                `;
+                                popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
+                            });
+
+                            map.on('mouseleave', 'unclustered-point', () => {
+                                map.getCanvas().style.cursor = '';
+                                popup.remove();
+                            });
+                        }
+                        // for mobile
+                        if (isTouchDevice) {
+                            map.on('touchstart', 'unclustered-point', (e) => {
+                                if (openPopupId === e.features[0].properties.id) return;
+
+                                const coordinates = e.features[0].geometry.coordinates.slice();
+                                const title = e.features[0].properties.title;
+                                const description = e.features[0].properties.description;
+
+                                if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
+                                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                                    }
+                                }
+
+                                const popupHTML = `
+                                    <div style="max-width: 400px;">
+                                        <h6 style="margin: 0 0 5px;">${title}</h6>
+                                        <p style="margin: 0; font-size: 14px;">${description}</p>
+                                    </div>
+                                    `;
+
+                                popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
+                                openPopupId = e.features[0].properties.id;
+                            });
+
+                            // Close popup when touching elsewhere
+                            map.on('touchstart', (e) => {
+                                const features = map.queryRenderedFeatures(e.point, {
+                                    layers: ['unclustered-point']
+                                });
+
+                                if (!features.length) {
+                                    popup.remove();
+                                    openPopupId = null;
+                                }
+                            });
+                        }
                     });
+
             });
         }
 
         const populatePopup = (props) => {
             document.querySelector('.ts-p--big').textContent = `Solved Story #${props.sr_no}`;
-            document.querySelector('.ts-h6').textContent = props.title || 'Location Event Title';
-            document.querySelector('.tc-grey200').textContent = props.description || 'Description not available.';
-            document.getElementById('popup-address').textContent = props.address || 'No address available';
+            document.querySelector('.ts-h6.tc-white').textContent = props.title;
+            document.querySelector('.tc-grey200').textContent = props.description;
+            document.getElementById('popup-address').textContent = props.address;
 
             const articleLink = document.querySelector('.icon-link.w-inline-block');
             articleLink.href = props.article_url || '#';
@@ -2485,11 +2595,12 @@ a,
                 link.href = props.article_url || '#';
             });
 
-            document.getElementById('custom-map-popup').style.display = '';
+            document.getElementsByClassName('map-canvas_popup')[0].style.display = '';
         };
 
         const closePopup = () => {
-            document.getElementById('custom-map-popup').style.display = 'none';
+            openPopupId = null;
+            document.getElementsByClassName('map-canvas_popup')[0].style.display = 'none';
         };
     </script>
 
