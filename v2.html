@@ -10,10 +10,10 @@
     <meta content="Map" property="twitter:title" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
-    <!-- <link href="map.css" rel="stylesheet" type="text/css" /> -->
-    <link
+    <link href="map.css" rel="stylesheet" type="text/css" />
+    <!-- <link
         href="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/css/flocksafety-staging-fdc65fa18dfdf8751e5.webflow.shared.0a5e127c7.css"
-        rel="stylesheet" type="text/css" />
+        rel="stylesheet" type="text/css" /> -->
     <style>
         @media (max-width:991px) and (min-width:768px) {
             html.w-mod-js:not(.w-mod-ix) [data-w-id="fd6a4dd0-adab-64da-ec12-bade521b79ca"] {
@@ -1525,7 +1525,7 @@ a,
                                                 loading="lazy" alt="" class="map-controls_icon" /></div>
                                     </div>
                                 </div>
-                                <div class="map-canvas_popup" style=" display: none;">
+                                <div class="map-canvas_popup">
                                     <div class="map-popup_split">
                                         <div class="ts-p--big">Solved Story #0001</div><img
                                             src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eba1_close.svg"
@@ -1592,8 +1592,7 @@ a,
                 <div class="container-huge">
                     <div class="footer-5_top-group">
                         <div id="w-node-c22ac329-c887-61ca-2266-aa10a10eaf9a-a10eaf96"
-                            class="footer-5_link-group is-logo">
-                            <a href="#" class="footer-5_brand w-nav-brand">
+                            class="footer-5_link-group is-logo"><a href="#" class="footer-5_brand w-nav-brand">
                                 <div class="embed w-embed"><svg width="321" height="50" viewBox="0 0 321 50" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -2458,9 +2457,23 @@ a,
                             const coords = e.features[0].geometry.coordinates;
 
                             openPopupId = props.id;
+
+                            const canvas = map.getCanvas();
+                            const point = map.project(coords);
+
+                            const width = window.innerWidth;
+
+                            if (width <= 479) {
+                                point.y += canvas.height * 0.2;
+                            } else if (width > 479 && width < 992) {
+                                point.x -= canvas.width * 0.10;
+                            } else {
+                                point.x -= canvas.width * 0.27;
+                            }
+                            const offsetLngLat = map.unproject(point);
                             map.flyTo({
-                                center: coords,
-                                zoom: Math.max(map.getZoom(), 6),
+                                center: offsetLngLat,
+                                zoom: map.getZoom(),
                                 speed: 0.5,
                                 curve: 1.4,
                                 essential: true
