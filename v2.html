@@ -1574,12 +1574,15 @@ a,
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="map-popup_bottom"><a href="#"
-                                            class="button is-small is-fullwidth w-inline-block">
+                                    <div class="map-popup_bottom">
+                                        <a href="#" class="button is-small is-fullwidth w-inline-block">
                                             <div>Read the Full Article</div>
-                                        </a><a href="#" class="map-popup_share w-inline-block"><img
+                                        </a>
+                                        <a href="#" class="map-popup_share w-inline-block"><img
                                                 src="https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/683ea9ecd5e30a9e0614eba2_icon-link.svg"
-                                                loading="lazy" alt="" class="map-popup_share-icon" /></a></div>
+                                                loading="lazy" alt="" class="map-popup_share-icon" />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2115,11 +2118,401 @@ a,
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const region = urlParams.get('region');
+        const state = urlParams.get('state');
+        const segment = urlParams.get('segment');
+        const openPopupParam = urlParams.get('openpopup');
+
+        let locations = [];
+        let bounds = [];
+        const mapboxAccessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
+        const dataBaseUrl = 'http://192.168.1.33:3002/api/v1/locations';
+
+        const usaBounds = [
+            [-179.231086, 18.776300],
+            [-66.934570, 71.538800]
+        ];
+        let map;
+        let openPopupId = null;
+
+
+        function initializeMapWithClusters() {
+            return new Promise((resolve, reject) => {
+                const query = new URLSearchParams(window.location.search);
+
+                closePopup();
+                mapboxgl.accessToken = mapboxAccessToken;
+
+                map = new mapboxgl.Map({
+                    container: 'map-canvas',
+                    style: 'mapbox://styles/mapbox/light-v11',
+                    projection: 'mercator',
+                    center: [-98.5795, 39.8283],
+                    zoom: 4,
+                    maxBounds: usaBounds
+                });
+
+                map.on('load', () => {
+                    // Load highlight-pointer icon
+                    if (!map.hasImage('highlight-pointer')) {
+                        map.loadImage('pointer.png', (error, image) => {
+                            if (error) {
+                                reject(error);
+                                return;
+                            }
+
+                            // Double-check inside the callback
+                            if (!map.hasImage('highlight-pointer')) {
+                                map.addImage('highlight-pointer', image);
+                            }
+                        });
+                    }
+
+                    // Fetch and process location data
+                    fetch(`${dataBaseUrl}${query ? '?' + query : ''}`)
+                        .then(res => res.json())
+                        .then(({ data }) => {
+                            locations = data.locations || [];
+
+                            if (locations.length > 0) {
+                                const coordinates = locations.map(loc => loc.geometry.coordinates);
+                                bounds = coordinates.reduce(
+                                    (b, c) => b.extend(c),
+                                    new mapboxgl.LngLatBounds(coordinates[0], coordinates[0])
+                                );
+                                map.fitBounds(bounds, {
+                                    padding: 50,
+                                    maxZoom: 10,
+                                    duration: 1000
+                                });
+                            }
+
+                            const geojsonData = {
+                                type: 'FeatureCollection',
+                                features: locations.map(loc => ({
+                                    type: 'Feature',
+                                    geometry: { type: 'Point', coordinates: loc.geometry.coordinates },
+                                    properties: { ...loc }
+                                }))
+                            };
+                            resolve();
+                            map.addSource('locations', {
+                                type: 'geojson',
+                                data: geojsonData,
+                                cluster: true,
+                                clusterMaxZoom: 10,
+                                clusterRadius: 50
+                            });
+
+
+                            map.addSource('highlight-point', {
+                                type: 'geojson',
+                                data: { type: 'FeatureCollection', features: [] }
+                            });
+
+                            map.addLayer({
+                                id: 'cluster-background',
+                                type: 'circle',
+                                source: 'locations',
+                                filter: ['has', 'point_count'],
+                                paint: {
+                                    'circle-color': '#fff',
+                                    'circle-radius': 22,
+                                    'circle-stroke-width': 2,
+                                    'circle-stroke-color': '#000'
+                                }
+                            });
+
+                            map.addLayer({
+                                id: 'clusters',
+                                type: 'circle',
+                                source: 'locations',
+                                filter: ['has', 'point_count'],
+                                paint: {
+                                    'circle-color': '#3fc919',
+                                    'circle-radius': 22,
+                                    'circle-stroke-width': 2,
+                                    'circle-stroke-color': '#fff'
+                                }
+                            });
+
+                            map.addLayer({
+                                id: 'cluster-count',
+                                type: 'symbol',
+                                source: 'locations',
+                                filter: ['has', 'point_count'],
+                                layout: {
+                                    'text-field': [
+                                        'case',
+                                        ['>', ['get', 'point_count'], 99],
+                                        '99+',
+                                        ['get', 'point_count_abbreviated']
+                                    ],
+                                    'text-size': 20,
+                                    'text-allow-overlap': true,
+                                    'text-ignore-placement': true,
+                                    'text-anchor': 'center'
+                                },
+                                paint: { 'text-color': '#000' }
+                            });
+
+                            map.addLayer({
+                                id: 'unclustered-point',
+                                type: 'circle',
+                                source: 'locations',
+                                filter: ['!', ['has', 'point_count']],
+                                paint: {
+                                    'circle-color': '#3fc919',
+                                    'circle-radius': 12,
+                                    'circle-stroke-width': 2,
+                                    'circle-stroke-color': '#fff'
+                                }
+                            });
+
+                            map.addLayer({
+                                id: 'highlight-symbol',
+                                type: 'symbol',
+                                source: 'highlight-point',
+                                layout: {
+                                    'icon-image': 'highlight-pointer',
+                                    'icon-size': 1,
+                                    'icon-allow-overlap': true,
+                                    'icon-ignore-placement': true
+                                }
+                            });
+
+                            map.moveLayer('highlight-symbol');
+
+                            map.on('click', 'unclustered-point', (e) => {
+                                const props = e.features[0].properties;
+                                const coords = e.features[0].geometry.coordinates;
+                                openPopupId = props.id;
+
+                                const canvas = map.getCanvas();
+                                const point = map.project(coords);
+                                const width = window.innerWidth;
+                                let zoomLevel = map.getZoom();
+
+                                const offsetLngLat = map.unproject(point);
+                                const { center, zoom } = calculateResponsiveOffset(coords, 7);
+
+                                map.getSource('highlight-point').setData({
+                                    type: 'FeatureCollection',
+                                    features: [{
+                                        type: 'Feature',
+                                        geometry: { type: 'Point', coordinates: coords },
+                                        properties: {}
+                                    }]
+                                });
+
+                                populatePopup(props);
+                            });
+
+                            map.on('click', (e) => {
+                                const features = map.queryRenderedFeatures(e.point, {
+                                    layers: ['unclustered-point']
+                                });
+
+                                if (!features.length) {
+                                    closePopup();
+                                    map.getSource('highlight-point').setData({
+                                        type: 'FeatureCollection',
+                                        features: []
+                                    });
+                                }
+                            });
+
+                            const popup = new mapboxgl.Popup({
+                                closeButton: false,
+                                closeOnClick: false
+                            });
+
+                            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+                            if (!isTouchDevice) {
+                                map.on('mouseenter', 'unclustered-point', (e) => {
+                                    if (openPopupId == e.features[0].properties.id) return;
+                                    map.getCanvas().style.cursor = 'pointer';
+
+                                    const coordinates = e.features[0].geometry.coordinates.slice();
+                                    const title = e.features[0].properties.title;
+                                    const description = e.features[0].properties.description;
+
+                                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                                    }
+
+                                    const popupHTML = `
+                                <div style="max-width: 400px;">
+                                    <h6 style="margin: 0 0 5px;">${title}</h6>
+                                    <p style="margin: 0 ; font-size: 14px">${description}</p>
+                                </div>
+                            `;
+
+                                    popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
+                                });
+
+                                map.on('mouseleave', 'unclustered-point', () => {
+                                    map.getCanvas().style.cursor = '';
+                                    popup.remove();
+                                });
+                            }
+
+                            if (isTouchDevice) {
+                                map.on('touchstart', 'unclustered-point', (e) => {
+                                    if (openPopupId === e.features[0].properties.id) return;
+
+                                    const coordinates = e.features[0].geometry.coordinates.slice();
+                                    const title = e.features[0].properties.title;
+                                    const description = e.features[0].properties.description;
+
+                                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                                    }
+
+                                    const popupHTML = `
+                                <div style="max-width: 400px;">
+                                    <h6 style="margin: 0 0 5px;">${title}</h6>
+                                    <p style="margin: 0 ; font-size: 14px;">${description}</p>
+                                </div>
+                            `;
+
+                                    popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
+                                    openPopupId = e.features[0].properties.id;
+                                });
+
+                                map.on('touchstart', (e) => {
+                                    const features = map.queryRenderedFeatures(e.point, {
+                                        layers: ['unclustered-point']
+                                    });
+
+                                    if (!features.length) {
+                                        popup.remove();
+                                        openPopupId = null;
+                                    }
+                                });
+                            }
+
+
+                        })
+                        .catch(err => {
+                            console.error("Failed to load map data", err);
+                            reject(err);
+                        });
+                });
+            });
+        }
+
+
+        const populatePopup = (props) => {
+            document.querySelector('.ts-p--big').textContent = `Solved Story #${props.sr_no}`;
+            document.querySelector('.ts-h6.tc-white').textContent = props.title;
+            document.querySelector('.tc-grey200').textContent = props.description;
+            document.getElementById('popup-address').textContent = props.address;
+
+            const articleLink = document.querySelector('.icon-link.w-inline-block').setAttribute('data-sr', props.sr_no);
+
+            const tagContainer = document.querySelector('.map-popup_tags-wrapper');
+            tagContainer.innerHTML = '';
+
+            let tags = [];
+
+            try {
+                if (Array.isArray(props.segments)) {
+                    tags = props.segments;
+                } else if (typeof props.segments === 'string') {
+                    const parsed = JSON.parse(props.segments);
+                    if (Array.isArray(parsed)) {
+                        tags = parsed;
+                    } else {
+                        tags = props.segments.split(',');
+                    }
+                }
+            } catch (err) {
+                console.warn('Error parsing segments, using as comma-separated string:', err);
+                tags = props.segments.split(',');
+            }
+
+            tags.forEach(tag => {
+                const div = document.createElement('div');
+                div.className = 'map-popup_tag';
+                div.textContent = tag.trim();
+                tagContainer.appendChild(div);
+            });
+
+
+            const el = document.querySelector('.map-popup_bottom .w-inline-block');
+            if (el) el.href = props.article_url || '#';
+
+            const shareLink = document.querySelector('.map-popup_bottom .map-popup_share');
+
+            if (shareLink) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('openpopup', props.sr_no);
+
+                const shareUrl = url.toString();
+
+                shareLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        // Change background color to green
+                        shareLink.style.backgroundColor = '#3fc919';
+                        shareLink.style.color = 'white';
+
+                        // Revert after 2 seconds
+                        setTimeout(() => {
+                            shareLink.style.backgroundColor = '';
+                            shareLink.style.color = '';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                });
+            }
+
+            document.getElementsByClassName('map-canvas_popup')[0].style.display = '';
+        };
+
+        const closePopup = () => {
+            openPopupId = null;
+            document.getElementsByClassName('map-canvas_popup')[0].style.display = 'none';
+        };
+
         $(document).ready(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const region = urlParams.get('region');
-            const state = urlParams.get('state');
-            const segment = urlParams.get('segment');
+            document.querySelectorAll('.icon-link.w-inline-block').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = el.getAttribute('data-sr');
+                    const target = locations.find(loc => loc.sr_no == targetId);
+                    if (!target) return;
+
+                    closePopup();
+
+                    const coords = target.geometry.coordinates;
+                    openPopupId = target.id;
+                    const point = map.project(coords);
+                    let zoomLevel = map.getZoom();
+                    const offsetLngLat = map.unproject(point);
+                    map.flyTo({
+                        center: coords,
+                        zoom: zoomLevel,
+                        speed: 0.5,
+                        curve: 1.4,
+                        essential: true
+                    });
+
+                    map.getSource('highlight-point').setData({
+                        type: 'FeatureCollection',
+                        features: [{
+                            type: 'Feature',
+                            geometry: { type: 'Point', coordinates: coords },
+                            properties: {}
+                        }]
+                    });
+                });
+            });
 
             // Map controller buttons
             document.getElementById('zoom-in').addEventListener('click', () => map.zoomIn());
@@ -2138,8 +2531,8 @@ a,
                         map.flyTo({
                             center: [lng, lat],
                             zoom: 12,
-                            speed: 1.2,
-                            curve: 1.5,
+                            speed: 0.5,
+                            curve: 1.4,
                             essential: true
                         });
 
@@ -2221,8 +2614,6 @@ a,
                 $('#Segments').val(segment).trigger('change');
             }
 
-            initializeMapWithClusters();
-
             // Filter controls
             $('#State, #Region').on('change', function () {
                 const selected = this.value;
@@ -2252,7 +2643,7 @@ a,
 
             $('#Segments').on('change', function () {
                 updateURLParam('segment', this.value === 'All Segments' ? '' : this.value);
-                initializeMapWithClusters();
+                initializeMapWithClusters().then(() => { });
             });
 
             function showRegion(selectedValue = null) {
@@ -2291,333 +2682,85 @@ a,
                 }
                 history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
             }
+            initializeMapWithClusters().then(() => {
+                if (openPopupParam) {
+                    updateURLParam('openpopup', '')
+                    const srNo = parseInt(openPopupParam);
+                    const target = locations.find(loc => loc.sr_no == srNo);
+                    if (target) {
+                        const coords = target.geometry.coordinates;
+                        openPopupId = target.id;
+
+                        const canvas = map.getCanvas();
+                        const point = map.project(coords);
+                        const width = window.innerWidth;
+                        let zoomLevel = map.getZoom();
+
+                        const { center, zoom } = calculateResponsiveOffset(coords, 7);
+
+                        map.getSource('highlight-point').setData({
+                            type: 'FeatureCollection',
+                            features: [{
+                                type: 'Feature',
+                                geometry: { type: 'Point', coordinates: coords },
+                                properties: {}
+                            }]
+                        });
+
+                        setTimeout(() => {
+                            populatePopup(target);
+                        }, 1000);
+                    }
+                }
+            });
         });
 
-        const mapboxAccessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
-        const dataBaseUrl = 'http://192.168.1.33:3002/api/v1/locations';
-        /* const usaBounds = [
-          [-125.0011, 24.9493],
-          [-66.9326, 49.5904]
-      ]; */
+        function calculateResponsiveOffset(targetCoords, zoomLevel) {
+            const width = window.innerWidth;
+            const canvas = map.getCanvas();
 
-        const usaBounds = [
-            [-179.231086, 18.776300],
-            [-66.934570, 71.538800]
-        ];
-        let map;
-        let openPopupId = null;
+            const originalCenter = map.getCenter();
+            const originalZoom = map.getZoom();
 
-        function initializeMapWithClusters() {
-            const query = new URLSearchParams(window.location.search);
-
-            closePopup();
-            mapboxgl.accessToken = mapboxAccessToken;
-
-            map = new mapboxgl.Map({
-                container: 'map-canvas',
-                style: 'mapbox://styles/mapbox/light-v11',
-                projection: 'mercator',
-                /* center: [-98.5795, 39.8283], */
-                zoom: 4,
-                maxBounds: usaBounds
+            map.jumpTo({
+                center: targetCoords,
+                zoom: zoomLevel
             });
 
-            map.on('load', () => {
-                if (!map.hasImage('highlight-pointer')) {
-                    map.loadImage('pointer.png', (error, image) => {
-                        if (error) throw error;
-                        map.addImage('highlight-pointer', image);
-                    });
-                }
+            const targetPoint = map.project(targetCoords);
 
-                fetch(`${dataBaseUrl}${query ? '?' + query : ''}`)
-                    .then(res => res.json())
-                    .then(({ data }) => {
-                        const locations = data.locations || [];
+            let offsetX = 0;
+            let offsetY = 0;
 
-                        if (locations.length > 0) {
-                            const coordinates = locations.map(loc => loc.geometry.coordinates);
-                            const bounds = coordinates.reduce(
-                                (b, c) => b.extend(c),
-                                new mapboxgl.LngLatBounds(coordinates[0], coordinates[0])
-                            );
-                            map.fitBounds(bounds, {
-                                padding: 50,
-                                maxZoom: 10,
-                                duration: 1000
-                            });
-                        }
-
-                        const geojsonData = {
-                            type: 'FeatureCollection',
-                            features: locations.map(loc => ({
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: loc.geometry.coordinates
-                                },
-                                properties: { ...loc }
-                            }))
-                        };
-
-                        map.addSource('locations', {
-                            type: 'geojson',
-                            data: geojsonData,
-                            cluster: true,
-                            clusterMaxZoom: 10,
-                            clusterRadius: 50
-                        });
-
-                        map.addSource('highlight-point', {
-                            type: 'geojson',
-                            data: {
-                                type: 'FeatureCollection',
-                                features: []
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'cluster-background',
-                            type: 'circle',
-                            source: 'locations',
-                            filter: ['has', 'point_count'],
-                            paint: {
-                                'circle-color': '#fff',
-                                'circle-radius': 22,
-                                'circle-stroke-width': 2,
-                                'circle-stroke-color': '#000'
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'clusters',
-                            type: 'circle',
-                            source: 'locations',
-                            filter: ['has', 'point_count'],
-                            paint: {
-                                'circle-color': '#3fc919',
-                                'circle-radius': 22,
-                                'circle-stroke-width': 2,
-                                'circle-stroke-color': '#fff'
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'cluster-count',
-                            type: 'symbol',
-                            source: 'locations',
-                            filter: ['has', 'point_count'],
-                            layout: {
-                                'text-field': [
-                                    'case',
-                                    ['>', ['get', 'point_count'], 99],
-                                    '99+',
-                                    ['get', 'point_count_abbreviated']
-                                ],
-                                'text-size': 20,
-                                'text-allow-overlap': true,
-                                'text-ignore-placement': true,
-                                'text-anchor': 'center',
-                                /* 'text-font': ['Denim Medium'] // Make sure this font is added in your Mapbox style */
-                            },
-                            paint: {
-                                'text-color': '#000'
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'unclustered-point',
-                            type: 'circle',
-                            source: 'locations',
-                            filter: ['!', ['has', 'point_count']],
-                            paint: {
-                                'circle-color': '#3fc919',
-                                'circle-radius': 12,
-                                'circle-stroke-width': 2,
-                                'circle-stroke-color': '#fff'
-                            }
-                        });
-
-                        map.addLayer({
-                            id: 'highlight-symbol',
-                            type: 'symbol',
-                            source: 'highlight-point',
-                            layout: {
-                                'icon-image': 'highlight-pointer',
-                                'icon-size': 1,
-                                'icon-allow-overlap': true,
-                                'icon-ignore-placement': true
-                            }
-                        });
-
-                        map.moveLayer('highlight-symbol');
-
-                        map.on('click', 'unclustered-point', (e) => {
-                            const props = e.features[0].properties;
-                            const coords = e.features[0].geometry.coordinates;
-
-                            openPopupId = props.id;
-
-                            const canvas = map.getCanvas();
-                            const point = map.project(coords);
-
-                            const width = window.innerWidth;
-
-                            if (width <= 479) {
-                                point.y += canvas.height * 0.2;
-                            } else if (width > 479 && width < 992) {
-                                point.x -= canvas.width * 0.10;
-                            } else {
-                                point.x -= canvas.width * 0.27;
-                            }
-                            const offsetLngLat = map.unproject(point);
-                            map.flyTo({
-                                center: offsetLngLat,
-                                zoom: map.getZoom(),
-                                speed: 0.5,
-                                curve: 1.4,
-                                essential: true
-                            });
-
-                            map.getSource('highlight-point').setData({
-                                type: 'FeatureCollection',
-                                features: [{
-                                    type: 'Feature',
-                                    geometry: { type: 'Point', coordinates: coords },
-                                    properties: {}
-                                }]
-                            });
-
-                            populatePopup(props);
-                        });
-
-                        map.on('click', (e) => {
-                            const features = map.queryRenderedFeatures(e.point, {
-                                layers: ['unclustered-point']
-                            });
-
-                            if (!features.length) {
-                                closePopup();
-                                map.getSource('highlight-point').setData({
-                                    type: 'FeatureCollection',
-                                    features: []
-                                });
-                            }
-                        });
-                        const popup = new mapboxgl.Popup({
-                            closeButton: false,
-                            closeOnClick: false
-                        });
-
-                        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-                        // for desktop
-                        if (!isTouchDevice) {
-                            map.on('mouseenter', 'unclustered-point', (e) => {
-                                if (openPopupId == e.features[0].properties.id) return;
-                                map.getCanvas().style.cursor = 'pointer';
-                                const coordinates = e.features[0].geometry.coordinates.slice();
-                                const title = e.features[0].properties.title;
-                                const description = e.features[0].properties.description;
-                                if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
-                                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                                    }
-                                }
-                                const popupHTML = `
-                                    <div style="max-width: 400px;">
-                                    <h6 style="margin: 0 0 5px;">${title}</h6>
-                                    <p style="margin: 0 ; font-size: 14px">${description}</p>
-                                    </div>
-                                `;
-                                popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
-                            });
-
-                            map.on('mouseleave', 'unclustered-point', () => {
-                                map.getCanvas().style.cursor = '';
-                                popup.remove();
-                            });
-                        }
-                        // for mobile
-                        if (isTouchDevice) {
-                            map.on('touchstart', 'unclustered-point', (e) => {
-                                if (openPopupId === e.features[0].properties.id) return;
-
-                                const coordinates = e.features[0].geometry.coordinates.slice();
-                                const title = e.features[0].properties.title;
-                                const description = e.features[0].properties.description;
-
-                                if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
-                                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                                    }
-                                }
-
-                                const popupHTML = `
-                                    <div style="max-width: 400px;">
-                                        <h6 style="margin: 0 0 5px;">${title}</h6>
-                                        <p style="margin: 0; font-size: 14px;">${description}</p>
-                                    </div>
-                                    `;
-
-                                popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
-                                openPopupId = e.features[0].properties.id;
-                            });
-
-                            // Close popup when touching elsewhere
-                            map.on('touchstart', (e) => {
-                                const features = map.queryRenderedFeatures(e.point, {
-                                    layers: ['unclustered-point']
-                                });
-
-                                if (!features.length) {
-                                    popup.remove();
-                                    openPopupId = null;
-                                }
-                            });
-                        }
-                    });
-
-            });
-        }
-
-        const populatePopup = (props) => {
-            document.querySelector('.ts-p--big').textContent = `Solved Story #${props.sr_no}`;
-            document.querySelector('.ts-h6.tc-white').textContent = props.title;
-            document.querySelector('.tc-grey200').textContent = props.description;
-            document.getElementById('popup-address').textContent = props.address;
-
-            const articleLink = document.querySelector('.icon-link.w-inline-block');
-            articleLink.href = props.article_url || '#';
-
-            const tagContainer = document.querySelector('.map-popup_tags-wrapper');
-            tagContainer.innerHTML = '';
-            try {
-                const tags = JSON.parse(props.segments || '[]');
-                tags.forEach(tag => {
-                    const div = document.createElement('div');
-                    div.className = 'map-popup_tag';
-                    div.textContent = tag.trim();
-                    tagContainer.appendChild(div);
-                });
-            } catch (err) {
-                console.warn('Error parsing segments:', err);
+            if (width <= 479) {
+                offsetY = canvas.height * 0.25 - targetPoint.y;
+            } else if (width < 992) {
+                offsetX = canvas.width / 2.40 - targetPoint.x;
+            } else {
+                offsetX = canvas.width / 2.40 - targetPoint.x;
             }
 
-            document.querySelectorAll('.map-popup_bottom a').forEach(link => {
-                link.href = props.article_url || '#';
+            const offsetPoint = [targetPoint.x + offsetX, targetPoint.y + offsetY];
+            const offsetCenter = map.unproject(offsetPoint);
+
+            map.jumpTo({
+                center: originalCenter,
+                zoom: originalZoom
+            });
+            map.flyTo({
+                center: [offsetCenter.lng, offsetCenter.lat],
+                zoom: zoomLevel,
+                speed: 0.5,
+                curve: 1.4,
+                essential: true
             });
 
-            document.getElementsByClassName('map-canvas_popup')[0].style.display = '';
-        };
-
-        const closePopup = () => {
-            openPopupId = null;
-            document.getElementsByClassName('map-canvas_popup')[0].style.display = 'none';
-        };
+            return {
+                center: [offsetCenter.lng, offsetCenter.lat],
+                zoom: zoomLevel
+            };
+        }
     </script>
-
-
 </body>
 
 </html>
