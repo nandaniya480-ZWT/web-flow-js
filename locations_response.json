@@ -1,0 +1,2460 @@
+{
+  "success": true,
+  "message": "Locations retrieved successfully",
+  "timestamp": "2025-06-18T06:55:26.178Z",
+  "data": {
+    "locations": [
+      {
+        "id": 1000,
+        "sr_no": 100,
+        "title": "Jerde, Bailey and Mertz Security Hub",
+        "description": "Aedificium bardus adinventitias canis stips suadeo sumo suppellex admiratio.",
+        "latitude": "33.5186000",
+        "longitude": "-86.8104000",
+        "region": "South",
+        "state": "Alabama",
+        "address": "First United Methodist Church, 518 19th Street North, Birmingham, AL 35203, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://unwieldy-conservation.info",
+        "created_at": "2025-06-18T06:34:02.588Z",
+        "updated_at": "2025-06-18T06:34:02.588Z",
+        "geometry": {
+          "coordinates": [
+            -86.8104,
+            33.5186
+          ]
+        }
+      },
+      {
+        "id": 1001,
+        "sr_no": 101,
+        "title": "Frami - McDermott Security Hub",
+        "description": "Similique aufero facere tempore sublime advoco.",
+        "latitude": "61.2176000",
+        "longitude": "-149.8997000",
+        "region": "West",
+        "state": "Alaska",
+        "address": "Hotel Captain Cook, 939 West 5th Avenue, Anchorage, AK 99501, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://muddy-fun.name",
+        "created_at": "2025-06-18T06:34:02.991Z",
+        "updated_at": "2025-06-18T06:34:02.991Z",
+        "geometry": {
+          "coordinates": [
+            -149.8997,
+            61.2176
+          ]
+        }
+      },
+      {
+        "id": 1002,
+        "sr_no": 102,
+        "title": "Wunsch, Beier and Ruecker Security Hub",
+        "description": "Patria aduro virgo.",
+        "latitude": "33.4484000",
+        "longitude": "-112.0740000",
+        "region": "West",
+        "state": "Arizona",
+        "address": "2 North Central Avenue, Phoenix, AZ 85003, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://obedient-ectoderm.com/",
+        "created_at": "2025-06-18T06:34:03.306Z",
+        "updated_at": "2025-06-18T06:34:03.306Z",
+        "geometry": {
+          "coordinates": [
+            -112.074,
+            33.4484
+          ]
+        }
+      },
+      {
+        "id": 1003,
+        "sr_no": 103,
+        "title": "Runolfsdottir and Sons Security Hub",
+        "description": "Curatio aeneus ademptio perspiciatis subito tenetur vulgo deleniti adeptio.",
+        "latitude": "34.7465000",
+        "longitude": "-92.2896000",
+        "region": "South",
+        "state": "Arkansas",
+        "address": "State Capitol, Little Rock, AR 72201, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://far-off-bug.info/",
+        "created_at": "2025-06-18T06:34:03.749Z",
+        "updated_at": "2025-06-18T06:34:03.749Z",
+        "geometry": {
+          "coordinates": [
+            -92.2896,
+            34.7465
+          ]
+        }
+      },
+      {
+        "id": 1004,
+        "sr_no": 104,
+        "title": "MacGyver, Rempel and Mills Security Hub",
+        "description": "Constans vulgaris deleniti canto universe demo cui cavus capto.",
+        "latitude": "34.0522000",
+        "longitude": "-118.2437000",
+        "region": "West",
+        "state": "California",
+        "address": "Los Angeles Police Department Headquarters, Broad Plaza, Los Angeles, CA 90013, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://regular-slipper.name",
+        "created_at": "2025-06-18T06:34:04.137Z",
+        "updated_at": "2025-06-18T06:34:04.137Z",
+        "geometry": {
+          "coordinates": [
+            -118.2437,
+            34.0522
+          ]
+        }
+      },
+      {
+        "id": 1005,
+        "sr_no": 105,
+        "title": "Buckridge Inc Security Hub",
+        "description": "Curriculum vulticulus curriculum.",
+        "latitude": "39.7392000",
+        "longitude": "-104.9903000",
+        "region": "West",
+        "state": "Colorado",
+        "address": "Bannock Central Plaza, Denver, CO 80281, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://noxious-technician.com",
+        "created_at": "2025-06-18T06:34:04.444Z",
+        "updated_at": "2025-06-18T06:34:04.444Z",
+        "geometry": {
+          "coordinates": [
+            -104.9903,
+            39.7392
+          ]
+        }
+      },
+      {
+        "id": 1006,
+        "sr_no": 106,
+        "title": "Zboncak - Will Security Hub",
+        "description": "Universe comedo accendo arceo velociter allatus ubi bonus crapula video.",
+        "latitude": "41.1792000",
+        "longitude": "-73.1894000",
+        "region": "Northeast",
+        "state": "Connecticut",
+        "address": "1061 Main Street, East Bridgeport, Bridgeport, CT 06604, United States of America",
+        "segments": [
+          "Community Safety",
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://hot-nucleotidase.org/",
+        "created_at": "2025-06-18T06:34:04.954Z",
+        "updated_at": "2025-06-18T06:34:04.954Z",
+        "geometry": {
+          "coordinates": [
+            -73.1894,
+            41.1792
+          ]
+        }
+      },
+      {
+        "id": 1007,
+        "sr_no": 107,
+        "title": "Kilback - Waelchi Security Hub",
+        "description": "Tutamen tenax universe temporibus vallum id damno.",
+        "latitude": "39.7391000",
+        "longitude": "-75.5398000",
+        "region": "South",
+        "state": "Delaware",
+        "address": "999 East 7th Street, Wilmington, DE 19801, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://likable-gastropod.name",
+        "created_at": "2025-06-18T06:34:05.298Z",
+        "updated_at": "2025-06-18T06:34:05.298Z",
+        "geometry": {
+          "coordinates": [
+            -75.5398,
+            39.7391
+          ]
+        }
+      },
+      {
+        "id": 1008,
+        "sr_no": 108,
+        "title": "Bahringer, Haley and Ziemann Security Hub",
+        "description": "Comis nam eius thermae admiratio suppono vix vulgaris corrumpo ut.",
+        "latitude": "38.8951000",
+        "longitude": "-77.0364000",
+        "region": "South",
+        "state": "Washington D.C.",
+        "address": "Ellipse Road Northwest, Washington, DC 20237, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business"
+        ],
+        "article_url": "https://robust-onset.biz/",
+        "created_at": "2025-06-18T06:34:05.620Z",
+        "updated_at": "2025-06-18T06:34:05.620Z",
+        "geometry": {
+          "coordinates": [
+            -77.0364,
+            38.8951
+          ]
+        }
+      },
+      {
+        "id": 1009,
+        "sr_no": 109,
+        "title": "Thiel and Sons Security Hub",
+        "description": "Amplexus venio amoveo.",
+        "latitude": "30.3322000",
+        "longitude": "-81.6557000",
+        "region": "South",
+        "state": "Florida",
+        "address": "23 Union Street, Jacksonville, FL 32202, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://untried-knuckle.net/",
+        "created_at": "2025-06-18T06:34:05.955Z",
+        "updated_at": "2025-06-18T06:34:05.955Z",
+        "geometry": {
+          "coordinates": [
+            -81.6557,
+            30.3322
+          ]
+        }
+      },
+      {
+        "id": 1010,
+        "sr_no": 110,
+        "title": "Barrows - Schulist Security Hub",
+        "description": "Colo subvenio ascisco capio calco sursum nulla attero ait totam.",
+        "latitude": "33.7490000",
+        "longitude": "-84.3880000",
+        "region": "South",
+        "state": "Georgia",
+        "address": "The Georgia State Capitol, 206 Washington Street Southwest, Atlanta, GA 30334, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "School Safety"
+        ],
+        "article_url": "https://yellowish-wear.net",
+        "created_at": "2025-06-18T06:34:06.363Z",
+        "updated_at": "2025-06-18T06:34:06.363Z",
+        "geometry": {
+          "coordinates": [
+            -84.388,
+            33.749
+          ]
+        }
+      },
+      {
+        "id": 1011,
+        "sr_no": 111,
+        "title": "Roob Inc Security Hub",
+        "description": "Conduco barba tener.",
+        "latitude": "21.3069000",
+        "longitude": "-157.8583000",
+        "region": "West",
+        "state": "Hawaii",
+        "address": "Iolani Palace, 364 South King Street, Honolulu, HI 96813, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://apprehensive-spear.com/",
+        "created_at": "2025-06-18T06:34:06.728Z",
+        "updated_at": "2025-06-18T06:34:06.728Z",
+        "geometry": {
+          "coordinates": [
+            -157.8583,
+            21.3069
+          ]
+        }
+      },
+      {
+        "id": 1012,
+        "sr_no": 112,
+        "title": "Kirlin LLC Security Hub",
+        "description": "Sum stella celebrer tamen deputo considero voluntarius contigo.",
+        "latitude": "43.6150000",
+        "longitude": "-116.2023000",
+        "region": "West",
+        "state": "Idaho",
+        "address": "Perrault Building, 625 West Main Street, Boise, ID 83702, United States of America",
+        "segments": [
+          "Commercial Business",
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://sparkling-skyscraper.com",
+        "created_at": "2025-06-18T06:34:07.172Z",
+        "updated_at": "2025-06-18T06:34:07.172Z",
+        "geometry": {
+          "coordinates": [
+            -116.2023,
+            43.615
+          ]
+        }
+      },
+      {
+        "id": 1013,
+        "sr_no": 113,
+        "title": "Hilll, Gorczany and Ortiz Security Hub",
+        "description": "Vestrum excepturi decens tersus iure ago termes.",
+        "latitude": "41.8781000",
+        "longitude": "-87.6298000",
+        "region": "Midwest",
+        "state": "Illinois",
+        "address": "314 South Federal Street, Chicago, IL 60604, United States of America",
+        "segments": [
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://ruddy-grouper.name/",
+        "created_at": "2025-06-18T06:34:07.585Z",
+        "updated_at": "2025-06-18T06:34:07.585Z",
+        "geometry": {
+          "coordinates": [
+            -87.6298,
+            41.8781
+          ]
+        }
+      },
+      {
+        "id": 1014,
+        "sr_no": 114,
+        "title": "Fay - Kuhlman Security Hub",
+        "description": "Viscus caute laudantium amitto beatae theatrum collum.",
+        "latitude": "39.7684000",
+        "longitude": "-86.1581000",
+        "region": "Midwest",
+        "state": "Indiana",
+        "address": "unnamed road, Indianapolis, IN 46207, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://muted-trolley.name/",
+        "created_at": "2025-06-18T06:34:07.903Z",
+        "updated_at": "2025-06-18T06:34:07.903Z",
+        "geometry": {
+          "coordinates": [
+            -86.1581,
+            39.7684
+          ]
+        }
+      },
+      {
+        "id": 1015,
+        "sr_no": 115,
+        "title": "Crona LLC Security Hub",
+        "description": "Reiciendis conqueror adopto aeternus sunt.",
+        "latitude": "41.5868000",
+        "longitude": "-93.6250000",
+        "region": "Midwest",
+        "state": "Iowa",
+        "address": "Equitable Building, 604 Locust Street, Des Moines, IA 50309, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://old-sushi.org/",
+        "created_at": "2025-06-18T06:34:08.395Z",
+        "updated_at": "2025-06-18T06:34:08.395Z",
+        "geometry": {
+          "coordinates": [
+            -93.625,
+            41.5868
+          ]
+        }
+      },
+      {
+        "id": 1016,
+        "sr_no": 116,
+        "title": "Raynor LLC Security Hub",
+        "description": "Molestiae distinctio venustas cibo deripio capio patrocinor.",
+        "latitude": "37.6872000",
+        "longitude": "-97.3301000",
+        "region": "Midwest",
+        "state": "Kansas",
+        "address": "160 North Santa Fe Avenue, Wichita, KS 67202, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://outlandish-platter.info/",
+        "created_at": "2025-06-18T06:34:08.837Z",
+        "updated_at": "2025-06-18T06:34:08.837Z",
+        "geometry": {
+          "coordinates": [
+            -97.3301,
+            37.6872
+          ]
+        }
+      },
+      {
+        "id": 1017,
+        "sr_no": 117,
+        "title": "Waelchi, Sipes and Champlin Security Hub",
+        "description": "Tabella umquam venia vetus substantia abundans.",
+        "latitude": "38.2527000",
+        "longitude": "-85.7585000",
+        "region": "South",
+        "state": "Kentucky",
+        "address": "West Liberty Street, Louisville, KY 40203, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://honored-bid.name",
+        "created_at": "2025-06-18T06:34:09.152Z",
+        "updated_at": "2025-06-18T06:34:09.152Z",
+        "geometry": {
+          "coordinates": [
+            -85.7585,
+            38.2527
+          ]
+        }
+      },
+      {
+        "id": 1018,
+        "sr_no": 118,
+        "title": "Russel LLC Security Hub",
+        "description": "Vulgivagus arcesso vitae adipiscor appositus.",
+        "latitude": "29.9511000",
+        "longitude": "-90.0715000",
+        "region": "South",
+        "state": "Louisiana",
+        "address": "335 Carondelet Street, New Orleans, LA 70130, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://slow-schnitzel.net/",
+        "created_at": "2025-06-18T06:34:09.652Z",
+        "updated_at": "2025-06-18T06:34:09.652Z",
+        "geometry": {
+          "coordinates": [
+            -90.0715,
+            29.9511
+          ]
+        }
+      },
+      {
+        "id": 1019,
+        "sr_no": 119,
+        "title": "Brown - Ward Security Hub",
+        "description": "Desipio templum caries vaco creator vester thalassinus vesco.",
+        "latitude": "43.6591000",
+        "longitude": "-70.2568000",
+        "region": "Northeast",
+        "state": "Maine",
+        "address": "Portland City Hall, 389 Congress Street, Portland, ME 04101, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://scented-thorn.com/",
+        "created_at": "2025-06-18T06:34:09.995Z",
+        "updated_at": "2025-06-18T06:34:09.995Z",
+        "geometry": {
+          "coordinates": [
+            -70.2568,
+            43.6591
+          ]
+        }
+      },
+      {
+        "id": 1020,
+        "sr_no": 120,
+        "title": "Daugherty - Jerde Security Hub",
+        "description": "Taedium cimentarius vaco.",
+        "latitude": "39.2904000",
+        "longitude": "-76.6122000",
+        "region": "South",
+        "state": "Maryland",
+        "address": "Business and Government Historic District, West Lombard Street, Baltimore, MD 21201, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://intent-monasticism.net",
+        "created_at": "2025-06-18T06:34:10.324Z",
+        "updated_at": "2025-06-18T06:34:10.324Z",
+        "geometry": {
+          "coordinates": [
+            -76.6122,
+            39.2904
+          ]
+        }
+      },
+      {
+        "id": 1021,
+        "sr_no": 121,
+        "title": "Walsh, Greenholt and Johns Security Hub",
+        "description": "Velit valens adulescens accommodo ab velit ager pariatur.",
+        "latitude": "42.3601000",
+        "longitude": "-71.0589000",
+        "region": "Northeast",
+        "state": "Massachusetts",
+        "address": "unnamed road, Boston, MA 02203, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://stunning-smoke.biz",
+        "created_at": "2025-06-18T06:34:10.670Z",
+        "updated_at": "2025-06-18T06:34:10.670Z",
+        "geometry": {
+          "coordinates": [
+            -71.0589,
+            42.3601
+          ]
+        }
+      },
+      {
+        "id": 1022,
+        "sr_no": 122,
+        "title": "Rice, Walter and Weimann Security Hub",
+        "description": "Suasoria bellum deludo antiquus damnatio eius subvenio sumptus anser laudantium.",
+        "latitude": "42.3314000",
+        "longitude": "-83.0458000",
+        "region": "Midwest",
+        "state": "Michigan",
+        "address": "52 Cadillac Square, Detroit, MI 48226, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://trim-secret.org/",
+        "created_at": "2025-06-18T06:34:11.093Z",
+        "updated_at": "2025-06-18T06:34:11.093Z",
+        "geometry": {
+          "coordinates": [
+            -83.0458,
+            42.3314
+          ]
+        }
+      },
+      {
+        "id": 1023,
+        "sr_no": 123,
+        "title": "Wilkinson and Sons Security Hub",
+        "description": "Amo commemoro depereo.",
+        "latitude": "44.9778000",
+        "longitude": "-93.2650000",
+        "region": "Midwest",
+        "state": "Minnesota",
+        "address": "Minneapolis Skyway (Tunnel), Minneapolis, MN 55415, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://altruistic-spork.name",
+        "created_at": "2025-06-18T06:34:11.454Z",
+        "updated_at": "2025-06-18T06:34:11.454Z",
+        "geometry": {
+          "coordinates": [
+            -93.265,
+            44.9778
+          ]
+        }
+      },
+      {
+        "id": 1024,
+        "sr_no": 124,
+        "title": "Lowe and Sons Security Hub",
+        "description": "Ultra varius infit vero pecus depopulo adicio eveniet commodi cultura.",
+        "latitude": "32.2988000",
+        "longitude": "-90.1848000",
+        "region": "South",
+        "state": "Mississippi",
+        "address": "210 East Pearl Street, Jackson, MS 39201, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://limited-shipper.net",
+        "created_at": "2025-06-18T06:34:11.831Z",
+        "updated_at": "2025-06-18T06:34:11.831Z",
+        "geometry": {
+          "coordinates": [
+            -90.1848,
+            32.2988
+          ]
+        }
+      },
+      {
+        "id": 1025,
+        "sr_no": 125,
+        "title": "Weissnat, Hackett and Murray Security Hub",
+        "description": "Crapula crastinus curso depromo temporibus spero advoco turba aeternus.",
+        "latitude": "39.0997000",
+        "longitude": "-94.5786000",
+        "region": "Midwest",
+        "state": "Missouri",
+        "address": "Board of Education Garage, 1200 Oak Street, Kansas City, MO 64106, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://vengeful-supplier.org/",
+        "created_at": "2025-06-18T06:34:12.152Z",
+        "updated_at": "2025-06-18T06:34:12.152Z",
+        "geometry": {
+          "coordinates": [
+            -94.5786,
+            39.0997
+          ]
+        }
+      },
+      {
+        "id": 1026,
+        "sr_no": 126,
+        "title": "Reichert, Murphy and Schinner Security Hub",
+        "description": "Ustulo voveo cervus similique aggero ante sursum asporto.",
+        "latitude": "45.7833000",
+        "longitude": "-108.5007000",
+        "region": "West",
+        "state": "Montana",
+        "address": "2462 Montana Avenue, Billings, MT 59101, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://unsung-digit.com/",
+        "created_at": "2025-06-18T06:34:12.584Z",
+        "updated_at": "2025-06-18T06:34:12.584Z",
+        "geometry": {
+          "coordinates": [
+            -108.5007,
+            45.7833
+          ]
+        }
+      },
+      {
+        "id": 1027,
+        "sr_no": 127,
+        "title": "Waelchi Group Security Hub",
+        "description": "Defessus audeo virtus sursum laudantium.",
+        "latitude": "41.2565000",
+        "longitude": "-95.9345000",
+        "region": "Midwest",
+        "state": "Nebraska",
+        "address": "1335 Harney Street, Omaha, NE 68102, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://sophisticated-department.net/",
+        "created_at": "2025-06-18T06:34:13.082Z",
+        "updated_at": "2025-06-18T06:34:13.082Z",
+        "geometry": {
+          "coordinates": [
+            -95.9345,
+            41.2565
+          ]
+        }
+      },
+      {
+        "id": 1028,
+        "sr_no": 128,
+        "title": "Dickens LLC Security Hub",
+        "description": "Suscipio quae ulterius deserunt vacuus caries possimus deprecator sollicito demulceo.",
+        "latitude": "36.1699000",
+        "longitude": "-115.1398000",
+        "region": "West",
+        "state": "Nevada",
+        "address": "Flaminto Hotel, Jackie Gaughan Plaza, Las Vegas, NV 89101, United States of America",
+        "segments": [
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://darling-edge.com",
+        "created_at": "2025-06-18T06:34:13.545Z",
+        "updated_at": "2025-06-18T06:34:13.545Z",
+        "geometry": {
+          "coordinates": [
+            -115.1398,
+            36.1699
+          ]
+        }
+      },
+      {
+        "id": 1029,
+        "sr_no": 129,
+        "title": "Nitzsche, Rodriguez and Labadie Security Hub",
+        "description": "Administratio tabella tempus occaecati uberrime.",
+        "latitude": "42.9956000",
+        "longitude": "-71.4548000",
+        "region": "Northeast",
+        "state": "New Hampshire",
+        "address": "195 Bridge Street, Manchester, NH 03104, United States of America",
+        "segments": [
+          "Community Safety",
+          "School Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://mean-event.org/",
+        "created_at": "2025-06-18T06:34:13.879Z",
+        "updated_at": "2025-06-18T06:34:13.879Z",
+        "geometry": {
+          "coordinates": [
+            -71.4548,
+            42.9956
+          ]
+        }
+      },
+      {
+        "id": 1030,
+        "sr_no": 130,
+        "title": "Graham, Erdman and Leuschke Security Hub",
+        "description": "Admoveo creta exercitationem tracto.",
+        "latitude": "40.7357000",
+        "longitude": "-74.1724000",
+        "region": "Northeast",
+        "state": "New Jersey",
+        "address": "Snipes, 163 Market Street, The Ironbound, Newark, NJ 07102, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://lighthearted-dime.net",
+        "created_at": "2025-06-18T06:34:14.196Z",
+        "updated_at": "2025-06-18T06:34:14.196Z",
+        "geometry": {
+          "coordinates": [
+            -74.1724,
+            40.7357
+          ]
+        }
+      },
+      {
+        "id": 1031,
+        "sr_no": 131,
+        "title": "Gleason, Haag and Rohan Security Hub",
+        "description": "Ustilo teneo repudiandae despecto rem sumptus arbustum voluptas.",
+        "latitude": "35.0844000",
+        "longitude": "-106.6504000",
+        "region": "West",
+        "state": "New Mexico",
+        "address": "The Banque Lofts, 219 Central Avenue Northwest, Albuquerque, NM 87102, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "School Safety"
+        ],
+        "article_url": "https://spherical-traffic.biz",
+        "created_at": "2025-06-18T06:34:14.553Z",
+        "updated_at": "2025-06-18T06:34:14.553Z",
+        "geometry": {
+          "coordinates": [
+            -106.6504,
+            35.0844
+          ]
+        }
+      },
+      {
+        "id": 1032,
+        "sr_no": 132,
+        "title": "Marks - Windler Security Hub",
+        "description": "Theatrum deleo utpote terebro tempora.",
+        "latitude": "40.7128000",
+        "longitude": "-74.0060000",
+        "region": "Northeast",
+        "state": "New York",
+        "address": "New York City Hall, 260 Broadway, New York, NY 10000, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://remarkable-kettledrum.com",
+        "created_at": "2025-06-18T06:34:15.099Z",
+        "updated_at": "2025-06-18T06:34:15.099Z",
+        "geometry": {
+          "coordinates": [
+            -74.006,
+            40.7128
+          ]
+        }
+      },
+      {
+        "id": 1033,
+        "sr_no": 133,
+        "title": "Treutel Inc Security Hub",
+        "description": "Administratio cinis baiulus asporto decretum asper eum conspergo brevis.",
+        "latitude": "35.2271000",
+        "longitude": "-80.8431000",
+        "region": "South",
+        "state": "North Carolina",
+        "address": "Essex Bar & Bistro, 101 South Tryon Street, Charlotte, NC 28202, United States of America",
+        "segments": [
+          "Community Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://marvelous-remark.name",
+        "created_at": "2025-06-18T06:34:15.582Z",
+        "updated_at": "2025-06-18T06:34:15.582Z",
+        "geometry": {
+          "coordinates": [
+            -80.8431,
+            35.2271
+          ]
+        }
+      },
+      {
+        "id": 1034,
+        "sr_no": 134,
+        "title": "Volkman, Greenholt and Bartoletti Security Hub",
+        "description": "Asperiores cursim eveniet conturbo assumenda adicio.",
+        "latitude": "46.8772000",
+        "longitude": "-96.7898000",
+        "region": "Midwest",
+        "state": "North Dakota",
+        "address": "Fargo Skyway, Fargo, ND 58102, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://moral-farm.net/",
+        "created_at": "2025-06-18T06:34:15.956Z",
+        "updated_at": "2025-06-18T06:34:15.956Z",
+        "geometry": {
+          "coordinates": [
+            -96.7898,
+            46.8772
+          ]
+        }
+      },
+      {
+        "id": 1035,
+        "sr_no": 135,
+        "title": "Rutherford, Ryan and Braun Security Hub",
+        "description": "Accusator eos adulescens adsidue vicissitudo assentator.",
+        "latitude": "39.9612000",
+        "longitude": "-82.9988000",
+        "region": "Midwest",
+        "state": "Ohio",
+        "address": "1 South Third Street, Columbus, OH 43216, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://grimy-commodity.net",
+        "created_at": "2025-06-18T06:34:16.326Z",
+        "updated_at": "2025-06-18T06:34:16.326Z",
+        "geometry": {
+          "coordinates": [
+            -82.9988,
+            39.9612
+          ]
+        }
+      },
+      {
+        "id": 1036,
+        "sr_no": 136,
+        "title": "Schmitt - Wintheiser Security Hub",
+        "description": "Aveho neque aestivus appello bellum concedo solium.",
+        "latitude": "35.4676000",
+        "longitude": "-97.5164000",
+        "region": "South",
+        "state": "Oklahoma",
+        "address": "North Robinson Avenue, Oklahoma City, OK 73109, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://stylish-management.biz/",
+        "created_at": "2025-06-18T06:34:16.630Z",
+        "updated_at": "2025-06-18T06:34:16.630Z",
+        "geometry": {
+          "coordinates": [
+            -97.5164,
+            35.4676
+          ]
+        }
+      },
+      {
+        "id": 1037,
+        "sr_no": 137,
+        "title": "Effertz, Lind and Roberts Security Hub",
+        "description": "Utroque cognatus adinventitias magni alioqui vesco debeo.",
+        "latitude": "45.5152000",
+        "longitude": "-122.6784000",
+        "region": "West",
+        "state": "Oregon",
+        "address": "Southwest Madison Street, Portland, OR 97258, United States of America",
+        "segments": [
+          "Community Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://genuine-cow.name/",
+        "created_at": "2025-06-18T06:34:17.023Z",
+        "updated_at": "2025-06-18T06:34:17.023Z",
+        "geometry": {
+          "coordinates": [
+            -122.6784,
+            45.5152
+          ]
+        }
+      },
+      {
+        "id": 1038,
+        "sr_no": 138,
+        "title": "Auer - Stokes Security Hub",
+        "description": "Temptatio uxor cultura deripio mollitia vulariter conscendo animi cerno vero.",
+        "latitude": "39.9526000",
+        "longitude": "-75.1652000",
+        "region": "Northeast",
+        "state": "Pennsylvania",
+        "address": "North 15th Street, Philadelphia, PA 19102, United States of America",
+        "segments": [
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://frightened-reboot.org/",
+        "created_at": "2025-06-18T06:34:17.332Z",
+        "updated_at": "2025-06-18T06:34:17.332Z",
+        "geometry": {
+          "coordinates": [
+            -75.1652,
+            39.9526
+          ]
+        }
+      },
+      {
+        "id": 1039,
+        "sr_no": 139,
+        "title": "Kerluke LLC Security Hub",
+        "description": "Cavus debeo commodi degenero denego solvo tutamen crapula.",
+        "latitude": "41.8240000",
+        "longitude": "-71.4128000",
+        "region": "Northeast",
+        "state": "Rhode Island",
+        "address": "Providence City Hall, 25 Dorrance Street, Providence, RI 02903, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://multicolored-gradient.info/",
+        "created_at": "2025-06-18T06:34:17.653Z",
+        "updated_at": "2025-06-18T06:34:17.653Z",
+        "geometry": {
+          "coordinates": [
+            -71.4128,
+            41.824
+          ]
+        }
+      },
+      {
+        "id": 1040,
+        "sr_no": 140,
+        "title": "Dietrich Group Security Hub",
+        "description": "Pectus vix coerceo.",
+        "latitude": "34.0007000",
+        "longitude": "-81.0348000",
+        "region": "South",
+        "state": "South Carolina",
+        "address": "J. Marion Sims, Gervais Street, Columbia, SC 29201, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Community Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://simple-sport.net/",
+        "created_at": "2025-06-18T06:34:17.955Z",
+        "updated_at": "2025-06-18T06:34:17.955Z",
+        "geometry": {
+          "coordinates": [
+            -81.0348,
+            34.0007
+          ]
+        }
+      },
+      {
+        "id": 1041,
+        "sr_no": 141,
+        "title": "Franey - Emmerich Security Hub",
+        "description": "Volup thymum adfero suspendo atqui adnuo uberrime.",
+        "latitude": "43.5446000",
+        "longitude": "-96.7311000",
+        "region": "Midwest",
+        "state": "South Dakota",
+        "address": "West 11th Street, Sioux Falls, SD 57186, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://ornery-siege.com/",
+        "created_at": "2025-06-18T06:34:18.254Z",
+        "updated_at": "2025-06-18T06:34:18.254Z",
+        "geometry": {
+          "coordinates": [
+            -96.7311,
+            43.5446
+          ]
+        }
+      },
+      {
+        "id": 1042,
+        "sr_no": 142,
+        "title": "Terry - Weimann Security Hub",
+        "description": "Dolore catena suppono copia.",
+        "latitude": "36.1627000",
+        "longitude": "-86.7816000",
+        "region": "South",
+        "state": "Tennessee",
+        "address": "6th Avenue North, Nashville, TN 37219, United States of America",
+        "segments": [
+          "Commercial Business",
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://secondary-tuber.com/",
+        "created_at": "2025-06-18T06:34:18.668Z",
+        "updated_at": "2025-06-18T06:34:18.668Z",
+        "geometry": {
+          "coordinates": [
+            -86.7816,
+            36.1627
+          ]
+        }
+      },
+      {
+        "id": 1043,
+        "sr_no": 143,
+        "title": "Russel - Conroy Security Hub",
+        "description": "Laboriosam suggero virgo amiculum comedo alter.",
+        "latitude": "29.7604000",
+        "longitude": "-95.3698000",
+        "region": "South",
+        "state": "Texas",
+        "address": "West Walker Tunnel, Houston, TX 77002, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://creative-filter.com",
+        "created_at": "2025-06-18T06:34:19.007Z",
+        "updated_at": "2025-06-18T06:34:19.007Z",
+        "geometry": {
+          "coordinates": [
+            -95.3698,
+            29.7604
+          ]
+        }
+      },
+      {
+        "id": 1044,
+        "sr_no": 144,
+        "title": "Mitchell, Gerlach and Sawayn Security Hub",
+        "description": "Dignissimos cohaero tolero.",
+        "latitude": "40.7608000",
+        "longitude": "-111.8910000",
+        "region": "West",
+        "state": "Utah",
+        "address": "Array Salon, 375 S Main Street, Salt Lake City, UT 84111, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://massive-silk.org",
+        "created_at": "2025-06-18T06:34:19.314Z",
+        "updated_at": "2025-06-18T06:34:19.314Z",
+        "geometry": {
+          "coordinates": [
+            -111.891,
+            40.7608
+          ]
+        }
+      },
+      {
+        "id": 1045,
+        "sr_no": 145,
+        "title": "Trantow, Johns and Stoltenberg Security Hub",
+        "description": "Suspendo constans comes capto aiunt conturbo.",
+        "latitude": "44.4759000",
+        "longitude": "-73.2121000",
+        "region": "Northeast",
+        "state": "Vermont",
+        "address": "Chittenden County Courthouse, 175 Main Street, Burlington, VT 05401, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://jittery-gradient.net/",
+        "created_at": "2025-06-18T06:34:19.744Z",
+        "updated_at": "2025-06-18T06:34:19.744Z",
+        "geometry": {
+          "coordinates": [
+            -73.2121,
+            44.4759
+          ]
+        }
+      },
+      {
+        "id": 1046,
+        "sr_no": 146,
+        "title": "Feest - Waelchi Security Hub",
+        "description": "Hic totam tero.",
+        "latitude": "36.8529000",
+        "longitude": "-75.9780000",
+        "region": "South",
+        "state": "Virginia",
+        "address": "Public Parking Deck, 24 1/2 Street, Virginia Beach, VA 23451, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://flimsy-academics.name",
+        "created_at": "2025-06-18T06:34:20.090Z",
+        "updated_at": "2025-06-18T06:34:20.090Z",
+        "geometry": {
+          "coordinates": [
+            -75.978,
+            36.8529
+          ]
+        }
+      },
+      {
+        "id": 1047,
+        "sr_no": 147,
+        "title": "Towne and Sons Security Hub",
+        "description": "Quibusdam damno eligendi barba cito talis testimonium veritatis cauda.",
+        "latitude": "47.6062000",
+        "longitude": "-122.3321000",
+        "region": "West",
+        "state": "Washington",
+        "address": "5th and Madison Condos, 909 5th Avenue, Seattle, WA 98164, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business",
+          "Community Safety"
+        ],
+        "article_url": "https://crooked-convection.net/",
+        "created_at": "2025-06-18T06:34:20.505Z",
+        "updated_at": "2025-06-18T06:34:20.505Z",
+        "geometry": {
+          "coordinates": [
+            -122.3321,
+            47.6062
+          ]
+        }
+      },
+      {
+        "id": 1048,
+        "sr_no": 148,
+        "title": "Dicki Inc Security Hub",
+        "description": "Aegre vulariter via tantum supra adversus magnam ager.",
+        "latitude": "38.3498000",
+        "longitude": "-81.6326000",
+        "region": "South",
+        "state": "West Virginia",
+        "address": "299 Dickinson Street, East Side, Charleston, WV 25301, United States of America",
+        "segments": [
+          "Community Safety",
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://excitable-blowgun.net",
+        "created_at": "2025-06-18T06:34:20.889Z",
+        "updated_at": "2025-06-18T06:34:20.889Z",
+        "geometry": {
+          "coordinates": [
+            -81.6326,
+            38.3498
+          ]
+        }
+      },
+      {
+        "id": 1049,
+        "sr_no": 149,
+        "title": "Hudson LLC Security Hub",
+        "description": "Tamisium ambitus aveho ventito umbra vaco tredecim tertius.",
+        "latitude": "43.0389000",
+        "longitude": "-87.9065000",
+        "region": "Midwest",
+        "state": "Wisconsin",
+        "address": "North Milwaukee Street, Milwaukee, WI 53288, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://deafening-cheetah.info",
+        "created_at": "2025-06-18T06:34:21.240Z",
+        "updated_at": "2025-06-18T06:34:21.240Z",
+        "geometry": {
+          "coordinates": [
+            -87.9065,
+            43.0389
+          ]
+        }
+      },
+      {
+        "id": 1050,
+        "sr_no": 150,
+        "title": "King LLC Security Hub",
+        "description": "Cenaculum somnus vociferor crudelis autus claustrum possimus.",
+        "latitude": "41.1400000",
+        "longitude": "-104.8202000",
+        "region": "West",
+        "state": "Wyoming",
+        "address": "Wyoming State Capitol, 200 West 24th Street, Cheyenne, WY 82001, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://defensive-gastropod.biz",
+        "created_at": "2025-06-18T06:34:21.571Z",
+        "updated_at": "2025-06-18T06:34:21.571Z",
+        "geometry": {
+          "coordinates": [
+            -104.8202,
+            41.14
+          ]
+        }
+      },
+      {
+        "id": 1000,
+        "sr_no": 100,
+        "title": "Boyer LLC Security Hub",
+        "description": "Claro calco colo absum tollo vespillo argentum carmen.",
+        "latitude": "33.5186000",
+        "longitude": "-86.8104000",
+        "region": "South",
+        "state": "Alabama",
+        "address": "First United Methodist Church, 518 19th Street North, Birmingham, AL 35203, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://unknown-toothpick.com/",
+        "created_at": "2025-06-18T06:55:10.161Z",
+        "updated_at": "2025-06-18T06:55:10.161Z",
+        "geometry": {
+          "coordinates": [
+            -86.8104,
+            33.5186
+          ]
+        }
+      },
+      {
+        "id": 1001,
+        "sr_no": 101,
+        "title": "Yundt and Sons Security Hub",
+        "description": "Paulatim quia tonsor bene tot vulgus repudiandae debeo qui.",
+        "latitude": "61.2176000",
+        "longitude": "-149.8997000",
+        "region": "West",
+        "state": "Alaska",
+        "address": "Hotel Captain Cook, 939 West 5th Avenue, Anchorage, AK 99501, United States of America",
+        "segments": [
+          "School Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://tough-sushi.org",
+        "created_at": "2025-06-18T06:55:10.494Z",
+        "updated_at": "2025-06-18T06:55:10.494Z",
+        "geometry": {
+          "coordinates": [
+            -149.8997,
+            61.2176
+          ]
+        }
+      },
+      {
+        "id": 1002,
+        "sr_no": 102,
+        "title": "Corwin, Reichel and Halvorson Security Hub",
+        "description": "Pel custodia administratio.",
+        "latitude": "33.4484000",
+        "longitude": "-112.0740000",
+        "region": "West",
+        "state": "Arizona",
+        "address": "2 North Central Avenue, Phoenix, AZ 85003, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://mad-prohibition.info/",
+        "created_at": "2025-06-18T06:55:10.741Z",
+        "updated_at": "2025-06-18T06:55:10.741Z",
+        "geometry": {
+          "coordinates": [
+            -112.074,
+            33.4484
+          ]
+        }
+      },
+      {
+        "id": 1003,
+        "sr_no": 103,
+        "title": "Shields - Block Security Hub",
+        "description": "Amet accusamus vita tribuo.",
+        "latitude": "34.7465000",
+        "longitude": "-92.2896000",
+        "region": "South",
+        "state": "Arkansas",
+        "address": "State Capitol, Little Rock, AR 72201, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://granular-acquaintance.org",
+        "created_at": "2025-06-18T06:55:11.096Z",
+        "updated_at": "2025-06-18T06:55:11.096Z",
+        "geometry": {
+          "coordinates": [
+            -92.2896,
+            34.7465
+          ]
+        }
+      },
+      {
+        "id": 1004,
+        "sr_no": 104,
+        "title": "Vandervort Inc Security Hub",
+        "description": "Tardus capio trucido vallum aliquid aveho ubi quo.",
+        "latitude": "34.0522000",
+        "longitude": "-118.2437000",
+        "region": "West",
+        "state": "California",
+        "address": "Los Angeles Police Department Headquarters, Broad Plaza, Los Angeles, CA 90013, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://shabby-pillbox.net/",
+        "created_at": "2025-06-18T06:55:11.374Z",
+        "updated_at": "2025-06-18T06:55:11.374Z",
+        "geometry": {
+          "coordinates": [
+            -118.2437,
+            34.0522
+          ]
+        }
+      },
+      {
+        "id": 1005,
+        "sr_no": 105,
+        "title": "Howe, VonRueden and Klein Security Hub",
+        "description": "Cuppedia vestigium textor aeneus.",
+        "latitude": "39.7392000",
+        "longitude": "-104.9903000",
+        "region": "West",
+        "state": "Colorado",
+        "address": "Bannock Central Plaza, Denver, CO 80281, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://circular-pillow.org",
+        "created_at": "2025-06-18T06:55:11.669Z",
+        "updated_at": "2025-06-18T06:55:11.669Z",
+        "geometry": {
+          "coordinates": [
+            -104.9903,
+            39.7392
+          ]
+        }
+      },
+      {
+        "id": 1006,
+        "sr_no": 106,
+        "title": "Breitenberg - Cormier Security Hub",
+        "description": "Demergo textor talus victoria teres victus tandem auctus speciosus.",
+        "latitude": "41.1792000",
+        "longitude": "-73.1894000",
+        "region": "Northeast",
+        "state": "Connecticut",
+        "address": "1061 Main Street, East Bridgeport, Bridgeport, CT 06604, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://pink-understanding.org",
+        "created_at": "2025-06-18T06:55:12.003Z",
+        "updated_at": "2025-06-18T06:55:12.003Z",
+        "geometry": {
+          "coordinates": [
+            -73.1894,
+            41.1792
+          ]
+        }
+      },
+      {
+        "id": 1007,
+        "sr_no": 107,
+        "title": "Fisher, Rice and Pacocha Security Hub",
+        "description": "Vere quo vero inflammatio clarus blanditiis.",
+        "latitude": "39.7391000",
+        "longitude": "-75.5398000",
+        "region": "South",
+        "state": "Delaware",
+        "address": "999 East 7th Street, Wilmington, DE 19801, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://small-jacket.net",
+        "created_at": "2025-06-18T06:55:12.303Z",
+        "updated_at": "2025-06-18T06:55:12.303Z",
+        "geometry": {
+          "coordinates": [
+            -75.5398,
+            39.7391
+          ]
+        }
+      },
+      {
+        "id": 1008,
+        "sr_no": 108,
+        "title": "O'Hara, Feil and Lynch Security Hub",
+        "description": "Tepesco auditor censura summisse suscipio ustilo.",
+        "latitude": "38.8951000",
+        "longitude": "-77.0364000",
+        "region": "South",
+        "state": "Washington D.C.",
+        "address": "Ellipse Road Northwest, Washington, DC 20237, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Law Enforcement",
+          "Community Safety"
+        ],
+        "article_url": "https://ultimate-goodwill.name",
+        "created_at": "2025-06-18T06:55:12.645Z",
+        "updated_at": "2025-06-18T06:55:12.645Z",
+        "geometry": {
+          "coordinates": [
+            -77.0364,
+            38.8951
+          ]
+        }
+      },
+      {
+        "id": 1009,
+        "sr_no": 109,
+        "title": "Hickle and Sons Security Hub",
+        "description": "Varietas aro tantillus trado vetus.",
+        "latitude": "30.3322000",
+        "longitude": "-81.6557000",
+        "region": "South",
+        "state": "Florida",
+        "address": "23 Union Street, Jacksonville, FL 32202, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business",
+          "Law Enforcement"
+        ],
+        "article_url": "https://narrow-bidet.net",
+        "created_at": "2025-06-18T06:55:13.061Z",
+        "updated_at": "2025-06-18T06:55:13.061Z",
+        "geometry": {
+          "coordinates": [
+            -81.6557,
+            30.3322
+          ]
+        }
+      },
+      {
+        "id": 1010,
+        "sr_no": 110,
+        "title": "Aufderhar, Waters and Ankunding Security Hub",
+        "description": "Sto textilis candidus decumbo conor.",
+        "latitude": "33.7490000",
+        "longitude": "-84.3880000",
+        "region": "South",
+        "state": "Georgia",
+        "address": "The Georgia State Capitol, 206 Washington Street Southwest, Atlanta, GA 30334, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business",
+          "Community Safety"
+        ],
+        "article_url": "https://direct-academics.name",
+        "created_at": "2025-06-18T06:55:13.390Z",
+        "updated_at": "2025-06-18T06:55:13.390Z",
+        "geometry": {
+          "coordinates": [
+            -84.388,
+            33.749
+          ]
+        }
+      },
+      {
+        "id": 1011,
+        "sr_no": 111,
+        "title": "Breitenberg and Sons Security Hub",
+        "description": "Placeat arcesso spero.",
+        "latitude": "21.3069000",
+        "longitude": "-157.8583000",
+        "region": "West",
+        "state": "Hawaii",
+        "address": "Iolani Palace, 364 South King Street, Honolulu, HI 96813, United States of America",
+        "segments": [
+          "Commercial Business"
+        ],
+        "article_url": "https://insecure-follower.org/",
+        "created_at": "2025-06-18T06:55:13.794Z",
+        "updated_at": "2025-06-18T06:55:13.794Z",
+        "geometry": {
+          "coordinates": [
+            -157.8583,
+            21.3069
+          ]
+        }
+      },
+      {
+        "id": 1012,
+        "sr_no": 112,
+        "title": "Stiedemann - Tromp Security Hub",
+        "description": "Coaegresco cunabula cohors delicate.",
+        "latitude": "43.6150000",
+        "longitude": "-116.2023000",
+        "region": "West",
+        "state": "Idaho",
+        "address": "Perrault Building, 625 West Main Street, Boise, ID 83702, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://unsightly-midwife.com/",
+        "created_at": "2025-06-18T06:55:14.132Z",
+        "updated_at": "2025-06-18T06:55:14.132Z",
+        "geometry": {
+          "coordinates": [
+            -116.2023,
+            43.615
+          ]
+        }
+      },
+      {
+        "id": 1013,
+        "sr_no": 113,
+        "title": "Olson, McDermott and Kozey Security Hub",
+        "description": "Aeger amita capto mollitia acidus.",
+        "latitude": "41.8781000",
+        "longitude": "-87.6298000",
+        "region": "Midwest",
+        "state": "Illinois",
+        "address": "314 South Federal Street, Chicago, IL 60604, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business"
+        ],
+        "article_url": "https://strict-chairperson.name/",
+        "created_at": "2025-06-18T06:55:14.454Z",
+        "updated_at": "2025-06-18T06:55:14.454Z",
+        "geometry": {
+          "coordinates": [
+            -87.6298,
+            41.8781
+          ]
+        }
+      },
+      {
+        "id": 1014,
+        "sr_no": 114,
+        "title": "Sawayn, Ullrich and Koss Security Hub",
+        "description": "Basium thymum super vita.",
+        "latitude": "39.7684000",
+        "longitude": "-86.1581000",
+        "region": "Midwest",
+        "state": "Indiana",
+        "address": "unnamed road, Indianapolis, IN 46207, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://grave-reasoning.net",
+        "created_at": "2025-06-18T06:55:14.716Z",
+        "updated_at": "2025-06-18T06:55:14.716Z",
+        "geometry": {
+          "coordinates": [
+            -86.1581,
+            39.7684
+          ]
+        }
+      },
+      {
+        "id": 1015,
+        "sr_no": 115,
+        "title": "Erdman Inc Security Hub",
+        "description": "Voro volutabrum addo.",
+        "latitude": "41.5868000",
+        "longitude": "-93.6250000",
+        "region": "Midwest",
+        "state": "Iowa",
+        "address": "Equitable Building, 604 Locust Street, Des Moines, IA 50309, United States of America",
+        "segments": [
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://assured-bob.biz/",
+        "created_at": "2025-06-18T06:55:15.033Z",
+        "updated_at": "2025-06-18T06:55:15.033Z",
+        "geometry": {
+          "coordinates": [
+            -93.625,
+            41.5868
+          ]
+        }
+      },
+      {
+        "id": 1016,
+        "sr_no": 116,
+        "title": "Dare and Sons Security Hub",
+        "description": "Tracto necessitatibus attero valde ater calco iste.",
+        "latitude": "37.6872000",
+        "longitude": "-97.3301000",
+        "region": "Midwest",
+        "state": "Kansas",
+        "address": "160 North Santa Fe Avenue, Wichita, KS 67202, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://teeming-mousse.net/",
+        "created_at": "2025-06-18T06:55:15.273Z",
+        "updated_at": "2025-06-18T06:55:15.273Z",
+        "geometry": {
+          "coordinates": [
+            -97.3301,
+            37.6872
+          ]
+        }
+      },
+      {
+        "id": 1017,
+        "sr_no": 117,
+        "title": "Lowe and Sons Security Hub",
+        "description": "Currus testimonium aeternus stillicidium.",
+        "latitude": "38.2527000",
+        "longitude": "-85.7585000",
+        "region": "South",
+        "state": "Kentucky",
+        "address": "West Liberty Street, Louisville, KY 40203, United States of America",
+        "segments": [
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://gaseous-poppy.biz",
+        "created_at": "2025-06-18T06:55:15.528Z",
+        "updated_at": "2025-06-18T06:55:15.528Z",
+        "geometry": {
+          "coordinates": [
+            -85.7585,
+            38.2527
+          ]
+        }
+      },
+      {
+        "id": 1018,
+        "sr_no": 118,
+        "title": "VonRueden - Vandervort Security Hub",
+        "description": "Cresco decretum currus quos delicate.",
+        "latitude": "29.9511000",
+        "longitude": "-90.0715000",
+        "region": "South",
+        "state": "Louisiana",
+        "address": "335 Carondelet Street, New Orleans, LA 70130, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Community Safety"
+        ],
+        "article_url": "https://hasty-seal.net",
+        "created_at": "2025-06-18T06:55:15.786Z",
+        "updated_at": "2025-06-18T06:55:15.786Z",
+        "geometry": {
+          "coordinates": [
+            -90.0715,
+            29.9511
+          ]
+        }
+      },
+      {
+        "id": 1019,
+        "sr_no": 119,
+        "title": "Doyle, Vandervort and Toy Security Hub",
+        "description": "Temeritas ultra veritas demulceo amissio confugo.",
+        "latitude": "43.6591000",
+        "longitude": "-70.2568000",
+        "region": "Northeast",
+        "state": "Maine",
+        "address": "Portland City Hall, 389 Congress Street, Portland, ME 04101, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety"
+        ],
+        "article_url": "https://scared-coin.net/",
+        "created_at": "2025-06-18T06:55:16.039Z",
+        "updated_at": "2025-06-18T06:55:16.039Z",
+        "geometry": {
+          "coordinates": [
+            -70.2568,
+            43.6591
+          ]
+        }
+      },
+      {
+        "id": 1020,
+        "sr_no": 120,
+        "title": "Breitenberg - Haley Security Hub",
+        "description": "Una stipes acer caries complectus summisse villa.",
+        "latitude": "39.2904000",
+        "longitude": "-76.6122000",
+        "region": "South",
+        "state": "Maryland",
+        "address": "Business and Government Historic District, West Lombard Street, Baltimore, MD 21201, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business",
+          "Law Enforcement"
+        ],
+        "article_url": "https://easy-hospitalization.org",
+        "created_at": "2025-06-18T06:55:16.328Z",
+        "updated_at": "2025-06-18T06:55:16.328Z",
+        "geometry": {
+          "coordinates": [
+            -76.6122,
+            39.2904
+          ]
+        }
+      },
+      {
+        "id": 1021,
+        "sr_no": 121,
+        "title": "Gusikowski and Sons Security Hub",
+        "description": "Cubicularis vir explicabo ubi eius.",
+        "latitude": "42.3601000",
+        "longitude": "-71.0589000",
+        "region": "Northeast",
+        "state": "Massachusetts",
+        "address": "unnamed road, Boston, MA 02203, United States of America",
+        "segments": [
+          "School Safety",
+          "Commercial Business",
+          "Community Safety"
+        ],
+        "article_url": "https://strange-cop-out.biz",
+        "created_at": "2025-06-18T06:55:16.724Z",
+        "updated_at": "2025-06-18T06:55:16.724Z",
+        "geometry": {
+          "coordinates": [
+            -71.0589,
+            42.3601
+          ]
+        }
+      },
+      {
+        "id": 1022,
+        "sr_no": 122,
+        "title": "Denesik - Murphy Security Hub",
+        "description": "Aiunt aperiam admitto charisma strues somniculosus tersus.",
+        "latitude": "42.3314000",
+        "longitude": "-83.0458000",
+        "region": "Midwest",
+        "state": "Michigan",
+        "address": "52 Cadillac Square, Detroit, MI 48226, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://aged-puritan.name",
+        "created_at": "2025-06-18T06:55:17.258Z",
+        "updated_at": "2025-06-18T06:55:17.258Z",
+        "geometry": {
+          "coordinates": [
+            -83.0458,
+            42.3314
+          ]
+        }
+      },
+      {
+        "id": 1023,
+        "sr_no": 123,
+        "title": "Wehner, Schuster and Hickle Security Hub",
+        "description": "Paulatim tametsi defungo nobis auxilium arbitro adipisci sed.",
+        "latitude": "44.9778000",
+        "longitude": "-93.2650000",
+        "region": "Midwest",
+        "state": "Minnesota",
+        "address": "Minneapolis Skyway (Tunnel), Minneapolis, MN 55415, United States of America",
+        "segments": [
+          "School Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://sticky-fund.biz",
+        "created_at": "2025-06-18T06:55:17.728Z",
+        "updated_at": "2025-06-18T06:55:17.728Z",
+        "geometry": {
+          "coordinates": [
+            -93.265,
+            44.9778
+          ]
+        }
+      },
+      {
+        "id": 1024,
+        "sr_no": 124,
+        "title": "Stiedemann, Corkery and Johnson Security Hub",
+        "description": "Arto virgo defero vulgo adulatio sint patruus acceptus bene.",
+        "latitude": "32.2988000",
+        "longitude": "-90.1848000",
+        "region": "South",
+        "state": "Mississippi",
+        "address": "210 East Pearl Street, Jackson, MS 39201, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://muted-mallard.net/",
+        "created_at": "2025-06-18T06:55:17.964Z",
+        "updated_at": "2025-06-18T06:55:17.964Z",
+        "geometry": {
+          "coordinates": [
+            -90.1848,
+            32.2988
+          ]
+        }
+      },
+      {
+        "id": 1025,
+        "sr_no": 125,
+        "title": "Jacobi, Kunze and Abernathy Security Hub",
+        "description": "Triumphus virgo vulpes commodo libero adamo casus auxilium bardus.",
+        "latitude": "39.0997000",
+        "longitude": "-94.5786000",
+        "region": "Midwest",
+        "state": "Missouri",
+        "address": "Board of Education Garage, 1200 Oak Street, Kansas City, MO 64106, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business"
+        ],
+        "article_url": "https://whopping-turret.org",
+        "created_at": "2025-06-18T06:55:18.210Z",
+        "updated_at": "2025-06-18T06:55:18.210Z",
+        "geometry": {
+          "coordinates": [
+            -94.5786,
+            39.0997
+          ]
+        }
+      },
+      {
+        "id": 1026,
+        "sr_no": 126,
+        "title": "Lebsack LLC Security Hub",
+        "description": "Consuasor bellum charisma porro.",
+        "latitude": "45.7833000",
+        "longitude": "-108.5007000",
+        "region": "West",
+        "state": "Montana",
+        "address": "2462 Montana Avenue, Billings, MT 59101, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://primary-slipper.org",
+        "created_at": "2025-06-18T06:55:18.612Z",
+        "updated_at": "2025-06-18T06:55:18.612Z",
+        "geometry": {
+          "coordinates": [
+            -108.5007,
+            45.7833
+          ]
+        }
+      },
+      {
+        "id": 1027,
+        "sr_no": 127,
+        "title": "O'Keefe - Bailey Security Hub",
+        "description": "Dolorum summisse strenuus trado video creta adulescens adamo.",
+        "latitude": "41.2565000",
+        "longitude": "-95.9345000",
+        "region": "Midwest",
+        "state": "Nebraska",
+        "address": "1335 Harney Street, Omaha, NE 68102, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Law Enforcement",
+          "School Safety"
+        ],
+        "article_url": "https://taut-clamp.net",
+        "created_at": "2025-06-18T06:55:18.953Z",
+        "updated_at": "2025-06-18T06:55:18.953Z",
+        "geometry": {
+          "coordinates": [
+            -95.9345,
+            41.2565
+          ]
+        }
+      },
+      {
+        "id": 1028,
+        "sr_no": 128,
+        "title": "Yundt Group Security Hub",
+        "description": "Ambulo culpa vix crux tollo verto socius aer cubitum.",
+        "latitude": "36.1699000",
+        "longitude": "-115.1398000",
+        "region": "West",
+        "state": "Nevada",
+        "address": "Flaminto Hotel, Jackie Gaughan Plaza, Las Vegas, NV 89101, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business",
+          "School Safety"
+        ],
+        "article_url": "https://happy-go-lucky-puritan.info",
+        "created_at": "2025-06-18T06:55:19.257Z",
+        "updated_at": "2025-06-18T06:55:19.257Z",
+        "geometry": {
+          "coordinates": [
+            -115.1398,
+            36.1699
+          ]
+        }
+      },
+      {
+        "id": 1029,
+        "sr_no": 129,
+        "title": "Kirlin - Collier Security Hub",
+        "description": "Voluptatibus odit benigne curo praesentium arbitro defleo arcesso bellicus supra.",
+        "latitude": "42.9956000",
+        "longitude": "-71.4548000",
+        "region": "Northeast",
+        "state": "New Hampshire",
+        "address": "195 Bridge Street, Manchester, NH 03104, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business"
+        ],
+        "article_url": "https://self-assured-precedent.info",
+        "created_at": "2025-06-18T06:55:19.591Z",
+        "updated_at": "2025-06-18T06:55:19.591Z",
+        "geometry": {
+          "coordinates": [
+            -71.4548,
+            42.9956
+          ]
+        }
+      },
+      {
+        "id": 1030,
+        "sr_no": 130,
+        "title": "O'Hara LLC Security Hub",
+        "description": "Altus debitis adulatio amitto attollo corona terror aveho ambitus terror.",
+        "latitude": "40.7357000",
+        "longitude": "-74.1724000",
+        "region": "Northeast",
+        "state": "New Jersey",
+        "address": "Snipes, 163 Market Street, The Ironbound, Newark, NJ 07102, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Commercial Business"
+        ],
+        "article_url": "https://harmful-perfection.com",
+        "created_at": "2025-06-18T06:55:19.832Z",
+        "updated_at": "2025-06-18T06:55:19.832Z",
+        "geometry": {
+          "coordinates": [
+            -74.1724,
+            40.7357
+          ]
+        }
+      },
+      {
+        "id": 1031,
+        "sr_no": 131,
+        "title": "Hickle - Yost Security Hub",
+        "description": "Arbustum demulceo veritatis nam desolo apud contigo desino ratione.",
+        "latitude": "35.0844000",
+        "longitude": "-106.6504000",
+        "region": "West",
+        "state": "New Mexico",
+        "address": "The Banque Lofts, 219 Central Avenue Northwest, Albuquerque, NM 87102, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety"
+        ],
+        "article_url": "https://pitiful-bathrobe.com/",
+        "created_at": "2025-06-18T06:55:20.246Z",
+        "updated_at": "2025-06-18T06:55:20.246Z",
+        "geometry": {
+          "coordinates": [
+            -106.6504,
+            35.0844
+          ]
+        }
+      },
+      {
+        "id": 1032,
+        "sr_no": 132,
+        "title": "Reinger Group Security Hub",
+        "description": "Corrigo adsuesco succurro.",
+        "latitude": "40.7128000",
+        "longitude": "-74.0060000",
+        "region": "Northeast",
+        "state": "New York",
+        "address": "New York City Hall, 260 Broadway, New York, NY 10000, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://boiling-waterspout.info/",
+        "created_at": "2025-06-18T06:55:20.577Z",
+        "updated_at": "2025-06-18T06:55:20.577Z",
+        "geometry": {
+          "coordinates": [
+            -74.006,
+            40.7128
+          ]
+        }
+      },
+      {
+        "id": 1033,
+        "sr_no": 133,
+        "title": "Kassulke Group Security Hub",
+        "description": "Totus blanditiis trepide eius pecto ultra.",
+        "latitude": "35.2271000",
+        "longitude": "-80.8431000",
+        "region": "South",
+        "state": "North Carolina",
+        "address": "Essex Bar & Bistro, 101 South Tryon Street, Charlotte, NC 28202, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Law Enforcement",
+          "School Safety"
+        ],
+        "article_url": "https://excited-nightlife.info/",
+        "created_at": "2025-06-18T06:55:21.032Z",
+        "updated_at": "2025-06-18T06:55:21.032Z",
+        "geometry": {
+          "coordinates": [
+            -80.8431,
+            35.2271
+          ]
+        }
+      },
+      {
+        "id": 1034,
+        "sr_no": 134,
+        "title": "Kemmer, Konopelski and Kunze Security Hub",
+        "description": "Autus arguo deduco decumbo cura maiores caecus creta tolero.",
+        "latitude": "46.8772000",
+        "longitude": "-96.7898000",
+        "region": "Midwest",
+        "state": "North Dakota",
+        "address": "Fargo Skyway, Fargo, ND 58102, United States of America",
+        "segments": [
+          "Community Safety",
+          "Commercial Business"
+        ],
+        "article_url": "https://acclaimed-packaging.com/",
+        "created_at": "2025-06-18T06:55:21.386Z",
+        "updated_at": "2025-06-18T06:55:21.386Z",
+        "geometry": {
+          "coordinates": [
+            -96.7898,
+            46.8772
+          ]
+        }
+      },
+      {
+        "id": 1035,
+        "sr_no": 135,
+        "title": "Schuster Group Security Hub",
+        "description": "Acidus barba vinum confido nulla provident delicate abbas venia trepide.",
+        "latitude": "39.9612000",
+        "longitude": "-82.9988000",
+        "region": "Midwest",
+        "state": "Ohio",
+        "address": "1 South Third Street, Columbus, OH 43216, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://thick-approach.org/",
+        "created_at": "2025-06-18T06:55:21.827Z",
+        "updated_at": "2025-06-18T06:55:21.827Z",
+        "geometry": {
+          "coordinates": [
+            -82.9988,
+            39.9612
+          ]
+        }
+      },
+      {
+        "id": 1036,
+        "sr_no": 136,
+        "title": "Carter - Kulas Security Hub",
+        "description": "Ex sollicito delego venia animus libero cur tam clamo sonitus.",
+        "latitude": "35.4676000",
+        "longitude": "-97.5164000",
+        "region": "South",
+        "state": "Oklahoma",
+        "address": "North Robinson Avenue, Oklahoma City, OK 73109, United States of America",
+        "segments": [
+          "Community Safety",
+          "Law Enforcement",
+          "Commercial Business"
+        ],
+        "article_url": "https://important-colon.com/",
+        "created_at": "2025-06-18T06:55:22.057Z",
+        "updated_at": "2025-06-18T06:55:22.057Z",
+        "geometry": {
+          "coordinates": [
+            -97.5164,
+            35.4676
+          ]
+        }
+      },
+      {
+        "id": 1037,
+        "sr_no": 137,
+        "title": "Corkery, Dietrich and Zboncak Security Hub",
+        "description": "Repellendus tamen certe tabernus pecto.",
+        "latitude": "45.5152000",
+        "longitude": "-122.6784000",
+        "region": "West",
+        "state": "Oregon",
+        "address": "Southwest Madison Street, Portland, OR 97258, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://gullible-cod.name",
+        "created_at": "2025-06-18T06:55:22.311Z",
+        "updated_at": "2025-06-18T06:55:22.311Z",
+        "geometry": {
+          "coordinates": [
+            -122.6784,
+            45.5152
+          ]
+        }
+      },
+      {
+        "id": 1038,
+        "sr_no": 138,
+        "title": "Windler LLC Security Hub",
+        "description": "Consequuntur tubineus vomica ascit viscus.",
+        "latitude": "39.9526000",
+        "longitude": "-75.1652000",
+        "region": "Northeast",
+        "state": "Pennsylvania",
+        "address": "North 15th Street, Philadelphia, PA 19102, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://impeccable-platypus.info/",
+        "created_at": "2025-06-18T06:55:22.624Z",
+        "updated_at": "2025-06-18T06:55:22.624Z",
+        "geometry": {
+          "coordinates": [
+            -75.1652,
+            39.9526
+          ]
+        }
+      },
+      {
+        "id": 1039,
+        "sr_no": 139,
+        "title": "Kuvalis - Kreiger Security Hub",
+        "description": "Pauper tametsi vita iste quam apostolus conatus.",
+        "latitude": "41.8240000",
+        "longitude": "-71.4128000",
+        "region": "Northeast",
+        "state": "Rhode Island",
+        "address": "Providence City Hall, 25 Dorrance Street, Providence, RI 02903, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://multicolored-injunction.com/",
+        "created_at": "2025-06-18T06:55:22.882Z",
+        "updated_at": "2025-06-18T06:55:22.882Z",
+        "geometry": {
+          "coordinates": [
+            -71.4128,
+            41.824
+          ]
+        }
+      },
+      {
+        "id": 1040,
+        "sr_no": 140,
+        "title": "Schneider LLC Security Hub",
+        "description": "Aiunt damno caput amo perferendis.",
+        "latitude": "34.0007000",
+        "longitude": "-81.0348000",
+        "region": "South",
+        "state": "South Carolina",
+        "address": "J. Marion Sims, Gervais Street, Columbia, SC 29201, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://actual-hope.org/",
+        "created_at": "2025-06-18T06:55:23.208Z",
+        "updated_at": "2025-06-18T06:55:23.208Z",
+        "geometry": {
+          "coordinates": [
+            -81.0348,
+            34.0007
+          ]
+        }
+      },
+      {
+        "id": 1041,
+        "sr_no": 141,
+        "title": "Anderson LLC Security Hub",
+        "description": "Celebrer adiuvo umquam tunc arca vacuus capillus agnosco casus volva.",
+        "latitude": "43.5446000",
+        "longitude": "-96.7311000",
+        "region": "Midwest",
+        "state": "South Dakota",
+        "address": "West 11th Street, Sioux Falls, SD 57186, United States of America",
+        "segments": [
+          "Commercial Business",
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://delicious-bookcase.com",
+        "created_at": "2025-06-18T06:55:23.473Z",
+        "updated_at": "2025-06-18T06:55:23.473Z",
+        "geometry": {
+          "coordinates": [
+            -96.7311,
+            43.5446
+          ]
+        }
+      },
+      {
+        "id": 1042,
+        "sr_no": 142,
+        "title": "Frami Inc Security Hub",
+        "description": "Cernuus ter ventosus antea urbs.",
+        "latitude": "36.1627000",
+        "longitude": "-86.7816000",
+        "region": "South",
+        "state": "Tennessee",
+        "address": "6th Avenue North, Nashville, TN 37219, United States of America",
+        "segments": [
+          "School Safety"
+        ],
+        "article_url": "https://imaginary-sand.com/",
+        "created_at": "2025-06-18T06:55:23.847Z",
+        "updated_at": "2025-06-18T06:55:23.847Z",
+        "geometry": {
+          "coordinates": [
+            -86.7816,
+            36.1627
+          ]
+        }
+      },
+      {
+        "id": 1043,
+        "sr_no": 143,
+        "title": "West Inc Security Hub",
+        "description": "Repellendus suasoria velum templum necessitatibus cupio antepono claro.",
+        "latitude": "29.7604000",
+        "longitude": "-95.3698000",
+        "region": "South",
+        "state": "Texas",
+        "address": "West Walker Tunnel, Houston, TX 77002, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Community Safety"
+        ],
+        "article_url": "https://same-leading.biz",
+        "created_at": "2025-06-18T06:55:24.110Z",
+        "updated_at": "2025-06-18T06:55:24.110Z",
+        "geometry": {
+          "coordinates": [
+            -95.3698,
+            29.7604
+          ]
+        }
+      },
+      {
+        "id": 1044,
+        "sr_no": 144,
+        "title": "Willms - Dibbert Security Hub",
+        "description": "Denique triumphus thalassinus sequi stabilis congregatio.",
+        "latitude": "40.7608000",
+        "longitude": "-111.8910000",
+        "region": "West",
+        "state": "Utah",
+        "address": "Array Salon, 375 S Main Street, Salt Lake City, UT 84111, United States of America",
+        "segments": [
+          "Law Enforcement",
+          "School Safety"
+        ],
+        "article_url": "https://zesty-experience.info/",
+        "created_at": "2025-06-18T06:55:24.362Z",
+        "updated_at": "2025-06-18T06:55:24.362Z",
+        "geometry": {
+          "coordinates": [
+            -111.891,
+            40.7608
+          ]
+        }
+      },
+      {
+        "id": 1045,
+        "sr_no": 145,
+        "title": "Kilback, Stark and Stracke Security Hub",
+        "description": "Denuo custodia magnam corpus aggredior summa textor peccatus.",
+        "latitude": "44.4759000",
+        "longitude": "-73.2121000",
+        "region": "Northeast",
+        "state": "Vermont",
+        "address": "Chittenden County Courthouse, 175 Main Street, Burlington, VT 05401, United States of America",
+        "segments": [
+          "Community Safety",
+          "School Safety"
+        ],
+        "article_url": "https://unruly-reasoning.net",
+        "created_at": "2025-06-18T06:55:24.618Z",
+        "updated_at": "2025-06-18T06:55:24.618Z",
+        "geometry": {
+          "coordinates": [
+            -73.2121,
+            44.4759
+          ]
+        }
+      },
+      {
+        "id": 1046,
+        "sr_no": 146,
+        "title": "Glover Group Security Hub",
+        "description": "Summopere cito asper eius verbum cursim optio laborum.",
+        "latitude": "36.8529000",
+        "longitude": "-75.9780000",
+        "region": "South",
+        "state": "Virginia",
+        "address": "Public Parking Deck, 24 1/2 Street, Virginia Beach, VA 23451, United States of America",
+        "segments": [
+          "School Safety",
+          "Law Enforcement"
+        ],
+        "article_url": "https://flickering-academics.info/",
+        "created_at": "2025-06-18T06:55:24.862Z",
+        "updated_at": "2025-06-18T06:55:24.862Z",
+        "geometry": {
+          "coordinates": [
+            -75.978,
+            36.8529
+          ]
+        }
+      },
+      {
+        "id": 1047,
+        "sr_no": 147,
+        "title": "Metz, Crooks and Reichel Security Hub",
+        "description": "Tenus libero custodia tricesimus delinquo amiculum.",
+        "latitude": "47.6062000",
+        "longitude": "-122.3321000",
+        "region": "West",
+        "state": "Washington",
+        "address": "5th and Madison Condos, 909 5th Avenue, Seattle, WA 98164, United States of America",
+        "segments": [
+          "Community Safety"
+        ],
+        "article_url": "https://hurtful-longboat.org/",
+        "created_at": "2025-06-18T06:55:25.301Z",
+        "updated_at": "2025-06-18T06:55:25.301Z",
+        "geometry": {
+          "coordinates": [
+            -122.3321,
+            47.6062
+          ]
+        }
+      },
+      {
+        "id": 1048,
+        "sr_no": 148,
+        "title": "Jast Inc Security Hub",
+        "description": "Ara totidem attonbitus magni adfectus.",
+        "latitude": "38.3498000",
+        "longitude": "-81.6326000",
+        "region": "South",
+        "state": "West Virginia",
+        "address": "299 Dickinson Street, East Side, Charleston, WV 25301, United States of America",
+        "segments": [
+          "Commercial Business",
+          "Law Enforcement",
+          "Community Safety"
+        ],
+        "article_url": "https://gleaming-commodity.net",
+        "created_at": "2025-06-18T06:55:25.564Z",
+        "updated_at": "2025-06-18T06:55:25.564Z",
+        "geometry": {
+          "coordinates": [
+            -81.6326,
+            38.3498
+          ]
+        }
+      },
+      {
+        "id": 1049,
+        "sr_no": 149,
+        "title": "Gulgowski, Funk and Rogahn Security Hub",
+        "description": "Quo coma sursum accusamus denuo fugit.",
+        "latitude": "43.0389000",
+        "longitude": "-87.9065000",
+        "region": "Midwest",
+        "state": "Wisconsin",
+        "address": "North Milwaukee Street, Milwaukee, WI 53288, United States of America",
+        "segments": [
+          "Law Enforcement"
+        ],
+        "article_url": "https://milky-brook.com",
+        "created_at": "2025-06-18T06:55:25.891Z",
+        "updated_at": "2025-06-18T06:55:25.891Z",
+        "geometry": {
+          "coordinates": [
+            -87.9065,
+            43.0389
+          ]
+        }
+      },
+      {
+        "id": 1050,
+        "sr_no": 150,
+        "title": "Erdman - Beahan Security Hub",
+        "description": "Infit adsum demoror pecco utrum eveniet.",
+        "latitude": "41.1400000",
+        "longitude": "-104.8202000",
+        "region": "West",
+        "state": "Wyoming",
+        "address": "Wyoming State Capitol, 200 West 24th Street, Cheyenne, WY 82001, United States of America",
+        "segments": [
+          "School Safety",
+          "Community Safety"
+        ],
+        "article_url": "https://knotty-valentine.org/",
+        "created_at": "2025-06-18T06:55:26.177Z",
+        "updated_at": "2025-06-18T06:55:26.177Z",
+        "geometry": {
+          "coordinates": [
+            -104.8202,
+            41.14
+          ]
+        }
+      }
+    ],
+    "totalItems": 102,
+    "filters": {
+      "region": null,
+      "state": null,
+      "segments": null
+    }
+  }
+}

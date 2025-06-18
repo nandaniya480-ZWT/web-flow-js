@@ -99,6 +99,7 @@
             handleMobile(dropdown);
         });
 
+        // Закрытие при клике вне на мобилке
         document.addEventListener("click", (e) => {
             dropdowns.forEach((dropdown) => {
                 if (
@@ -111,6 +112,7 @@
             });
         });
 
+        // При resize — сбрасываем dropdown'ы
         window.addEventListener("resize", () => {
             dropdowns.forEach((dropdown) => {
                 dropdown.classList.remove("show");
@@ -199,20 +201,15 @@
             // On mobile, ensure it's hidden initially if not already in that state
             mainContent.style.overflow = "hidden";
         }
-        const urlParams = new URLSearchParams(window.location.search);
-        const region = urlParams.get("region");
-        const state = urlParams.get("state");
-        const segment = urlParams.get("segment");
-        const openPopupParam = urlParams.get("openpopup");
 
         let locations = [];
-        let bounds = [];
         const mapboxAccessToken =
             "pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg";
 
-        // const dataBaseUrl = "http://192.168.1.33:3002/api/v1/locations";
+        // const dataBaseUrl =
+        // "https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/68510a25934e28a74066a147_data.txt";
         const dataBaseUrl =
-            "https://cdn.prod.website-files.com/683ea9ecd5e30a9e0614e96e/68510a25934e28a74066a147_data.txt";
+            "https://testing.siteproofs.com/zabal-flock-safety/api/v1/solvedStories";
         /* const usaBounds = [
                 [-125.0011, 24.9493],
                 [-66.9326, 49.5904]
@@ -227,7 +224,25 @@
 
         function initializeMapWithClusters() {
             return new Promise((resolve, reject) => {
-                const query = new URLSearchParams(window.location.search);
+                let filters = {};
+                let region = $("#Regions").val();
+
+                if (region && region != "All Regions") {
+                    filters.region = region;
+                }
+
+                let state = $("#States").val();
+                if (state && state != "All States") {
+                    filters.state = state;
+                }
+
+                let segment = $("#Segments").val();
+
+                if (segment && segment != "All Segments") {
+                    filters.segment = segment;
+                }
+
+                const query = new URLSearchParams(filters).toString();
 
                 closePopup();
                 mapboxgl.accessToken = mapboxAccessToken;
@@ -281,17 +296,17 @@
 
                             if (locations.length > 0) {
                                 /*  const coordinates = locations.map(
-                                   (loc) => loc.geometry.coordinates
-                                 );
-                                 bounds = coordinates.reduce(
-                                   (b, c) => b.extend(c),
-                                   new mapboxgl.LngLatBounds(coordinates[0], coordinates[0])
-                                 ); */
+                                  (loc) => loc.geometry.coordinates
+                                );
+                                bounds = coordinates.reduce(
+                                  (b, c) => b.extend(c),
+                                  new mapboxgl.LngLatBounds(coordinates[0], coordinates[0])
+                                ); */
                                 /*  map.fitBounds(bounds, {
-                                   padding: 50,
-                                   maxZoom: 10,
-                                   duration: 1000,
-                                 }); */
+                                  padding: 50,
+                                  maxZoom: 10,
+                                  duration: 1000,
+                                }); */
                             }
 
                             const geojsonData = {
@@ -397,21 +412,13 @@
                                 const coords = e.features[0].geometry.coordinates;
                                 openPopupId = props.id;
 
-                                const canvas = map.getCanvas();
-                                const point = map.project(coords);
-                                const width = window.innerWidth;
-                                let zoomLevel = map.getZoom();
-
-                                const { center, zoom } = calculateResponsiveOffset(coords, 7);
-
-                                const offsetLngLat = map.unproject(point);
-
+                                const { center, zoom } = calculateResponsiveOffset(coords, map.getZoom());
                                 map.flyTo({
                                     center: center,
                                     zoom: zoom,
                                     speed: 0.5,
                                     curve: 1.4,
-                                    essential: true,
+                                    essential: true
                                 });
 
                                 map.getSource("highlight-point").setData({
@@ -424,6 +431,8 @@
                                         },
                                     ],
                                 });
+
+                                popup.remove();
 
                                 populatePopup(props);
                             });
@@ -528,18 +537,19 @@
 
         const populatePopup = (props) => {
             document.querySelector(
-                ".ts-p--big"
+                ".story-number"
             ).textContent = `Solved Story #${props.sr_no}`;
-            document.querySelector(".ts-h6.tc-white").textContent = props.title;
-            document.querySelector(".tc-grey200").textContent = props.description;
+            document.querySelector(".story-title").textContent = props.title;
+            document.querySelector(".story-description").textContent =
+                props.description;
             document.getElementById("popup-address").textContent = props.address;
 
-            const articleLink = document
-                .querySelector(".icon-link.w-inline-block")
+            document
+                .querySelector(".show-on-map")
                 .setAttribute("data-sr", props.sr_no);
 
-            const tagContainer = document.querySelector(".map-popup_tags-wrapper");
-            tagContainer.innerHTML = "";
+            const segmentsTagsContainer = document.querySelector(".segments-tags");
+            segmentsTagsContainer.innerHTML = "";
 
             let tags = [];
 
@@ -569,10 +579,21 @@
                 const div = document.createElement("div");
                 div.className = "map-popup_tag";
                 div.textContent = tag.trim();
-                tagContainer.appendChild(div);
+                segmentsTagsContainer.appendChild(div);
             });
 
-            const el = document.querySelector(".map-popup_bottom .w-inline-block");
+            const agencyTagsContainer = document.querySelector(".agency-tags");
+            agencyTagsContainer.innerHTML = "";
+
+            let agencytags = props.agency.split(",");
+            agencytags.forEach((tag) => {
+                const div = document.createElement("div");
+                div.className = "map-popup_tag";
+                div.textContent = tag.trim();
+                agencyTagsContainer.appendChild(div);
+            });
+
+            const el = document.querySelector(".article-link");
             if (el) el.href = props.article_url || "#";
 
             const shareLink = document.querySelector(
@@ -581,13 +602,12 @@
 
             if (shareLink) {
                 const url = new URL(window.location.href);
-                url.searchParams.set("openpopup", props.sr_no);
+                url.searchParams.set("story_id", props.sr_no);
 
                 const shareUrl = url.toString();
 
                 shareLink.addEventListener("click", (e) => {
                     e.preventDefault();
-                    console.log('Testing')
                     navigator.clipboard
                         .writeText(shareUrl)
                         .then(() => {
@@ -608,11 +628,11 @@
             }
 
             if (window.innerWidth < 992) {
-                if ($('.map-filter_close').height == 0) {
-                    $('.map-filter_close').trigger('click')
+                if ($(".map-filter_close").height == 0) {
+                    $(".map-filter_close").trigger("click");
                 }
-                if ($('.map-filter_main').height == 0) {
-                    $('.map-filter_title-icon').trigger('click')
+                if ($(".map-filter_main").height == 0) {
+                    $(".map-filter_title-icon").trigger("click");
                 }
             }
 
@@ -628,7 +648,7 @@
                 .classList.add("hide");
         };
 
-        document.querySelectorAll(".icon-link.w-inline-block").forEach((el) => {
+        document.querySelectorAll(".show-on-map").forEach((el) => {
             el.addEventListener("click", (e) => {
                 e.preventDefault();
                 const targetId = el.getAttribute("data-sr");
@@ -639,8 +659,20 @@
 
                 const coords = target.geometry.coordinates;
                 openPopupId = target.id;
+
                 const point = map.project(coords);
+
+                const width = window.innerWidth;
                 let zoomLevel = map.getZoom();
+
+                if (width <= 479) {
+                    zoomLevel = Math.max(zoomLevel, 5);
+                } else if (width > 479 && width < 992) {
+                    zoomLevel = Math.max(zoomLevel, 4.5);
+                } else {
+                    zoomLevel = Math.max(zoomLevel, 4);
+                }
+
                 const offsetLngLat = map.unproject(point);
                 map.flyTo({
                     center: coords,
@@ -664,8 +696,12 @@
         });
 
         // Map controller buttons
-        document.getElementById("zoom-in").addEventListener("click", () => map.zoomIn());
-        document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());
+        document
+            .getElementById("zoom-in")
+            .addEventListener("click", () => map.zoomIn());
+        document
+            .getElementById("zoom-out")
+            .addEventListener("click", () => map.zoomOut());
         document.getElementById("locate-me-btn").addEventListener("click", () => {
             if (!navigator.geolocation) {
                 alert("Geolocation is not supported by your browser.");
@@ -705,35 +741,53 @@
         });
 
         // Copy current URL
-        $(".map-filter_right .button.is-secondary.is-nav.is-white").on(
-            "click",
-            function (e) {
-                e.preventDefault();
-                const currentUrl = window.location.href;
-                const textarea = document.createElement("textarea");
-                textarea.value = currentUrl;
-                textarea.style.position = "fixed";
-                textarea.style.opacity = "0";
-                document.body.appendChild(textarea);
-                textarea.focus();
-                textarea.select();
+        $(".share-map").on("click", function (e) {
+            e.preventDefault();
+            const currentUrl = window.location.href;
+            let filters = {};
+            let region = $("#Regions").val();
 
-                const buttonText = $(this).find("div");
-                const originalText = buttonText.text();
-
-                try {
-                    const successful = document.execCommand("copy");
-                    if (successful) {
-                        buttonText.text("Copied!");
-                        setTimeout(() => buttonText.text(originalText), 2000);
-                    }
-                } catch (err) {
-                    console.error("Failed to copy: ", err);
-                }
-
-                document.body.removeChild(textarea);
+            if (region && region != "All Regions") {
+                filters.region = region;
             }
-        );
+
+            let state = $("#States").val();
+
+            if (state && state != "All States") {
+                filters.state = state;
+            }
+
+            let segment = $("#Segments").val();
+
+            if (segment && segment != "All Segments") {
+                filters.segment = segment;
+            }
+
+            const query = new URLSearchParams(filters).toString();
+
+            const textarea = document.createElement("textarea");
+            textarea.value = currentUrl + "?" + query;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            const buttonText = $(this).find("div");
+            const originalText = buttonText.text();
+
+            try {
+                const successful = document.execCommand("copy");
+                if (successful) {
+                    buttonText.text("Copied!");
+                    setTimeout(() => buttonText.text(originalText), 2000);
+                }
+            } catch (err) {
+                console.error("Failed to copy: ", err);
+            }
+
+            document.body.removeChild(textarea);
+        });
 
         // Popup close
         $(".map-popup_close").on("click", () => {
@@ -751,31 +805,106 @@
             if (e.key === "Enter") e.preventDefault();
         });
 
+        let communityDynamicParams = $("#map-query-filter").text();
+        let region = "";
+        let state = "";
+        let segment = "";
+        let openPopupParam = "";
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (
+            urlParams.has("region") ||
+            urlParams.has("state") ||
+            urlParams.has("segment") ||
+            urlParams.has("story_id")
+        ) {
+            region = urlParams.get("region");
+            state = urlParams.get("state");
+            segment = urlParams.get("segment");
+            openPopupParam = urlParams.get("story_id");
+            setTimeout(() => {
+                if ($(".map-wrapper")) {
+                    $("html, body").animate(
+                        {
+                            scrollTop: $(".map-wrapper").offset().top,
+                        },
+                        1000
+                    );
+                }
+            }, 500);
+        } else if (communityDynamicParams) {
+            try {
+                const params = new URLSearchParams(communityDynamicParams.trim());
+                const obj = Object.fromEntries(params.entries());
+                region = obj.region ?? "";
+                state = obj.state ?? "";
+                segment = obj.segment ?? "";
+                openPopupParam = obj.story_id ?? "";
+            } catch (error) {
+                console.log("error", error);
+            }
+        }
+
         // Load filters from URL
         if (region) {
-            $("#Region").prop("checked", true).trigger("change");
+            $("#Region").prop("checked", true); //.trigger("change");
+            $("#State")
+                .closest(".map-filter_radio")
+                .find(".w-form-formradioinput")
+                .removeClass("w--redirected-checked");
+            $("#Region")
+                .closest(".map-filter_radio")
+                .find(".w-form-formradioinput")
+                .addClass("w--redirected-checked");
             showRegion(region);
         } else if (state) {
-            $("#State").prop("checked", true).trigger("change");
+            $("#States").val(state);
+            setTimeout(() => {
+                $("#State").prop("checked", true); //.trigger("change");
+                $("#Region")
+                    .closest(".map-filter_radio")
+                    .find(".w-form-formradioinput")
+                    .removeClass("w--redirected-checked");
+                $("#State")
+                    .closest(".map-filter_radio")
+                    .find(".w-form-formradioinput")
+                    .addClass("w--redirected-checked");
+            }, 1000);
             showState(state);
+            $(".map-filter_input-clear").show();
         } else {
             showRegion();
         }
 
         if (segment) {
-            $("#Segments").val(segment).trigger("change");
+            const segmentsList = $(".segments-filter").find(
+                ".map-filter_dd-list .map-filter_dd-link"
+            );
+            $.each(segmentsList, (key, item) => {
+                if (segment.trim() === $(item).text().trim()) {
+                    $("#Segments").val(segment); //.trigger("change");
+                    $(".segments-filter .w-dropdown-toggle div").text(segment);
+                    $(item).attr("aria-selected", true);
+                    $(item).addClass("w--current");
+                    $(item).attr("tabindex", 0);
+                }
+            });
         }
+
+        setTimeout(function () {
+            init();
+        }, 300);
 
         // Filter controls
         $("#State, #Region").on("change", function () {
             const selected = this.value;
-
             if (selected === "Region") {
                 showRegion();
                 updateURLParam("state", "");
                 $("#States").val("All States");
-                $("#fs-option-all-states")[0].click();
-                initializeMapWithClusters();
+                //$("#fs-option-all-states").click();
+                $(".map-filter_input-clear").click();
+                // initializeMapWithClusters();
             } else if (selected === "State") {
                 showState("");
                 updateURLParam("region", "");
@@ -789,6 +918,7 @@
                 "region",
                 this.value === "All Regions" ? "" : this.value.trim()
             );
+            $(".regions-filter .w-dropdown-toggle div").text(this.value.trim());
             initializeMapWithClusters();
         });
 
@@ -805,6 +935,7 @@
                 "segment",
                 this.value === "All Segments" ? "" : this.value.trim()
             );
+            $(".segments-filter .w-dropdown-toggle div").text(this.value.trim());
             initializeMapWithClusters().then(() => { });
         });
 
@@ -812,7 +943,8 @@
             $('[map-filter="Regions"]').show();
             $('[map-filter="States"]').hide();
             if (selectedValue) {
-                $("#Regions").val(selectedValue).trigger("change");
+                $(".regions-filter .w-dropdown-toggle div").text(selectedValue);
+                $("#Regions").val(selectedValue);
             }
         }
 
@@ -826,6 +958,7 @@
                     $.each(states, (key, item) => {
                         if ($(item).is("a") && selectedValue === $(item).text().trim()) {
                             $(".map-filter_input").val(selectedValue);
+                            $("#States").val(selectedValue);
                             $(item).attr("aria-selected", true);
                             $(item).addClass("w--current");
                             $(item).attr("tabindex", 0);
@@ -837,92 +970,98 @@
 
         function updateURLParam(key, value) {
             const params = new URLSearchParams(window.location.search);
-            if (value) {
-                params.set(key, value);
-            } else {
-                params.delete(key);
-            }
-            history.replaceState(
-                null,
-                "",
-                `${window.location.pathname}?${params.toString()}`
-            );
-        }
-        initializeMapWithClusters().then(() => {
-            if (openPopupParam) {
-                updateURLParam("openpopup", "");
-                const srNo = parseInt(openPopupParam);
-                const target = locations.find((loc) => loc.sr_no == srNo);
-                if (target) {
-                    const coords = target.geometry.coordinates;
-                    openPopupId = target.id;
-
-                    const point = map.project(coords);
-                    const { center, zoom } = calculateResponsiveOffset(coords, 7);
-                    const offsetLngLat = map.unproject(point);
-                    map.flyTo({
-                        center: center,
-                        zoom: zoom,
-                        speed: 0.5,
-                        curve: 1.4,
-                        essential: true,
-                    });
-
-                    map.getSource("highlight-point").setData({
-                        type: "FeatureCollection",
-                        features: [
-                            {
-                                type: "Feature",
-                                geometry: { type: "Point", coordinates: coords },
-                                properties: {},
-                            },
-                        ],
-                    });
-
-                    setTimeout(() => {
-                        populatePopup(target);
-                    }, 1000);
+            if (params.has("is_iframe")) {
+                if (value) {
+                    params.set(key, value);
+                } else {
+                    params.delete(key);
                 }
+                history.replaceState(
+                    null,
+                    "",
+                    `${window.location.pathname}?${params.toString()}`
+                );
             }
-        });
+        }
+
+        function init() {
+            initializeMapWithClusters().then(() => {
+                if (openPopupParam) {
+                    updateURLParam("story_id", "");
+                    const srNo = parseInt(openPopupParam);
+                    const target = locations.find((loc) => loc.sr_no == srNo);
+                    if (target) {
+                        const coords = target.geometry.coordinates;
+                        openPopupId = target.id;
+
+                        const { center, zoom } = calculateResponsiveOffset(coords, map.getZoom());
+                        map.flyTo({
+                            center: center,
+                            zoom: zoom,
+                            speed: 0.5,
+                            curve: 1.4,
+                            essential: true
+                        });
+
+                        map.getSource("highlight-point").setData({
+                            type: "FeatureCollection",
+                            features: [
+                                {
+                                    type: "Feature",
+                                    geometry: { type: "Point", coordinates: coords },
+                                    properties: {},
+                                },
+                            ],
+                        });
+
+                        setTimeout(() => {
+                            populatePopup(target);
+                        }, 1000);
+                    }
+                }
+            });
+        }
+
         function calculateResponsiveOffset(targetCoords, zoomLevel) {
             const width = window.innerWidth;
             const canvas = map.getCanvas();
 
+            // Save current map state
             const originalCenter = map.getCenter();
             const originalZoom = map.getZoom();
 
+            // Temporarily set the map to target zoom and center
             map.jumpTo({
                 center: targetCoords,
                 zoom: zoomLevel
             });
 
+            // Get the projected point of our target
             const targetPoint = map.project(targetCoords);
 
+            // Calculate responsive offsets
             let offsetX = 0;
             let offsetY = 0;
 
             if (width <= 479) {
-                offsetY = canvas.height * 0.25 - targetPoint.y;
+                // Mobile: position slightly up (24% from top) - original behavior
+                offsetY = canvas.height * 0.24 - targetPoint.y;
             } else if (width < 992) {
-                offsetX = canvas.width / 2.40 - targetPoint.x;
+                // Tablet: position slightly right of center (150px)
+                offsetX = -150; // Negative to move center left
             } else {
-                offsetX = canvas.width / 2.40 - targetPoint.x;
+                // Desktop: position slightly right of center (150px)
+                offsetX = -150; // Negative to move center left
             }
 
+            // Calculate the required center point
             const offsetPoint = [targetPoint.x + offsetX, targetPoint.y + offsetY];
             const offsetCenter = map.unproject(offsetPoint);
 
+            // Restore original map state
             map.jumpTo({
                 center: originalCenter,
                 zoom: originalZoom
-            });
-            map.flyTo({
-                center: [offsetCenter.lng, offsetCenter.lat],
-                zoom: zoomLevel,
-                speed: 0.5,
-                curve: 1.4,
-                essential: true
             });
 
             return {

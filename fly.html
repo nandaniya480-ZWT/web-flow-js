@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Mapbox Custom Zoom Offset</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            display: block;
+            margin: 5px 0;
+            padding: 8px 12px;
+            background: #4264fb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3254eb;
+        }
+
+        .mapboxgl-marker {
+            background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png');
+            background-size: cover;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .status {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 1;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class="controls">
+        <button id="fly-to-delhi">Fly to Delhi (centered)</button>
+        <button id="fly-to-delhi-left">Fly to Delhi (custom zoom offset)</button>
+        <button id="fly-to-mumbai-left">Fly to Mumbai (custom zoom offset)</button>
+    </div>
+    <div class="status" id="status">Ready</div>
+
+    <script>
+        // Set your Mapbox access token here
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia3Jpc3RlbmF0ZmxvY2siLCJhIjoiY21iamQ3ZnpyMGVvNTJub29vNDUydHd0MSJ9.KOVQYg0oXDerDHlVqQoBBg';
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [78.9629, 20.5937], // Center on India
+            zoom: 4
+        });
+
+        let marker = null;
+
+        // Function to calculate responsive offset position with custom zoom
+        function calculateOffsetWithZoom(targetCoords, zoomLevel) {
+            const width = window.innerWidth;
+            const canvas = map.getCanvas();
+
+            // Save current map state
+            const originalCenter = map.getCenter();
+            const originalZoom = map.getZoom();
+
+            // Temporarily set the map to target zoom and center
+            map.jumpTo({
+                center: targetCoords,
+                zoom: zoomLevel
+            });
+
+            // Get the projected point of our target
+            const targetPoint = map.project(targetCoords);
+
+            // Calculate responsive offsets
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (width <= 479) {
+                // Mobile: position slightly up (24% from top)
+                offsetY = canvas.height * 0.24 - targetPoint.y;
+            } else if (width > 479 && width < 992) {
+                // Tablet: position at 1/3 from left
+                offsetX = canvas.width / 4 - targetPoint.x;
+            } else {
+                // Desktop: position at 1/3 from left
+                offsetX = canvas.width / 4 - targetPoint.x;
+            }
+
+            // Calculate the required center point
+            const offsetPoint = [targetPoint.x + offsetX, targetPoint.y + offsetY];
+            const offsetCenter = map.unproject(offsetPoint);
+
+            // Restore original map state
+            map.jumpTo({
+                center: originalCenter,
+                zoom: originalZoom
+            });
+
+
+            return {
+                center: [offsetCenter.lng, offsetCenter.lat],
+                zoom: zoomLevel
+            };
+        }
+
+        // Add marker at specified coordinates
+        function addMarker(coords, title = '') {
+            if (marker) marker.remove();
+
+            marker = new mapboxgl.Marker()
+                .setLngLat(coords)
+                .setPopup(new mapboxgl.Popup().setText(title))
+                .addTo(map);
+        }
+
+        // Fly to location with custom zoom offset
+        function flyToWithCustomZoom(coords, title = '', zoomLevel = null) {
+            document.getElementById('status').textContent = `Calculating offset for ${title}...`;
+            addMarker(coords, title);
+
+            // Use provided zoom level or calculate a default one
+            const targetZoom = zoomLevel !== null ? zoomLevel : 7;
+
+            // Calculate the offset position with custom zoom
+            const { center, zoom } = calculateOffsetWithZoom(coords, targetZoom);
+
+            map.flyTo({
+                center: center,
+                zoom: zoom,
+                speed: 0.8,
+                curve: 1.4,
+                essential: true
+            });
+
+            document.getElementById('status').textContent = `Showing ${title} at zoom ${zoom}`;
+            setTimeout(() => marker.togglePopup(), 1000);
+        }
+
+        // Initialize the map
+        map.on('load', () => {
+            // Set up button handlers
+            document.getElementById('fly-to-delhi').addEventListener('click', () => {
+                addMarker([77.2090, 28.6139], 'New Delhi (centered)');
+                map.flyTo({
+                    center: [77.2090, 28.6139],
+                    zoom: 10,
+                    essential: true
+                });
+                document.getElementById('status').textContent = "Showing New Delhi (centered at zoom 10)";
+            });
+
+            document.getElementById('fly-to-delhi-left').addEventListener('click', () => {
+                // Example with custom zoom level (you can change this value)
+                const customZoom = 4;
+                flyToWithCustomZoom([77.2090, 28.6139], 'New Delhi', customZoom);
+            });
+
+            document.getElementById('fly-to-mumbai-left').addEventListener('click', () => {
+                // Example with automatic zoom calculation
+                flyToWithCustomZoom([72.8777, 19.0760], 'Mumbai');
+            });
+
+            // Show current zoom level
+            map.on('zoom', () => {
+                document.getElementById('status').textContent = `Current zoom: ${map.getZoom().toFixed(2)}`;
+            });
+        });
+    </script>
+</body>
+
+</html>
